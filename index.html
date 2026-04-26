@@ -2,82 +2,76 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Projet L4INA01 - Soukaina Elkasmi</title>
+    <title>Projet L4INA01 - ELKASMI Soukaina</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
-    <div id="cv-section">
-        <div class="header-cv">
-            <h1>Curriculum Vitae</h1>
-            <h2>Soukaina Elkasmi</h2>
-            <p>Étudiante en Sciences du Langage</p>
-        </div>
-
-        <div class="cv-content">
-            <div class="cv-left">
-                <p><strong>Mon parcours scolaire :</strong></p>
-                <table class="grid-table">
+    <div id="cv-bloc">
+        <h1>Curriculum Vitae</h1>
+        <h2>Soukaina Elkasmi</h2>
+        
+        <div class="cv-flex">
+            <div class="cv-infos">
+                <p><strong>Mon parcours :</strong></p>
+                <table class="table-grille">
                     <tr><th>Années</th><th>Formation</th></tr>
                     <tr><td>2024-2025</td><td>L1 Sciences du Langage</td></tr>
                     <tr><td>2025-2026</td><td>L2 Sciences du Langage</td></tr>
                 </table>
 
-                <p><strong>Derniers livres lus :</strong></p>
+                <p><strong>Livres lus :</strong></p>
                 <ul>
                     <li>La dame de ménage</li>
                     <li>Harry Potter</li>
-                    <li>Le Petit Prince</li>
+                    <li>Le Silence du corps</li>
+                    <li>L'alchimiste</li>
                     <li>L'étranger</li>
-                    <li>Le Cid</li>
                 </ul>
             </div>
-            
-            <div class="cv-right">
-                <img src="assets/img/maphoto.jpg" alt="Ma Photo" class="photo-box">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Universit%C3%A9_Sorbonne_Nouvelle_-_Logo.svg" alt="Photo École" class="photo-box">
+            <div class="cv-photos">
+                <img src="assets/img/maphoto.jpg" alt="Ma Photo">
+                <img src="assets/img/universite.jpg" alt="Photo École">
             </div>
         </div>
     </div>
 
-    <div id="analyseur-section">
+    <div id="analyseur-bloc">
         <h3>Analyse des données dans un fichier</h3>
-        
         <p>Sélectionner un fichier au format .txt : <input type="file" id="fileInput"></p>
 
         <table class="params-table">
             <tr>
-                <td><strong>DÉLIMITEURS:</strong></td>
+                <td>DÉLIMITEURS:</td>
                 <td><input type="text" id="delims" value="[ ,.?;:!/()&quot;']+"></td>
             </tr>
             <tr>
-                <td><strong>PÔLE:</strong></td>
-                <td><input type="text" id="pole" placeholder="mot à chercher..."></td>
-                <td><strong>LONGUEUR:</strong></td>
+                <td>PÔLE:</td>
+                <td><input type="text" id="pole"></td>
+                <td>LONGUEUR:</td>
                 <td><input type="number" id="longueur" value="10"></td>
             </tr>
         </table>
 
-        <div class="center-btn">
+        <div class="center">
             <button id="btnBonjour">Bonjour</button>
         </div>
 
-        <div class="buttons-grid">
+        <div class="buttons-container">
             <button id="btnSegmentation">Segmentation</button>
             <button id="btnDictionnaire">Dictionnaire</button>
             <button id="btnGrep">GREP</button>
             <button id="btnConcordance">Concordancier</button>
             <button id="btnKujuj">/kujuj/</button>
-            <button id="btnPhrases">Nombre de phrases</button>
-            <button id="btnMotsLongs">Mots les plus longs</button>
-            <button id="btnGraphe">Graphe Camembert (Pie Chart)</button>
+            <button id="btnPhrases">Nb phrases</button>
+            <button id="btnMotsLongs">Mots longs</button>
+            <button id="btnChart">Pie Chart</button>
         </div>
 
-        <div class="display-zones">
-            <textarea id="affichageGauche" placeholder="Texte source..."></textarea>
-            <div id="affichageDroit">Résultat...</div>
+        <div class="affichage">
+            <textarea id="affichageGauche" readonly></textarea>
+            <div id="affichageDroit"></div>
         </div>
-        
         <p id="stats">Nombre de formes : 0</p>
     </div>
 
