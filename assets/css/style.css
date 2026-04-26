@@ -1,4 +1,4 @@
-/* --- CONFIGURATION GLOBALE --- */
+/* --- BASE --- */
 body {
     background-color: #d4cc00;
     font-family: Arial, sans-serif;
@@ -7,45 +7,46 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: 12px !important; 
 }
 
 /* --- SECTION CV --- */
 #bloc-cv {
     background-color: #e2e1b9;
     width: 95%;
-    max-width: 700px;
-    border: 1px solid #000;
-    padding: 15px;
+    max-width: 650px;
+    border: 1px solid black;
     display: flex;
     justify-content: space-between;
+    padding: 15px;
     margin-bottom: 20px;
 }
-
 .photo-cv img {
     width: 150px !important;
-    border: 1px solid #000;
+    border: 1px solid black;
 }
+.cv-gauche h1 { font-size: 1.2rem; margin: 0; }
+.liste-livres { font-size: 0.85rem; }
 
-/* --- TITRE --- */
+/* --- TITRE MOYEN --- */
 .titre-moyen {
-    color: #fff;
-    font-size: 1.2rem !important;
+    color: white;
+    font-size: 1.3rem !important;
     text-shadow: 1px 1px #5a3d8c;
-    text-align: center;
+    margin: 15px 0;
 }
 
-/* --- BLOC ANALYSEUR --- */
+/* --- BLOC ROSE --- */
 #bloc-analyseur {
     background-color: #c499a6;
     width: 95%;
-    max-width: 700px;
-    border: 1px solid #000;
+    max-width: 650px;
+    border: 1px solid black;
     padding: 15px;
     text-align: center;
+    box-shadow: 4px 4px 0px #5a3d8c;
 }
 
-/* ALIGNEMENT "Sélectionner un fichier" + BOUTON */
+/* ALIGNEMENTS DEMANDÉS (Fichier et Longueur) */
 .ligne-simple {
     display: flex;
     align-items: center;
@@ -55,42 +56,44 @@ body {
     font-size: 11px;
 }
 
-/* ALIGNEMENT "Pôle" + "Longueur" sur une seule ligne */
 .ligne-mixte {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    margin: 5px 0;
+    margin: 8px 0;
 }
 
 .badge { 
     background-color: #8b5fb0; 
-    color: #fff; 
-    font-size: 9px !important; 
+    color: white; 
+    font-size: 9px; 
     padding: 2px 4px;
-    white-space: nowrap;
 }
 
-input {
-    font-size: 10px !important;
-    padding: 2px;
-}
+input { font-size: 10px !important; padding: 2px; }
 
-/* BOUTONS ACTIONS */
+/* BOUTONS */
 .boutons-actions button {
     background-color: #c9d6a3;
-    border: 1px solid #000;
+    border: 1px solid black;
     margin: 2px;
     padding: 4px 6px;
     font-size: 10px !important;
     font-weight: bold;
 }
 
-/* FOOTER */
+.cadre-bonjour {
+    border: 2px solid #1a5e4d;
+    padding: 3px 10px;
+    margin: 10px 0;
+    display: inline-block;
+}
+
+/* LIEN SORBONNE */
+footer { margin-top: 30px; }
 .lien-sorbonne {
     font-size: 11px !important;
     color: #5a3d8c;
     text-decoration: none;
 }
-
