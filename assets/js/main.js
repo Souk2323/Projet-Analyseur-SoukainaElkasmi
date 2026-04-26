@@ -1,56 +1,50 @@
-body {
-    background-color: #3b244d;
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-}
+var texteSource = "";
 
-#bloc-cv {
-    background-color: #e2e1b9;
-    width: 800px;
-    border: 2px solid black;
-    display: flex;
-    padding: 20px;
-    margin-bottom: 20px;
-}
+// Charger le fichier
+document.getElementById('fileInput').onchange = function(e) {
+    var lecteur = new FileReader();
+    lecteur.onload = function() {
+        texteSource = lecteur.result;
+        document.getElementById('affichageGauche').value = texteSource;
+    };
+    lecteur.readAsText(e.target.files[0]);
+};
 
-.cv-gauche { flex: 2; }
-.grille-blanche { border-collapse: collapse; background: white; width: 100%; }
-.cv-droite { flex: 1; text-align: right; }
-.cv-droite img { width: 100px; border: 1px solid black; margin-bottom: 5px; display: block; margin-left: auto; }
+// Dire bonjour
+document.getElementById('btnBonjour').onclick = function() {
+    alert("Bonjour Soukaina !");
+};
 
-#bloc-analyseur {
-    background-color: #f7b1b1;
-    width: 800px;
-    border: 2px solid black;
-    padding: 20px;
-    text-align: center;
-}
+// Faire la segmentation
+document.getElementById('btnSegmentation').onclick = function() {
+    var d = document.getElementById('delims').value;
+    var expression = new RegExp(d, "g");
+    
+    var mots = texteSource.split(expression).filter(function(m) {
+        return m.length > 0;
+    });
+    
+    document.getElementById('affichageDroit').innerText = mots.join(" | ");
+    document.getElementById('stats').innerText = "Nombre de formes : " + mots.length;
+};
 
-.tab-params { margin: 10px auto; }
-.boutons { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; }
-
-button {
-    background-color: #5d4037;
-    color: white;
-    border: 1px solid black;
-    padding: 8px;
-    cursor: pointer;
-}
-
-.affichage { display: flex; gap: 10px; margin-top: 15px; }
-textarea { flex: 1; height: 180px; background: white; border: 1px solid black; padding: 5px; }
-
-/* ENCADRÉ JAUNE */
-#affichageDroit {
-    flex: 1;
-    height: 180px;
-    background-color: #ffff00;
-    border: 1px solid black;
-    padding: 5px;
-    overflow-y: auto;
-    text-align: left;
-    color: black;
-}
+// Faire le dictionnaire
+document.getElementById('btnDico').onclick = function() {
+    var d = document.getElementById('delims').value;
+    var expression = new RegExp(d, "g");
+    var mots = texteSource.toLowerCase().split(expression).filter(function(m) {
+        return m.length > 0;
+    });
+    
+    var dico = {};
+    for (var i = 0; i < mots.length; i++) {
+        var mot = mots[i];
+        dico[mot] = (dico[mot] || 0) + 1;
+    }
+    
+    var texteDico = "DICTIONNAIRE :\n\n";
+    for (var cle in dico) {
+        texteDico += cle + " : " + dico[cle] + "\n";
+    }
+    document.getElementById('affichageDroit').innerText = texteDico;
+};
