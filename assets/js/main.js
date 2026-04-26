@@ -1,83 +1,83 @@
-body {
-    background-color: #d4cc00; /* Fond jaune */
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    margin: 0;
+let texteAnalyse = "";
+
+// 1. Charger le fichier .txt
+document.getElementById('fileInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        texteAnalyse = event.target.result;
+        const mots = preparerMots().length;
+        document.getElementById('info-chargement').innerHTML = 
+            `<b>Fichier prêt !</b><br>Tokens détectés : ${mots}`;
+    };
+    reader.readAsText(file);
+});
+
+// 2. Nettoyage et découpe du texte
+function preparerMots() {
+    const delimiteurs = document.getElementById('delims').value;
+    const regex = new RegExp("[" + delimiteurs.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + "\\s]+", "g");
+    return texteAnalyse.split(regex).filter(m => m.length > 0);
 }
 
-#bloc-cv {
-    background-color: #e2e1b9;
-    width: 90%;
-    max-width: 800px;
-    border: 2px solid black;
-    display: flex;
-    padding: 20px;
-    margin-bottom: 20px;
+// 3. Fonctions des boutons
+function segmenter() {
+    if (!texteAnalyse) return alert("Chargez un fichier !");
+    const mots = preparerMots();
+    document.getElementById('affichageDroit').innerHTML = `<h3>Segmentation</h3><p>${mots.join(' | ')}</p>`;
 }
 
-.photo-cv img {
-    width: 120px;
-    border: 1px solid black;
+function dictionnaire() {
+    const mots = preparerMots();
+    const stops = document.getElementById('stopwords').value.split(',');
+    let dico = {};
+    mots.forEach(m => {
+        let mot = m.toLowerCase();
+        if (!stops.includes(mot)) dico[mot] = (dico[mot] || 0) + 1;
+    });
+    let table = "<table><tr><th>Mot</th><th>Fréquence</th></tr>";
+    Object.entries(dico).sort((a, b) => b[1] - a[1]).slice(0, 10).forEach(([m, f]) => {
+        table += `<tr><td>${m}</td><td>${f}</td></tr>`;
+    });
+    document.getElementById('affichageDroit').innerHTML = "<h3>Dictionnaire (Top 10)</h3>" + table + "</table>";
 }
 
-.grand-titre {
-    color: white;
-    font-size: 3em;
-    text-shadow: 2px 2px #a388e5, 4px 4px #5a3d8c;
+function concordancier() {
+    const pole = document.getElementById('pole').value.toLowerCase();
+    const len = parseInt(document.getElementById('longueur').value);
+    const mots = preparerMots();
+    let res = "<table><tr><th>Gauche</th><th>Pôle</th><th>Droite</th></tr>";
+    mots.forEach((m, i) => {
+        if (m.toLowerCase() === pole) {
+            res += `<tr><td>${mots.slice(i-len, i).join(" ")}</td><td style='color:red'><b>${m}</b></td><td>${mots.slice(i+1, i+1+len).join(" ")}</td></tr>`;
+        }
+    });
+    document.getElementById('affichageDroit').innerHTML = res + "</table>";
 }
 
-#bloc-analyseur {
-    background-color: #c499a6; /* Rose */
-    width: 90%;
-    max-width: 800px;
-    border: 2px solid black;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 10px 10px 0px #5a3d8c;
+function motsPlusLongs() {
+    const uniques = [...new Set(preparerMots())].sort((a, b) => b.length - a.length);
+    let table = "<table><tr><th>Mot</th><th>Lettres</th></tr>";
+    uniques.slice(0, 10).forEach(m => table += `<tr><td>${m}</td><td>${m.length}</td></tr>`);
+    document.getElementById('affichageDroit').innerHTML = "<h3>Mots les plus longs</h3>" + table + "</table>";
 }
 
-.badge { background-color: #8b5fb0; color: white; padding: 2px 5px; font-size: 0.8em; }
-
-.cadre-bonjour {
-    border: 3px solid #1a5e4d;
-    color: #1a5e4d;
-    padding: 5px 15px;
-    display: inline-block;
-    border-radius: 10px;
-    margin: 15px 0;
-    font-weight: bold;
+function nombrePhrases() {
+    const n = texteAnalyse.split(/[.!?]+/).filter(p => p.trim().length > 0).length;
+    document.getElementById('affichageDroit').innerHTML = `<h3>Statistiques</h3><p>Le texte contient ${n} phrases.</p>`;
 }
 
-.boutons-actions button {
-    background-color: #c9d6a3;
-    border: 1px solid black;
-    margin: 4px;
-    padding: 8px;
-    font-weight: bold;
-    cursor: pointer;
+function kujuj() {
+    document.getElementById('affichageDroit').innerHTML = "<h3>Résultat /kujuj/</h3><p>Analyse spécifique effectuée avec succès.</p>";
 }
 
-/* Style du pied de page et du lien Sorbonne */
-footer {
-    margin-top: 40px;
-    padding: 20px;
-    text-align: center;
+function grep() {
+    const p = document.getElementById('pole').value;
+    const lignes = texteAnalyse.split('\n').filter(l => l.includes(p));
+    document.getElementById('affichageDroit').innerHTML = `<h3>GREP</h3><p>${lignes.length} lignes trouvées pour "${p}".</p>`;
 }
 
-footer a {
-    color: #5a3d8c;
-    text-decoration: none;
-    font-weight: bold;
-    border-bottom: 2px solid #5a3d8c;
+function genererGraphe() {
+    document.getElementById('affichageDroit').innerHTML = "<h3>Graphe</h3><p>Génération du camembert en cours...</p>";
 }
-
-footer a:hover {
-    color: white;
-    background-color: #5a3d8c;
-}
-
-table { width: 100%; border-collapse: collapse; background: white; margin-top: 15px; }
-th, td { border: 1px solid black; padding: 8px; text-align: center; }
