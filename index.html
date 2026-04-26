@@ -7,17 +7,17 @@
 </head>
 <body>
 
-    <div id="bloc-cv">
+    <div id="cv-bloc">
         <div class="cv-gauche">
             <h1>Curriculum Vitae</h1>
-            <h2>Soukaina Elkasmi</h2>
-            <p><strong>Mon parcours scolaire :</strong></p>
-            <table border="1" class="grille-cv">
+            <h3>Soukaina Elkasmi</h3>
+            <p><strong>Parcours scolaire :</strong></p>
+            <table border="1" style="border-collapse: collapse; background: white; width: 100%;">
                 <tr><td>2024-2025</td><td>L1 Sciences du Langage</td></tr>
                 <tr><td>2025-2026</td><td>L2 Sciences du Langage</td></tr>
             </table>
 
-            <p><strong>Derniers livres lus :</strong></p>
+            <p><strong>Livres lus :</strong></p>
             <ul>
                 <li>La dame de ménage</li>
                 <li>Harry Potter</li>
@@ -27,19 +27,19 @@
             </ul>
         </div>
         <div class="cv-droite">
-            <img src="assets/img/maphoto.jpg" alt="Ma Photo">
-            <img src="assets/img/universite.jpg" alt="Photo Sorbonne">
+            <img src="assets/img/maphoto.jpg" alt="Photo" style="width:100px; border:1px solid black; display:block; margin-bottom:5px;">
+            <img src="assets/img/universite.jpg" alt="Ecole" style="width:100px; border:1px solid black;">
         </div>
     </div>
 
-    <div id="bloc-analyseur">
+    <div id="analyseur-bloc">
         <h3>Analyse des données dans un fichier</h3>
-        <p>Sélectionner un fichier au format .txt : <input type="file" id="fileInput"></p>
+        <p>Fichier .txt : <input type="file" id="fileInput"></p>
 
-        <table border="0" class="tab-params">
+        <table style="margin: auto; text-align: left;">
             <tr>
                 <td>DÉLIMITEURS:</td>
-                <td colspan="3"><input type="text" id="delims" value="[ ,.?;:!/()&quot;']+"></td>
+                <td><input type="text" id="delims" value="[ ,.?;:!/()&quot;']+"></td>
             </tr>
             <tr>
                 <td>PÔLE:</td>
@@ -49,26 +49,21 @@
             </tr>
         </table>
 
-        <div class="div-bonjour">
+        <div style="margin: 15px;">
             <button id="btnBonjour">Bonjour</button>
         </div>
 
-        <div class="grille-boutons">
+        <div class="boutons">
             <button id="btnSegmentation">Segmentation</button>
             <button id="btnDico">Dictionnaire</button>
             <button id="btnGrep">GREP</button>
             <button id="btnConc">Concordancier</button>
-            <button id="btnKujuj">/kujuj/</button>
-            <button id="btnPhrases">Nb phrases</button>
-            <button id="btnMots">Mots longs</button>
-            <button id="btnChart">Pie Chart</button>
         </div>
 
-        <div class="zones-texte">
-            <textarea id="affichageGauche" readonly></textarea>
+        <div class="affichage">
+            <textarea id="affichageGauche"></textarea>
             <div id="affichageDroit"></div>
         </div>
-        
         <p id="stats">Nombre de formes : 0</p>
     </div>
 
