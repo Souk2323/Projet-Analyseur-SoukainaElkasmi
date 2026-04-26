@@ -2,38 +2,39 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>CV & Analyseur - Soukaina Elkasmi</title>
+    <title>Projet L4INA01 - Soukaina Elkasmi</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-
-    <header id="cv-header">
-        <img src="assets/img/maphoto.jpg" alt="Photo de Soukaina" id="cv-photo" style="width:150px; border-radius:10px; border: 2px solid #000;">
-        <h1>Curriculum Vitae</h1>
-        <h2>Soukaina Elkasmi</h2>
+    <header>
+        <img src="assets/img/maphoto.jpg" id="cv-photo" alt="Photo de Soukaina">
+        <h1>Soukaina Elkasmi</h1>
         <p>Étudiante en Sciences du Langage</p>
     </header>
 
-    <main id="container">
-        <h3>Analyseur de Texte</h3>
-        <input type="file" id="fileInput">
-        <br><br>
-        <input type="text" id="delims" value=",;. " placeholder="Délimiteurs">
-        <br><br>
-        <button id="btnSegmentation">Segmenter</button>
-        <button id="btnBonjour">Bonjour</button>
-        <button id="btnAide">Aide</button>
-
-        <div id="aide" style="display:none; background:white; padding:10px; border:1px solid black; margin-top:10px;">
-            <p>Mode d'emploi : Chargez un fichier .txt et cliquez sur segmenter.</p>
+    <div id="container">
+        <h2>Analyseur de Texte</h2>
+        <p>Sélectionner un fichier au format .txt : <input type="file" id="fileInput"></p>
+        
+        <div class="inputs">
+            <label>DÉLIMITEURS :</label>
+            <input type="text" id="delims" value="[ ,.?;:!/()&quot;']+">
+            <label>PÔLE :</label>
+            <input type="text" id="pole" placeholder="entrez un pôle...">
         </div>
 
-        <div style="display:flex; gap:10px; margin-top:20px;">
-            <div id="affichageGauche" style="flex:1; height:200px; border:1px solid black; background:white; overflow:auto; padding:5px;">Texte source...</div>
-            <div id="affichageDroit" style="flex:1; height:200px; border:1px solid black; background:white; overflow:auto; padding:5px;">Résultat...</div>
+        <div class="buttons">
+            <button id="btnBonjour">Bonjour</button>
+            <button id="btnSegmentation">Segmentation</button>
+            <button id="btnAide">Aide</button>
         </div>
-        <p id="stats">Nombre de formes : 0</p>
-    </main>
+
+        <div class="affichage-flex">
+            <textarea id="affichageGauche" readonly></textarea>
+            <div id="affichageDroit"></div>
+        </div>
+        <p id="stats"></p>
+    </div>
 
     <script src="assets/js/main.js"></script>
 </body>
