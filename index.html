@@ -1,60 +1,62 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Projet Soukaina Elkasmi</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body>
+body {
+    background-color: #3b244d; /* Fond violet foncé */
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
 
-    <div id="cv-section">
-        <div class="header-cv">
-            <h1>Curriculum Vitae</h1>
-            <h2>Soukaina Elkasmi</h2>
-            <p>Étudiante en Sciences du Langage</p>
-        </div>
+/* Style du CV (Cadre Beige) */
+#cv-section {
+    background-color: #e2e1b9;
+    width: 90%;
+    max-width: 650px;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
 
-        <div class="cv-content">
-            <div class="cv-details">
-                <p><strong>Mon parcours :</strong></p>
-                <ul>
-                    <li>2024-2025 : L1 Sciences du langage</li>
-                    <li>2025-2026 : L2 Sciences du langage</li>
-                </ul>
-            </div>
-            <div class="cv-photo-zone">
-                <img src="assets/img/maphoto.jpg" alt="Photo de Soukaina" id="cv-photo">
-            </div>
-        </div>
-    </div>
+.cv-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
 
-    <div id="analyseur-container">
-        <h3>Analyse des données dans un fichier</h3>
-        
-        <div class="file-zone">
-            <input type="file" id="fileInput">
-        </div>
+.cv-details { flex: 2; text-align: left; }
 
-        <div class="params">
-            DÉLIMITEURS: <input type="text" id="delims" value="[ ,.?;:!/()&quot;']+">
-            PÔLE: <input type="text" id="pole" placeholder="mot...">
-        </div>
+/* Style de la photo dans le CV */
+#cv-photo {
+    width: 100px;
+    height: 100px;
+    border: 2px solid black;
+    background-color: white;
+    object-fit: cover;
+}
 
-        <div class="buttons">
-            <button id="btnBonjour">Bonjour</button>
-            <button id="btnSegmentation">Segmenter</button>
-            <button id="btnAide">Aide</button>
-        </div>
+/* Style de l'Analyseur (Cadre Rose) */
+#analyseur-container {
+    background-color: #f7b1b1;
+    width: 90%;
+    max-width: 650px;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+}
 
-        <div class="display-flex">
-            <textarea id="affichageGauche" placeholder="Texte source..."></textarea>
-            <div id="affichageDroit">Résultat...</div>
-        </div>
-        
-        <p id="stats">Nombre de formes : 0</p>
-    </div>
+.buttons button {
+    background-color: #5d4037;
+    color: white;
+    border: none;
+    padding: 7px 12px;
+    margin: 3px;
+    border-radius: 4px;
+}
 
-    <script src="assets/js/main.js"></script>
-</body>
-</html>
-
+.display-flex { display: flex; gap: 10px; margin-top: 10px; }
+textarea, #affichageDroit {
+    flex: 1; height: 120px; border: 1px solid black; background: white;
+}
