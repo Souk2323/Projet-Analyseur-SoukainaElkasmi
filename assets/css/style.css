@@ -1,99 +1,102 @@
-/* --- BASE --- */
+/* --- CONFIGURATION GLOBALE --- */
 body {
     background-color: #d4cc00;
-    font-family: Arial, sans-serif;
+    font-family: 'Arial Rounded MT Bold', Arial, sans-serif; /* Police un peu plus "bulle" */
     margin: 0;
     padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-size: 11px !important;
 }
 
-/* --- SECTION CV --- */
-#bloc-cv {
-    background-color: #e2e1b9;
-    width: 95%;
-    max-width: 650px;
-    border: 1px solid black;
-    display: flex;
-    justify-content: space-between;
-    padding: 15px;
-    margin-bottom: 20px;
-}
-.photo-cv img {
-    width: 150px !important;
-    border: 1px solid black;
-}
-.cv-gauche h1 { font-size: 1.2rem; margin: 0; }
-.liste-livres { font-size: 0.85rem; }
-
-/* --- TITRE MOYEN --- */
+/* --- TITRE EFFET BULLE (Comme sur l'image) --- */
 .titre-moyen {
     color: white;
-    font-size: 1.3rem !important;
-    text-shadow: 1px 1px #5a3d8c;
-    margin: 15px 0;
+    font-size: 1.8rem !important; /* Taille moyenne */
+    text-align: center;
+    margin: 20px 0;
+    /* Effet d'ombre multiple pour le contour rose/violet */
+    text-shadow: 2px 2px 0px #a388e5, 4px 4px 0px rgba(0,0,0,0.1);
+    font-weight: bold;
 }
 
-/* --- BLOC ROSE --- */
+/* --- BLOC ANALYSEUR ROSE --- */
 #bloc-analyseur {
     background-color: #c499a6;
-    width: 95%;
-    max-width: 650px;
-    border: 1px solid black;
+    width: 90%;
+    max-width: 550px;
+    border: 1px solid #000;
     padding: 15px;
     text-align: center;
-    box-shadow: 4px 4px 0px #5a3d8c;
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
 }
 
-/* ALIGNEMENTS DEMANDÉS (Fichier et Longueur) */
-.ligne-simple {
+/* --- ALIGNEMENTS --- */
+.ligne-simple, .ligne-mixte {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    margin-bottom: 10px;
-    font-size: 11px;
-}
-
-.ligne-mixte {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin: 8px 0;
+    gap: 5px;
+    margin-bottom: 8px;
 }
 
 .badge { 
     background-color: #8b5fb0; 
     color: white; 
-    font-size: 9px; 
+    font-size: 8px !important; 
     padding: 2px 4px;
+    border: 0.5px solid black;
 }
 
-input { font-size: 10px !important; padding: 2px; }
+input {
+    border: 1px solid black;
+    font-size: 9px !important;
+    padding: 2px;
+}
 
-/* BOUTONS */
-.boutons-actions button {
-    background-color: #c9d6a3;
+/* --- BOUTONS JAUNES (Comme sur l'image) --- */
+.boutons-actions button, .btn-aide {
+    background-color: #d4cc00; /* Jaune comme le fond */
     border: 1px solid black;
     margin: 2px;
-    padding: 4px 6px;
-    font-size: 10px !important;
+    padding: 3px 6px;
+    font-size: 9px !important;
     font-weight: bold;
+    cursor: pointer;
+}
+
+.boutons-actions button:hover {
+    background-color: #e5dd00;
 }
 
 .cadre-bonjour {
-    border: 2px solid #1a5e4d;
-    padding: 3px 10px;
+    border: 1.5px solid #1a5e4d;
+    padding: 2px 10px;
     margin: 10px 0;
     display: inline-block;
+    font-weight: bold;
+    color: #1a5e4d;
 }
 
-/* LIEN SORBONNE */
-footer { margin-top: 30px; }
+/* --- CV --- */
+#bloc-cv {
+    background-color: #e2e1b9;
+    width: 90%;
+    max-width: 550px;
+    border: 1px solid black;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.photo-cv img { width: 120px; border: 1px solid black; }
+.liste-livres { font-size: 9px; padding-left: 15px; }
+
+/* --- FOOTER --- */
 .lien-sorbonne {
-    font-size: 11px !important;
+    font-size: 10px !important;
     color: #5a3d8c;
     text-decoration: none;
+    margin-top: 15px;
 }
