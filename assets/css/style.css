@@ -1,18 +1,68 @@
-body { background-color: #3b244d; color: black; font-family: Arial; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+body {
+    background-color: #3b244d;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
 
 /* CV */
-#cv-bloc { background-color: #e2e1b9; width: 800px; border: 2px solid black; padding: 20px; margin-bottom: 20px; }
-.table-grille { border-collapse: collapse; background: white; width: 100%; }
-.table-grille th, .table-grille td { border: 1px solid black; padding: 5px; }
-.cv-flex { display: flex; justify-content: space-between; }
-.cv-photos img { width: 100px; border: 1px solid black; margin-left: 10px; }
+#bloc-cv {
+    background-color: #e2e1b9;
+    width: 800px;
+    border: 2px solid black;
+    display: flex;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.cv-gauche { flex: 2; text-align: left; }
+.grille-cv { border-collapse: collapse; background: white; width: 100%; margin-top: 10px; }
+.grille-cv td { padding: 5px; }
+
+.cv-droite { flex: 1; text-align: right; }
+.cv-droite img { width: 100px; border: 1px solid black; margin-bottom: 10px; display: block; margin-left: auto; }
 
 /* Analyseur */
-#analyseur-bloc { background-color: #f7b1b1; width: 800px; border: 2px solid black; padding: 20px; text-align: center; }
-.params-table { margin: 10px auto; }
-.center { margin: 15px; }
-.buttons-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; }
-button { background-color: #5d4037; color: white; border: 1px solid black; padding: 8px; cursor: pointer; }
+#bloc-analyseur {
+    background-color: #f7b1b1;
+    width: 800px;
+    border: 2px solid black;
+    padding: 20px;
+    text-align: center;
+}
 
-.affichage { display: flex; gap: 10px; margin-top: 15px; }
-textarea, #affichageDroit { flex: 1; height: 150px; background: white; border: 1px solid black; text-align: left; padding: 5px; overflow-y: auto; }
+.tab-params { margin: 10px auto; text-align: left; }
+.div-bonjour { margin: 15px; }
+
+.grille-boutons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+}
+
+button {
+    background-color: #5d4037;
+    color: white;
+    border: 1px solid black;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.zones-texte {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+textarea, #affichageDroit {
+    flex: 1;
+    height: 150px;
+    background: white;
+    border: 1px solid black;
+    padding: 5px;
+    text-align: left;
+    overflow-y: auto;
+}
