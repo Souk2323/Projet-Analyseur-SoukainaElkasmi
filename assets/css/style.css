@@ -1,65 +1,53 @@
-/* Style général - Fond Prune */
 body {
-    background-color: #5c2d50;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
-    padding: 20px;
-}
-
-/* En-tête CV - Fond Beige */
-#cv-header {
-    background-color: #f0f0d8;
-    border: 3px solid #000;
-    border-radius: 15px;
-    padding: 20px;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* Photo du CV */
-#cv-photo {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    border: 2px solid #5c2d50;
-    margin-bottom: 10px;
-}
-
-/* Boîte de l'analyseur - Fond Rose Saumon */
-#container {
-    background-color: #e6a1a1;
-    border: 3px solid #000;
-    border-radius: 15px;
-    padding: 25px;
-}
-
-/* Flexbox pour mettre les deux zones de texte côte à côte */
-.affichage-flex {
+    background-color: #3b244d; /* Le fond violet foncé */
+    font-family: 'Courier New', Courier, monospace;
+    color: black;
     display: flex;
-    gap: 20px;
-    margin-top: 20px;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
 }
 
-.box {
+#cv-bloc {
+    background-color: #e2e1b9; /* Le beige du rectangle central */
+    width: 90%;
+    max-width: 900px;
+    padding: 20px;
+    border: 2px solid black;
+}
+
+.contenu-cv {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.texte {
+    flex: 2;
+    text-align: left;
+}
+
+.photo-zone {
     flex: 1;
-    background-color: #ffffff;
-    border: 2px solid #000;
-    height: 300px;
-    padding: 10px;
-    overflow-y: auto; /* Scroll si le texte est long */
+    display: flex;
+    justify-content: center;
 }
 
-/* Boutons */
-button {
-    padding: 10px 15px;
-    background-color: #5c2d50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-right: 5px;
+.photo-zone img {
+    width: 150px;
+    border: 1px solid black;
 }
 
-button:hover {
-    background-color: #3e1e36;
+table {
+    background-color: white;
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+
+.lien-jaune {
+    background-color: #d4d44d;
+    padding: 5px;
+    text-decoration: none;
+    color: black;
+    font-size: 0.8em;
 }
