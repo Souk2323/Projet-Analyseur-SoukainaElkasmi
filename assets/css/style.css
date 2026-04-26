@@ -1,75 +1,104 @@
+/* --- REGLAGES GLOBAUX --- */
 body {
-    background-color: #d4cc00; /* Fond jaune */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #d4cc00; /* Le jaune de fond */
+    font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    padding: 10px;
+    margin: 0;
+    font-size: 14px; /* On baisse la taille globale */
 }
 
-/* CV et Image plus grande */
+/* --- SECTION CV --- */
 #bloc-cv {
     background-color: #e2e1b9;
-    width: 850px;
+    width: 95%; /* S'adapte à la largeur du mobile */
+    max-width: 800px;
     border: 2px solid black;
     display: flex;
-    padding: 25px;
-    margin-bottom: 25px;
+    flex-wrap: wrap; /* Pour que la photo passe dessous si besoin */
+    padding: 15px;
+    margin-bottom: 20px;
 }
+
 .photo-cv img {
-    width: 200px; /* Photo agrandie */
+    width: 150px; /* Taille agrandie comme demandé */
     border: 2px solid black;
-    border-radius: 5px;
     box-shadow: 4px 4px 0px #5a3d8c;
 }
-.liste-livres { font-size: 0.9em; padding-left: 20px; margin-top: 5px; }
 
-/* Titre de taille MOYENNE */
+.liste-livres {
+    font-size: 0.9em;
+    padding-left: 20px;
+}
+
+/* --- TITRE (CORRIGÉ : PLUS PETIT) --- */
 .titre-moyen {
     color: white;
-    font-size: 2.2em; /* Taille réduite */
-    text-shadow: 2px 2px #a388e5;
-    margin: 15px 0;
+    font-size: 1.4em; /* Réduit pour éviter les gros pâtés */
+    text-shadow: 1px 1px #a388e5;
+    text-align: center;
+    margin: 10px 0;
 }
 
+/* --- BLOC ANALYSEUR ROSE --- */
 #bloc-analyseur {
     background-color: #c499a6;
-    width: 850px;
+    width: 95%;
+    max-width: 800px;
     border: 2px solid black;
-    padding: 20px;
+    padding: 10px;
     text-align: center;
-    box-shadow: 8px 8px 0px #5a3d8c;
+    box-shadow: 6px 6px 0px #5a3d8c;
 }
 
-.badge { background-color: #8b5fb0; color: white; padding: 2px 6px; font-size: 0.75em; }
-
-.cadre-bonjour {
-    border: 3px solid #1a5e4d;
-    color: #1a5e4d;
-    padding: 5px 15px;
-    margin: 15px 0;
-    font-weight: bold;
-    display: inline-block;
+.badge { 
+    background-color: #8b5fb0; 
+    color: white; 
+    padding: 2px 4px; 
+    font-size: 0.7em; 
 }
 
+/* --- BOUTONS (PLUS PETITS) --- */
 .boutons-actions button {
     background-color: #c9d6a3;
     border: 1px solid black;
-    margin: 3px;
-    padding: 7px 12px;
+    margin: 2px;
+    padding: 5px 8px;
+    font-size: 0.75em; /* Pour qu'ils tiennent sur la ligne */
     font-weight: bold;
     cursor: pointer;
 }
 
-/* Lien Sorbonne Nouvelle discret en bas */
-footer { margin-top: 50px; }
+.cadre-bonjour {
+    border: 2px solid #1a5e4d;
+    color: #1a5e4d;
+    padding: 4px 10px;
+    margin: 10px 0;
+    display: inline-block;
+    font-weight: bold;
+}
+
+/* --- PIED DE PAGE --- */
+footer { 
+    margin-top: 30px; 
+    padding-bottom: 20px;
+}
+
 .lien-sorbonne {
-    font-size: 0.9em; /* Taille de police plus petite */
+    font-size: 0.85em; /* Petit et discret */
     color: #5a3d8c;
     text-decoration: none;
     font-weight: bold;
 }
-.lien-sorbonne:hover { text-decoration: underline; }
 
-table { width: 100%; border-collapse: collapse; background: white; margin-top: 15px; }
-th, td { border: 1px solid black; padding: 8px; text-align: center; }
+/* --- RÉSULTATS --- */
+table { 
+    width: 100%; 
+    font-size: 0.8em; 
+    border-collapse: collapse; 
+    background: white; 
+    margin-top: 10px;
+}
+th, td { border: 1px solid black; padding: 5px; }
