@@ -7,40 +7,22 @@ body {
     padding: 20px;
 }
 
-/* CV */
-#bloc-cv {
-    background-color: #e2e1b9;
+#cv-bloc {
+    background-color: #e2e1b9; /* Beige */
     width: 800px;
     border: 2px solid black;
     display: flex;
     padding: 20px;
     margin-bottom: 20px;
+    justify-content: space-between;
 }
 
-.cv-gauche { flex: 2; text-align: left; }
-.grille-cv { border-collapse: collapse; background: white; width: 100%; margin-top: 10px; }
-.grille-cv td { padding: 5px; }
-
-.cv-droite { flex: 1; text-align: right; }
-.cv-droite img { width: 100px; border: 1px solid black; margin-bottom: 10px; display: block; margin-left: auto; }
-
-/* Analyseur */
-#bloc-analyseur {
-    background-color: #f7b1b1;
+#analyseur-bloc {
+    background-color: #f7b1b1; /* Rose */
     width: 800px;
     border: 2px solid black;
     padding: 20px;
     text-align: center;
-}
-
-.tab-params { margin: 10px auto; text-align: left; }
-.div-bonjour { margin: 15px; }
-
-.grille-boutons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 5px;
 }
 
 button {
@@ -51,7 +33,7 @@ button {
     cursor: pointer;
 }
 
-.zones-texte {
+.affichage {
     display: flex;
     gap: 10px;
     margin-top: 15px;
