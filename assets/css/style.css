@@ -1,83 +1,75 @@
 body {
     background-color: #d4cc00; /* Fond jaune */
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    margin: 0;
 }
 
+/* CV et Image plus grande */
 #bloc-cv {
     background-color: #e2e1b9;
-    width: 90%;
-    max-width: 800px;
+    width: 850px;
     border: 2px solid black;
     display: flex;
-    padding: 20px;
-    margin-bottom: 20px;
+    padding: 25px;
+    margin-bottom: 25px;
 }
-
 .photo-cv img {
-    width: 120px;
-    border: 1px solid black;
+    width: 200px; /* Photo agrandie */
+    border: 2px solid black;
+    border-radius: 5px;
+    box-shadow: 4px 4px 0px #5a3d8c;
 }
+.liste-livres { font-size: 0.9em; padding-left: 20px; margin-top: 5px; }
 
-.grand-titre {
+/* Titre de taille MOYENNE */
+.titre-moyen {
     color: white;
-    font-size: 3em;
-    text-shadow: 2px 2px #a388e5, 4px 4px #5a3d8c;
+    font-size: 2.2em; /* Taille réduite */
+    text-shadow: 2px 2px #a388e5;
+    margin: 15px 0;
 }
 
 #bloc-analyseur {
-    background-color: #c499a6; /* Rose */
-    width: 90%;
-    max-width: 800px;
+    background-color: #c499a6;
+    width: 850px;
     border: 2px solid black;
     padding: 20px;
     text-align: center;
-    box-shadow: 10px 10px 0px #5a3d8c;
+    box-shadow: 8px 8px 0px #5a3d8c;
 }
 
-.badge { background-color: #8b5fb0; color: white; padding: 2px 5px; font-size: 0.8em; }
+.badge { background-color: #8b5fb0; color: white; padding: 2px 6px; font-size: 0.75em; }
 
 .cadre-bonjour {
     border: 3px solid #1a5e4d;
     color: #1a5e4d;
     padding: 5px 15px;
-    display: inline-block;
-    border-radius: 10px;
     margin: 15px 0;
     font-weight: bold;
+    display: inline-block;
 }
 
 .boutons-actions button {
     background-color: #c9d6a3;
     border: 1px solid black;
-    margin: 4px;
-    padding: 8px;
+    margin: 3px;
+    padding: 7px 12px;
     font-weight: bold;
     cursor: pointer;
 }
 
-/* Style du pied de page et du lien Sorbonne */
-footer {
-    margin-top: 40px;
-    padding: 20px;
-    text-align: center;
-}
-
-footer a {
+/* Lien Sorbonne Nouvelle discret en bas */
+footer { margin-top: 50px; }
+.lien-sorbonne {
+    font-size: 0.9em; /* Taille de police plus petite */
     color: #5a3d8c;
     text-decoration: none;
     font-weight: bold;
-    border-bottom: 2px solid #5a3d8c;
 }
-
-footer a:hover {
-    color: white;
-    background-color: #5a3d8c;
-}
+.lien-sorbonne:hover { text-decoration: underline; }
 
 table { width: 100%; border-collapse: collapse; background: white; margin-top: 15px; }
 th, td { border: 1px solid black; padding: 8px; text-align: center; }
