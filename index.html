@@ -2,40 +2,43 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Projet L4INA01 - Soukaina Elkasmi</title>
+    <title>CV Soukaina Elkasmi</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <header>
-        <img src="assets/img/maphoto.jpg" id="cv-photo" alt="Photo de Soukaina">
-        <h1>Soukaina Elkasmi</h1>
-        <p>Étudiante en Sciences du Langage</p>
-    </header>
 
-    <div id="container">
-        <h2>Analyseur de Texte</h2>
-        <p>Sélectionner un fichier au format .txt : <input type="file" id="fileInput"></p>
-        
-        <div class="inputs">
-            <label>DÉLIMITEURS :</label>
-            <input type="text" id="delims" value="[ ,.?;:!/()&quot;']+">
-            <label>PÔLE :</label>
-            <input type="text" id="pole" placeholder="entrez un pôle...">
-        </div>
+    <div id="cv-bloc">
+        <div class="contenu-cv">
+            <div class="texte">
+                <h1>UFR LLD, Département ILPGA, campus Nation</h1>
+                
+                <p><strong>Mon CV :</strong></p>
+                <table border="1">
+                    <tr><th>Années</th><th>Parcours</th></tr>
+                    <tr><td>2023-2024</td><td>L1 Sciences du Langage</td></tr>
+                    <tr><td>2024-2025</td><td>L2 Sciences du Langage</td></tr>
+                </table>
 
-        <div class="buttons">
-            <button id="btnBonjour">Bonjour</button>
-            <button id="btnSegmentation">Segmentation</button>
-            <button id="btnAide">Aide</button>
-        </div>
+                <p><strong>Liste de mes dernières lectures :</strong></p>
+                <ol>
+                    <li>L'Analyse structurale - Claude Lévi-Strauss</li>
+                    <li>Anthropologie des pratiques langagières</li>
+                    <li>Une anthropologie de la variation</li>
+                    <li>Écologie des relations</li>
+                    <li>Linguistique et anthropologie</li>
+                </ol>
+                
+                <a href="#" class="lien-jaune">plus d'info sur mon cv</a>
+            </div>
 
-        <div class="affichage-flex">
-            <textarea id="affichageGauche" readonly></textarea>
-            <div id="affichageDroit"></div>
+            <div class="photo-zone">
+                <img src="assets/img/maphoto.jpg" alt="Photo CV">
+            </div>
         </div>
-        <p id="stats"></p>
     </div>
 
-    <script src="assets/js/main.js"></script>
+    <div id="analyseur-section">
+        </div>
+
 </body>
 </html>
