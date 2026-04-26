@@ -7,43 +7,39 @@
 </head>
 <body>
 
-    <div id="cv-bloc">
-        <h1>Curriculum Vitae</h1>
-        <h2>Soukaina Elkasmi</h2>
-        
-        <div class="cv-flex">
-            <div class="cv-infos">
-                <p><strong>Mon parcours :</strong></p>
-                <table class="table-grille">
-                    <tr><th>Années</th><th>Formation</th></tr>
-                    <tr><td>2024-2025</td><td>L1 Sciences du Langage</td></tr>
-                    <tr><td>2025-2026</td><td>L2 Sciences du Langage</td></tr>
-                </table>
+    <div id="bloc-cv">
+        <div class="cv-gauche">
+            <h1>Curriculum Vitae</h1>
+            <h2>Soukaina Elkasmi</h2>
+            <p><strong>Mon parcours scolaire :</strong></p>
+            <table border="1" class="grille-cv">
+                <tr><td>2024-2025</td><td>L1 Sciences du Langage</td></tr>
+                <tr><td>2025-2026</td><td>L2 Sciences du Langage</td></tr>
+            </table>
 
-                <p><strong>Livres lus :</strong></p>
-                <ul>
-                    <li>La dame de ménage</li>
-                    <li>Harry Potter</li>
-                    <li>Le Silence du corps</li>
-                    <li>L'alchimiste</li>
-                    <li>L'étranger</li>
-                </ul>
-            </div>
-            <div class="cv-photos">
-                <img src="assets/img/maphoto.jpg" alt="Ma Photo">
-                <img src="assets/img/universite.jpg" alt="Photo École">
-            </div>
+            <p><strong>Derniers livres lus :</strong></p>
+            <ul>
+                <li>La dame de ménage</li>
+                <li>Harry Potter</li>
+                <li>Linguistique et Société</li>
+                <li>La structure des langues</li>
+                <li>Analyse du discours</li>
+            </ul>
+        </div>
+        <div class="cv-droite">
+            <img src="assets/img/maphoto.jpg" alt="Ma Photo">
+            <img src="assets/img/universite.jpg" alt="Photo Sorbonne">
         </div>
     </div>
 
-    <div id="analyseur-bloc">
+    <div id="bloc-analyseur">
         <h3>Analyse des données dans un fichier</h3>
         <p>Sélectionner un fichier au format .txt : <input type="file" id="fileInput"></p>
 
-        <table class="params-table">
+        <table border="0" class="tab-params">
             <tr>
                 <td>DÉLIMITEURS:</td>
-                <td><input type="text" id="delims" value="[ ,.?;:!/()&quot;']+"></td>
+                <td colspan="3"><input type="text" id="delims" value="[ ,.?;:!/()&quot;']+"></td>
             </tr>
             <tr>
                 <td>PÔLE:</td>
@@ -53,25 +49,26 @@
             </tr>
         </table>
 
-        <div class="center">
+        <div class="div-bonjour">
             <button id="btnBonjour">Bonjour</button>
         </div>
 
-        <div class="buttons-container">
+        <div class="grille-boutons">
             <button id="btnSegmentation">Segmentation</button>
-            <button id="btnDictionnaire">Dictionnaire</button>
+            <button id="btnDico">Dictionnaire</button>
             <button id="btnGrep">GREP</button>
-            <button id="btnConcordance">Concordancier</button>
+            <button id="btnConc">Concordancier</button>
             <button id="btnKujuj">/kujuj/</button>
             <button id="btnPhrases">Nb phrases</button>
-            <button id="btnMotsLongs">Mots longs</button>
+            <button id="btnMots">Mots longs</button>
             <button id="btnChart">Pie Chart</button>
         </div>
 
-        <div class="affichage">
+        <div class="zones-texte">
             <textarea id="affichageGauche" readonly></textarea>
             <div id="affichageDroit"></div>
         </div>
+        
         <p id="stats">Nombre de formes : 0</p>
     </div>
 
