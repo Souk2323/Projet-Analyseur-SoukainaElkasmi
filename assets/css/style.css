@@ -1,72 +1,74 @@
-/* --- REGLAGES GLOBAUX --- */
+/* --- CONFIGURATION DE BASE --- */
 body {
-    background-color: #d4cc00; /* Le jaune de fond */
-    font-family: Arial, sans-serif;
+    background-color: #d4cc00; /* Jaune */
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px;
-    margin: 0;
-    font-size: 14px; /* On baisse la taille globale */
+    /* On force une petite taille de texte de base */
+    font-size: 13px !important; 
 }
 
 /* --- SECTION CV --- */
 #bloc-cv {
     background-color: #e2e1b9;
-    width: 95%; /* S'adapte à la largeur du mobile */
-    max-width: 800px;
-    border: 2px solid black;
-    display: flex;
-    flex-wrap: wrap; /* Pour que la photo passe dessous si besoin */
+    width: 95%;
+    max-width: 600px;
+    border: 2px solid #000;
     padding: 15px;
-    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap; /* Pour que la photo passe dessous si l'écran est trop petit */
+    justify-content: space-between;
+    margin-bottom: 15px;
 }
+
+.cv-gauche h1 { font-size: 1.2rem; margin: 0; }
+.cv-gauche h2 { font-size: 1rem; color: #5a3d8c; }
 
 .photo-cv img {
-    width: 150px; /* Taille agrandie comme demandé */
-    border: 2px solid black;
-    box-shadow: 4px 4px 0px #5a3d8c;
+    width: 140px !important; /* Taille moyenne pour la photo */
+    height: auto;
+    border: 2px solid #000;
+    box-shadow: 3px 3px 0px #5a3d8c;
 }
 
-.liste-livres {
-    font-size: 0.9em;
-    padding-left: 20px;
-}
-
-/* --- TITRE (CORRIGÉ : PLUS PETIT) --- */
+/* --- TITRE PRINCIPAL (CORRIGÉ : MOYEN) --- */
 .titre-moyen {
-    color: white;
-    font-size: 1.4em; /* Réduit pour éviter les gros pâtés */
-    text-shadow: 1px 1px #a388e5;
+    color: #fff;
+    font-size: 1.3rem !important; /* Taille moyenne forcée */
+    text-shadow: 2px 2px #5a3d8c;
     text-align: center;
-    margin: 10px 0;
+    margin: 15px 0;
+    width: 90%;
 }
 
 /* --- BLOC ANALYSEUR ROSE --- */
 #bloc-analyseur {
     background-color: #c499a6;
     width: 95%;
-    max-width: 800px;
-    border: 2px solid black;
-    padding: 10px;
+    max-width: 600px;
+    border: 2px solid #000;
+    padding: 15px;
     text-align: center;
-    box-shadow: 6px 6px 0px #5a3d8c;
+    box-shadow: 5px 5px 0px #5a3d8c;
 }
 
 .badge { 
     background-color: #8b5fb0; 
-    color: white; 
-    padding: 2px 4px; 
-    font-size: 0.7em; 
+    color: #fff; 
+    font-size: 10px; 
+    padding: 2px 5px; 
 }
 
-/* --- BOUTONS (PLUS PETITS) --- */
+/* --- BOUTONS (PETITS POUR MOBILE) --- */
 .boutons-actions button {
     background-color: #c9d6a3;
-    border: 1px solid black;
+    border: 1px solid #000;
     margin: 2px;
     padding: 5px 8px;
-    font-size: 0.75em; /* Pour qu'ils tiennent sur la ligne */
+    font-size: 11px !important; /* Petit texte pour les boutons */
     font-weight: bold;
     cursor: pointer;
 }
@@ -74,31 +76,31 @@ body {
 .cadre-bonjour {
     border: 2px solid #1a5e4d;
     color: #1a5e4d;
-    padding: 4px 10px;
+    padding: 3px 10px;
     margin: 10px 0;
     display: inline-block;
     font-weight: bold;
 }
 
-/* --- PIED DE PAGE --- */
-footer { 
-    margin-top: 30px; 
-    padding-bottom: 20px;
+/* --- LIEN SORBONNE (DISCRET) --- */
+footer {
+    margin: 30px 0;
 }
 
 .lien-sorbonne {
-    font-size: 0.85em; /* Petit et discret */
+    font-size: 12px !important;
     color: #5a3d8c;
     text-decoration: none;
     font-weight: bold;
+    font-style: italic;
 }
 
-/* --- RÉSULTATS --- */
-table { 
-    width: 100%; 
-    font-size: 0.8em; 
-    border-collapse: collapse; 
-    background: white; 
+/* --- TABLEAUX DE RESULTATS --- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
     margin-top: 10px;
+    font-size: 11px;
 }
-th, td { border: 1px solid black; padding: 5px; }
+th, td { border: 1px solid #000; padding: 4px; text-align: center; }
