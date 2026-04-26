@@ -1,7 +1,6 @@
-/* Style global */
 body {
-    background-color: #d4cc00; /* Le jaune moutarde du fond */
-    font-family: 'Courier New', Courier, monospace;
+    background-color: #d4cc00; /* Fond jaune */
+    font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,92 +8,76 @@ body {
     margin: 0;
 }
 
-/* Ton bloc CV (en haut de la page) */
 #bloc-cv {
-    background-color: #e2e1b9; /* Gris/beige clair */
-    width: 85%;
+    background-color: #e2e1b9;
+    width: 90%;
     max-width: 800px;
     border: 2px solid black;
     display: flex;
     padding: 20px;
-    margin-bottom: 30px;
-    justify-content: space-between;
-    align-items: center;
+    margin-bottom: 20px;
 }
 
-.cv-gauche { flex: 2; }
-
-/* Style pour ta photo dans le CV */
 .photo-cv img {
     width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 50%; /* Photo ronde */
-    border: 3px solid #5a3d8c;
-    box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
+    border: 1px solid black;
 }
 
-/* Le bloc de l'Analyseur (Violet/Rose) */
+.grand-titre {
+    color: white;
+    font-size: 3em;
+    text-shadow: 2px 2px #a388e5, 4px 4px #5a3d8c;
+}
+
 #bloc-analyseur {
-    background-color: #c499a6;
-    width: 85%;
+    background-color: #c499a6; /* Rose */
+    width: 90%;
     max-width: 800px;
     border: 2px solid black;
-    padding: 30px;
+    padding: 20px;
     text-align: center;
     box-shadow: 10px 10px 0px #5a3d8c;
 }
 
-/* Les badges pour les labels (DÉLIMITEURS, etc.) */
-.badge {
-    background-color: #8b5fb0;
-    color: white;
-    padding: 2px 8px;
-    font-size: 0.8em;
-    margin-right: 5px;
-    font-weight: bold;
-}
+.badge { background-color: #8b5fb0; color: white; padding: 2px 5px; font-size: 0.8em; }
 
-/* Les boutons d'actions */
-.boutons-actions button {
-    background-color: #c9d6a3; /* Vert d'eau */
-    border: 1px solid black;
-    margin: 5px;
-    padding: 10px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.boutons-actions button:hover {
-    background-color: #aebf86;
-}
-
-/* Style des résultats (tableaux) */
-table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-    background-color: white;
-}
-
-th, td {
-    border: 1px solid black;
-    padding: 10px;
-    text-align: center;
-}
-
-th {
-    background-color: #a388e5;
-    color: white;
-}
-
-/* Zone pour le message de bienvenue */
 .cadre-bonjour {
     border: 3px solid #1a5e4d;
     color: #1a5e4d;
-    padding: 10px 20px;
+    padding: 5px 15px;
     display: inline-block;
     border-radius: 10px;
     margin: 15px 0;
     font-weight: bold;
 }
+
+.boutons-actions button {
+    background-color: #c9d6a3;
+    border: 1px solid black;
+    margin: 4px;
+    padding: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Style du pied de page et du lien Sorbonne */
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    text-align: center;
+}
+
+footer a {
+    color: #5a3d8c;
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom: 2px solid #5a3d8c;
+}
+
+footer a:hover {
+    color: white;
+    background-color: #5a3d8c;
+}
+
+table { width: 100%; border-collapse: collapse; background: white; margin-top: 15px; }
+th, td { border: 1px solid black; padding: 8px; text-align: center; }
