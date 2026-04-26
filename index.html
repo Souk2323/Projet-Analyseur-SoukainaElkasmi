@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Projet Soukaina Elkasmi</title>
+    <title>Projet L4INA01 - Soukaina Elkasmi</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -15,38 +15,65 @@
         </div>
 
         <div class="cv-content">
-            <div class="cv-details">
-                <p><strong>Mon parcours :</strong></p>
+            <div class="cv-left">
+                <p><strong>Mon parcours scolaire :</strong></p>
+                <table class="grid-table">
+                    <tr><th>Années</th><th>Formation</th></tr>
+                    <tr><td>2024-2025</td><td>L1 Sciences du Langage</td></tr>
+                    <tr><td>2025-2026</td><td>L2 Sciences du Langage</td></tr>
+                </table>
+
+                <p><strong>Derniers livres lus :</strong></p>
                 <ul>
-                    <li>2024-2025 : L1 Sciences du langage</li>
-                    <li>2025-2026 : L2 Sciences du langage</li>
+                    <li>La dame de ménage</li>
+                    <li>Harry Potter</li>
+                    <li>Le Petit Prince</li>
+                    <li>L'étranger</li>
+                    <li>Le Cid</li>
                 </ul>
             </div>
-            <div class="cv-photo-zone">
-                <img src="assets/img/maphoto.jpg" alt="Photo de Soukaina" id="cv-photo">
+            
+            <div class="cv-right">
+                <img src="assets/img/maphoto.jpg" alt="Ma Photo" class="photo-box">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Universit%C3%A9_Sorbonne_Nouvelle_-_Logo.svg" alt="Photo École" class="photo-box">
             </div>
         </div>
     </div>
 
-    <div id="analyseur-container">
+    <div id="analyseur-section">
         <h3>Analyse des données dans un fichier</h3>
         
-        <div class="file-zone">
-            <input type="file" id="fileInput">
-        </div>
+        <p>Sélectionner un fichier au format .txt : <input type="file" id="fileInput"></p>
 
-        <div class="params">
-            DÉLIMITEURS: <input type="text" id="delims" value="[ ,.?;:!/()&quot;']+">
-            PÔLE: <input type="text" id="pole" placeholder="mot...">
-        </div>
+        <table class="params-table">
+            <tr>
+                <td><strong>DÉLIMITEURS:</strong></td>
+                <td><input type="text" id="delims" value="[ ,.?;:!/()&quot;']+"></td>
+            </tr>
+            <tr>
+                <td><strong>PÔLE:</strong></td>
+                <td><input type="text" id="pole" placeholder="mot à chercher..."></td>
+                <td><strong>LONGUEUR:</strong></td>
+                <td><input type="number" id="longueur" value="10"></td>
+            </tr>
+        </table>
 
-        <div class="buttons">
+        <div class="center-btn">
             <button id="btnBonjour">Bonjour</button>
-            <button id="btnSegmentation">Segmenter</button>
-            <button id="btnAide">Aide</button>
         </div>
 
-        <div class="display-flex">
+        <div class="buttons-grid">
+            <button id="btnSegmentation">Segmentation</button>
+            <button id="btnDictionnaire">Dictionnaire</button>
+            <button id="btnGrep">GREP</button>
+            <button id="btnConcordance">Concordancier</button>
+            <button id="btnKujuj">/kujuj/</button>
+            <button id="btnPhrases">Nombre de phrases</button>
+            <button id="btnMotsLongs">Mots les plus longs</button>
+            <button id="btnGraphe">Graphe Camembert (Pie Chart)</button>
+        </div>
+
+        <div class="display-zones">
             <textarea id="affichageGauche" placeholder="Texte source..."></textarea>
             <div id="affichageDroit">Résultat...</div>
         </div>
@@ -57,4 +84,3 @@
     <script src="assets/js/main.js"></script>
 </body>
 </html>
-
