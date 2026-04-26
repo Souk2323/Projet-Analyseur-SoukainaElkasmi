@@ -1,86 +1,83 @@
-let texteAnalyse = "";
-
-// 1. Charger le fichier .txt
-document.getElementById('fileInput').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function(event) {
-        texteAnalyse = event.target.result;
-        document.getElementById('affichageDroit').innerHTML = "Fichier chargé avec succès !";
-    };
-    reader.readAsText(file);
-});
-
-// 2. Fonction pour découper le texte en mots (Tokens)
-function preparerMots() {
-    const delimiteurs = document.getElementById('delims').value;
-    // Crée une règle de découpe basée sur tes délimiteurs
-    const regex = new RegExp("[" + delimiteurs.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + "\\s]+", "g");
-    return texteAnalyse.split(regex).filter(m => m.length > 0);
+body {
+    background-color: #d4cc00; /* Fond jaune */
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin: 0;
 }
 
-// 3. Bouton Segmentation
-function segmenter() {
-    if (!texteAnalyse) return alert("Veuillez d'abord charger un fichier !");
-    const mots = preparerMots();
-    document.getElementById('affichageDroit').innerHTML = `Nombre de tokens : ${mots.length}`;
-    document.getElementById('stats').innerHTML = `Tokens : ${mots.length}`;
+#bloc-cv {
+    background-color: #e2e1b9;
+    width: 90%;
+    max-width: 800px;
+    border: 2px solid black;
+    display: flex;
+    padding: 20px;
+    margin-bottom: 20px;
 }
 
-// 4. Bouton Dictionnaire (Mots fréquents)
-function dictionnaire() {
-    const mots = preparerMots();
-    const stops = document.getElementById('stopwords').value.split(',');
-    let dico = {};
-    
-    mots.forEach(m => {
-        let mot = m.toLowerCase();
-        if (!stops.includes(mot)) {
-            dico[mot] = (dico[mot] || 0) + 1;
-        }
-    });
-
-    let table = "<table><tr><th>Token</th><th>Fréquence</th></tr>";
-    Object.entries(dico).sort((a, b) => b[1] - a[1]).slice(0, 10).forEach(([m, f]) => {
-        table += `<tr><td>${m}</td><td>${f}</td></tr>`;
-    });
-    document.getElementById('affichageDroit').innerHTML = "<h3>Top 10 des fréquences</h3>" + table + "</table>";
+.photo-cv img {
+    width: 120px;
+    border: 1px solid black;
 }
 
-// 5. Bouton Mots les plus longs
-function motsPlusLongs() {
-    const motsUniques = [...new Set(preparerMots())];
-    motsUniques.sort((a, b) => b.length - a.length);
-    
-    let table = "<table><tr><th>Mot</th><th>Longueur</th></tr>";
-    motsUniques.slice(0, 10).forEach(m => {
-        table += `<tr><td>${m}</td><td>${m.length}</td></tr>`;
-    });
-    document.getElementById('affichageDroit').innerHTML = "<h3>Mots les plus longs</h3>" + table + "</table>";
+.grand-titre {
+    color: white;
+    font-size: 3em;
+    text-shadow: 2px 2px #a388e5, 4px 4px #5a3d8c;
 }
 
-// 6. Bouton Nombre de phrases
-function nombrePhrases() {
-    const phrases = texteAnalyse.split(/[.!?]+/).filter(p => p.trim().length > 0);
-    document.getElementById('affichageDroit').innerHTML = `Il y a ${phrases.length} phrases dans ce texte.`;
+#bloc-analyseur {
+    background-color: #c499a6; /* Rose */
+    width: 90%;
+    max-width: 800px;
+    border: 2px solid black;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 10px 10px 0px #5a3d8c;
 }
 
-// 7. Bouton Concordancier
-function concordancier() {
-    const motPole = document.getElementById('pole').value.toLowerCase();
-    const contexte = parseInt(document.getElementById('longueur').value);
-    if (!motPole) return alert("Entrez un mot pôle !");
-    
-    const mots = preparerMots();
-    let table = "<table><tr><th>Gauche</th><th>Pôle</th><th>Droite</th></tr>";
-    
-    mots.forEach((m, i) => {
-        if (m.toLowerCase() === motPole) {
-            let gauche = mots.slice(Math.max(0, i - contexte), i).join(" ");
-            let droite = mots.slice(i + 1, i + 1 + contexte).join(" ");
-            table += `<tr><td>${gauche}</td><td style='color:red'>${m}</td><td>${droite}</td></tr>`;
-        }
-    });
-    document.getElementById('affichageDroit').innerHTML = table + "</table>";
+.badge { background-color: #8b5fb0; color: white; padding: 2px 5px; font-size: 0.8em; }
+
+.cadre-bonjour {
+    border: 3px solid #1a5e4d;
+    color: #1a5e4d;
+    padding: 5px 15px;
+    display: inline-block;
+    border-radius: 10px;
+    margin: 15px 0;
+    font-weight: bold;
 }
+
+.boutons-actions button {
+    background-color: #c9d6a3;
+    border: 1px solid black;
+    margin: 4px;
+    padding: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Style du pied de page et du lien Sorbonne */
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    text-align: center;
+}
+
+footer a {
+    color: #5a3d8c;
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom: 2px solid #5a3d8c;
+}
+
+footer a:hover {
+    color: white;
+    background-color: #5a3d8c;
+}
+
+table { width: 100%; border-collapse: collapse; background: white; margin-top: 15px; }
+th, td { border: 1px solid black; padding: 8px; text-align: center; }
