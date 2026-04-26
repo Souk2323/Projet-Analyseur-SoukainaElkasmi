@@ -1,56 +1,100 @@
+/* Style global */
 body {
-    background-color: #3b244d;
-    font-family: Arial, sans-serif;
+    background-color: #d4cc00; /* Le jaune moutarde du fond */
+    font-family: 'Courier New', Courier, monospace;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
+    margin: 0;
 }
 
+/* Ton bloc CV (en haut de la page) */
 #bloc-cv {
-    background-color: #e2e1b9;
-    width: 800px;
+    background-color: #e2e1b9; /* Gris/beige clair */
+    width: 85%;
+    max-width: 800px;
     border: 2px solid black;
     display: flex;
     padding: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .cv-gauche { flex: 2; }
-.grille-blanche { border-collapse: collapse; background: white; width: 100%; }
-.cv-droite { flex: 1; text-align: right; }
-.cv-droite img { width: 100px; border: 1px solid black; margin-bottom: 5px; display: block; margin-left: auto; }
 
+/* Style pour ta photo dans le CV */
+.photo-cv img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%; /* Photo ronde */
+    border: 3px solid #5a3d8c;
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
+}
+
+/* Le bloc de l'Analyseur (Violet/Rose) */
 #bloc-analyseur {
-    background-color: #f7b1b1;
-    width: 800px;
+    background-color: #c499a6;
+    width: 85%;
+    max-width: 800px;
     border: 2px solid black;
-    padding: 20px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 10px 10px 0px #5a3d8c;
+}
+
+/* Les badges pour les labels (DÉLIMITEURS, etc.) */
+.badge {
+    background-color: #8b5fb0;
+    color: white;
+    padding: 2px 8px;
+    font-size: 0.8em;
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+/* Les boutons d'actions */
+.boutons-actions button {
+    background-color: #c9d6a3; /* Vert d'eau */
+    border: 1px solid black;
+    margin: 5px;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.boutons-actions button:hover {
+    background-color: #aebf86;
+}
+
+/* Style des résultats (tableaux) */
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 10px;
     text-align: center;
 }
 
-.tab-params { margin: 10px auto; }
-.boutons { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; }
-
-button {
-    background-color: #5d4037;
+th {
+    background-color: #a388e5;
     color: white;
-    border: 1px solid black;
-    padding: 8px;
-    cursor: pointer;
 }
 
-.affichage { display: flex; gap: 10px; margin-top: 15px; }
-textarea { flex: 1; height: 180px; background: white; border: 1px solid black; padding: 5px; }
-
-/* ENCADRÉ JAUNE */
-#affichageDroit {
-    flex: 1;
-    height: 180px;
-    background-color: #ffff00;
-    border: 1px solid black;
-    padding: 5px;
-    overflow-y: auto;
-    text-align: left;
-    color: black;
+/* Zone pour le message de bienvenue */
+.cadre-bonjour {
+    border: 3px solid #1a5e4d;
+    color: #1a5e4d;
+    padding: 10px 20px;
+    display: inline-block;
+    border-radius: 10px;
+    margin: 15px 0;
+    font-weight: bold;
 }
