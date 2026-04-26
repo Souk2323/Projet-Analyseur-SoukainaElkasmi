@@ -1,58 +1,41 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analyseur - Soukaina</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=2.0">
-</head>
-<body>
+<h2 class="titre-moyen">Analyse des données dans un fichier</h2>
 
-    <div id="bloc-cv">
-        <div class="cv-gauche">
-            <h1>Soukaina Elkasmi</h1>
-            <p><strong>Livres lus :</strong></p>
-            <ul class="liste-livres">
-                <li>Harry Potter - J.K. Rowling</li>
-                <li>La Dame de ménage - Freida McFadden</li>
-                <li>Le Petit Prince - Saint-Exupéry</li>
-            </ul>
-        </div>
-        <div class="photo-cv">
-            <img src="assets/IMG_5211.jpeg" alt="Photo">
-        </div>
+<div id="bloc-analyseur">
+    <button class="btn-aide">Afficher l'aide</button>
+    
+    <div class="ligne-simple" style="margin-top:10px;">
+        <label>Sélectionner un fichier .txt :</label>
+        <input type="file" id="fileInput">
     </div>
 
-    <h2 class="titre-moyen">Analyse des données dans un fichier</h2>
-
-    <div id="bloc-analyseur">
-        <div class="ligne-simple">
-            <label>Sélectionner un fichier .txt :</label>
-            <input type="file" id="fileInput" accept=".txt">
-        </div>
-
-        <div class="ligne-mixte">
-            <span class="badge">PÔLE</span>
-            <input type="text" id="pole" placeholder="pôle..." style="width: 70px;">
-            <span class="badge">LONGUEUR</span>
-            <input type="number" id="longueur" value="10" style="width: 35px;">
-        </div>
-
-        <div class="cadre-bonjour">Bonjour</div>
-
-        <div class="boutons-actions">
-            <button onclick="segmenter()">Segmentation</button>
-            <button onclick="dictionnaire()">Dictionnaire</button>
-            <button onclick="grep()">GREP</button>
-            <button onclick="concordancier()">Concordancier</button>
-            <button onclick="kujuj()">/kujuj/</button>
-        </div>
+    <div class="ligne-mixte">
+        <span class="badge">DÉLIMITEUR(S)</span>
+        <input type="text" id="delims" value=" ,;.'!?-">
     </div>
 
-    <footer>
-        <a href="https://www.sorbonne-nouvelle.fr/" target="_blank" class="lien-sorbonne">Lien vers la Sorbonne Nouvelle</a>
-    </footer>
+    <div class="ligne-mixte">
+        <span class="badge">PÔLE</span>
+        <input type="text" id="pole" placeholder="entrez un pôle..." style="width: 100px;">
+        <span class="badge">LONGUEUR</span>
+        <input type="number" id="longueur" value="10" style="width: 40px;">
+    </div>
 
-    <script src="assets/js/main.js"></script>
-</body>
-</html>
+    <div class="ligne-simple">
+        <span class="badge" style="font-size: 7px;">MOTS GRAMMATICAUX (STOPWORDS)</span>
+        <input type="text" id="stopwords" value="de,le,la,les,à,et,des,un,une,du,que,en,l,qu,d,s,se,ne,n,ce,me,sa" style="width: 100%;">
+    </div>
+
+    <div class="cadre-bonjour">Bonjour</div>
+
+    <div class="boutons-actions">
+        <button onclick="segmenter()">Segmentation</button>
+        <button onclick="dictionnaire()">Dictionnaire</button>
+        <button onclick="grep()">GREP</button>
+        <button onclick="concordancier()">Concordancier</button>
+        <button onclick="kujuj()">/kujuj/</button>
+        <br>
+        <button onclick="nombrePhrases()">Nombre de phrases</button>
+        <button onclick="motsPlusLongs()">Mots les plus longs</button>
+        <button onclick="genererGraphe()">Graphe</button>
+    </div>
+</div>
