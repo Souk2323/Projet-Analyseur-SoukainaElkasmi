@@ -17,35 +17,43 @@
                 <tr><td>2024-2025</td><td>L1 Sciences du Langage</td></tr>
                 <tr><td>2025-2026</td><td>L2 Sciences du Langage</td></tr>
             </table>
+            
+            <p><strong>Livres lus :</strong></p>
+            <ul class="liste-livres">
+                <li>Harry Potter - J.K. Rowling</li>
+                <li>La Dame de ménage - Freida McFadden</li>
+                <li>Le Petit Prince - Antoine de Saint-Exupéry</li>
+                <li>L'Étranger - Albert Camus</li>
+            </ul>
         </div>
         <div class="photo-cv">
             <img src="assets/IMG_5211.jpeg" alt="Photo de Soukaina Elkasmi">
         </div>
     </div>
 
-    <h1 class="grand-titre">Analyse des données dans un fichier</h1>
+    <h2 class="titre-moyen">Analyse des données dans un fichier</h2>
 
     <div id="bloc-analyseur">
         <button class="btn-aide">Afficher l'aide</button>
         
         <div class="upload-zone">
-            <p>Sélectionner un fichier au format .txt : <input type="file" id="fileInput" accept=".txt"></p>
+            <p>Sélectionner un fichier .txt : <input type="file" id="fileInput" accept=".txt"></p>
         </div>
 
-        <div class="tab-params">
+        <div class="parametres">
             <div class="ligne">
                 <span class="badge">DÉLIMITEUR(S)</span>
                 <input type="text" id="delims" value=" ,;.'!?-">
             </div>
             <div class="ligne-double">
                 <span class="badge">PÔLE</span>
-                <input type="text" id="pole" placeholder="entrez un pôle...">
+                <input type="text" id="pole" placeholder="mot pôle...">
                 <span class="badge">LONGUEUR</span>
                 <input type="number" id="longueur" value="10">
             </div>
             <div class="ligne">
-                <span class="badge">MOTS GRAMMATICAUX, STOPWORDS EN ANGLAIS</span>
-                <input type="text" id="stopwords" value="de,le,la,les,à,et,des,un,une,du,que,en,l,qu,d,s,se,ne,n,ce,me,sa" style="width: 80%;">
+                <span class="badge">STOPWORDS</span>
+                <input type="text" id="stopwords" value="de,le,la,les,à,et,des,un,une,du,que,en,l,qu,d,s,se,ne,n,ce,me,sa">
             </div>
         </div>
 
@@ -60,18 +68,16 @@
             <br>
             <button onclick="nombrePhrases()">Nombre de phrases</button>
             <button onclick="motsPlusLongs()">Mots les plus longs</button>
-            <button onclick="genererGraphe()">grapheCamembert-Pie Chart</button>
+            <button onclick="genererGraphe()">Graphe</button>
         </div>
     </div>
 
     <div id="zone-resultats">
-        <div id="info-chargement"></div>
         <div id="affichageDroit"></div>
-        <div id="stats"></div>
     </div>
 
     <footer>
-        <p>Projet réalisé pour l' <a href="https://www.sorbonne-nouvelle.fr/" target="_blank">Université Sorbonne Nouvelle</a></p>
+        <a href="https://www.sorbonne-nouvelle.fr/" target="_blank" class="lien-sorbonne">Lien vers la Sorbonne Nouvelle</a>
     </footer>
 
     <script src="assets/js/main.js"></script>
