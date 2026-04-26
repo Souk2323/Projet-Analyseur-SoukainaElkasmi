@@ -2,76 +2,77 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projet L4INA01 - ELKASMI Soukaina</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-<div class="photo-cv">
-    <img src="assets/IMG_5211.jpeg" alt="Photo de Soukaina Elkasmi">
-</div>
 
     <div id="bloc-cv">
         <div class="cv-gauche">
             <h1>Curriculum Vitae</h1>
             <h2>Soukaina Elkasmi</h2>
             <p><strong>Mon parcours scolaire :</strong></p>
-            <table border="1" class="grille-blanche">
+            <table class="grille-blanche">
                 <tr><td>2024-2025</td><td>L1 Sciences du Langage</td></tr>
                 <tr><td>2025-2026</td><td>L2 Sciences du Langage</td></tr>
             </table>
-
-            <p><strong>Derniers livres lus :</strong></p>
-            <ul>
-                <li>La dame de ménage</li>
-                <li>Harry Potter</li>
-                <li>Linguistique et Société</li>
-                <li>La structure des langues</li>
-                <li>Analyse du discours</li>
-            </ul>
         </div>
-        <div class="cv-droite">
-            <img src="assets/img/maphoto.jpg" alt="Photo Perso">
-            <img src="assets/img/universite.jpg" alt="Photo Sorbonne">
+        <div class="photo-cv">
+            <img src="assets/IMG_5211.jpeg" alt="Photo de Soukaina Elkasmi">
         </div>
     </div>
+
+    <h1 class="grand-titre">Analyse des données dans un fichier</h1>
 
     <div id="bloc-analyseur">
-        <h3>Analyse des données dans un fichier</h3>
-        <p>Sélectionner un fichier au format .txt : <input type="file" id="fileInput"></p>
-
-        <table border="0" class="tab-params">
-            <tr>
-                <td>DÉLIMITEURS :</td>
-                <td colspan="3"><input type="text" id="delims" value="[ ,.?;:!/()&quot;']+"></td>
-            </tr>
-            <tr>
-                <td>PÔLE :</td>
-                <td><input type="text" id="pole"></td>
-                <td>LONGUEUR :</td>
-                <td><input type="number" id="longueur" value="10"></td>
-            </tr>
-        </table>
-
-        <div class="center">
-            <button id="btnBonjour">Bonjour</button>
-        </div>
-
-        <div class="boutons">
-            <button id="btnSegmentation">Segmentation</button>
-            <button id="btnDico">Dictionnaire</button>
-            <button id="btnGrep">GREP</button>
-            <button id="btnConc">Concordancier</button>
-            <button id="btnPhrases">Nb phrases</button>
-            <button id="btnMots">Mots longs</button>
-        </div>
-
-        <div class="affichage">
-            <textarea id="affichageGauche" readonly placeholder="Texte source..."></textarea>
-            <div id="affichageDroit">Résultat...</div>
-        </div>
+        <button class="btn-aide">Afficher l'aide</button>
         
-        <p id="stats">Nombre de formes : 0</p>
+        <div class="upload-zone">
+            <p>Sélectionner un fichier au format .txt : <input type="file" id="fileInput" accept=".txt"></p>
+        </div>
+
+        <div class="tab-params">
+            <div class="ligne">
+                <span class="badge">DÉLIMITEUR(S)</span>
+                <input type="text" id="delims" value=" ,;.'!?-">
+            </div>
+            <div class="ligne-double">
+                <span class="badge">PÔLE</span>
+                <input type="text" id="pole" placeholder="entrez un pôle...">
+                <span class="badge">LONGUEUR</span>
+                <input type="number" id="longueur" value="10">
+            </div>
+            <div class="ligne">
+                <span class="badge">MOTS GRAMMATICAUX, STOPWORDS EN ANGLAIS</span>
+                <input type="text" id="stopwords" value="de,le,la,les,à,et,des,un,une,du,que,en,l,qu,d,s,se,ne,n,ce,me,sa" style="width: 80%;">
+            </div>
+        </div>
+
+        <div class="cadre-bonjour">Bonjour</div>
+
+        <div class="boutons-actions">
+            <button onclick="segmenter()">Segmentation</button>
+            <button onclick="dictionnaire()">Dictionnaire</button>
+            <button onclick="grep()">GREP</button>
+            <button onclick="concordancier()">Concordancier</button>
+            <button onclick="kujuj()">/kujuj/</button>
+            <br>
+            <button onclick="nombrePhrases()">Nombre de phrases</button>
+            <button onclick="motsPlusLongs()">Mots les plus longs</button>
+            <button onclick="genererGraphe()">grapheCamembert-Pie Chart</button>
+        </div>
     </div>
+
+    <div id="zone-resultats">
+        <div id="info-chargement"></div>
+        <div id="affichageDroit"></div>
+        <div id="stats"></div>
+    </div>
+
+    <footer>
+        <p>Projet réalisé pour l' <a href="https://www.sorbonne-nouvelle.fr/" target="_blank">Université Sorbonne Nouvelle</a></p>
+    </footer>
 
     <script src="assets/js/main.js"></script>
 </body>
