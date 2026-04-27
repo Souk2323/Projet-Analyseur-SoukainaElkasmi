@@ -10,7 +10,7 @@ document.getElementById('fileInput').addEventListener('change', function(e) {
     reader.onload = function(event) {
         texteAnalyse = event.target.result;
         lignesTexte = texteAnalyse.split(/\n/).filter(function(l) { return l.trim().length > 0; });
-        document.querySelector('.cadre-bonjour').innerHTML = "Fichier chargé avec succès<br>Nombre de tokens : " + preparerMotsBruts().length + "<br>Nombre de lignes : " + lignesTexte.length;
+        document.querySelector('.cadre-bonjour').innerHTML = "Fichier chargé avec succès le " + new Date().toLocaleDateString() + "<br>Nombre de tokens : " + preparerMotsBruts().length + "<br>Nombre de lignes : " + lignesTexte.length;
     };
     reader.readAsText(file);
 });
