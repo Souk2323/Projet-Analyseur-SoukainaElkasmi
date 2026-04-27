@@ -1,101 +1,69 @@
-// --- FONCTION DE BASE (NE PAS CHANGER) ---
-function preparerMots() {
-    if (!texteAnalyse) return [];
-    const delimInput = document.getElementById('delims');
-    const delimiteurs = delimInput && delimInput.value ? delimInput.value : " ,;.'!?-";
-    const regex = new RegExp("[" + delimiteurs.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + "\\s]+", "g");
-    return texteAnalyse.split(regex).filter(m => m.length > 0);
+body {
+    background-color: #d4cc3d; /* Jaune moutarde */
+    font-family: Arial, sans-serif;
+    margin: 20px;
 }
 
-// --- 1. KUJUJ (Fonctionne déjà) ---
-function kujuj() {
-    const mots = preparerMots();
-    const zone = document.getElementById('affichageDroit');
-    alert("Mode /kujuj/ activé !");
-    if (mots.length > 0) {
-        // Règle : MAJUSCULE + uj
-        const res = mots.map(m => m.toUpperCase() + "uj").join(" ");
-        zone.innerHTML = "<h3>Résultat Kujuj :</h3><p>" + res + "</p>";
-    }
+.cv-container {
+    background-color: #e2df9a;
+    border: 1px solid #000;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
 }
 
-// --- 2. DICTIONNAIRE (Tableau comme sur la photo) ---
-function dictionnaire() {
-    const mots = preparerMots();
-    const zone = document.getElementById('affichageDroit');
-    if (mots.length === 0) return;
-
-    let freq = {};
-    mots.forEach(m => { let mot = m.toLowerCase(); freq[mot] = (freq[mot] || 0) + 1; });
-    const tri = Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 10);
-
-    let html = "<h3>Token / Fréquence</h3><table border='1' style='width:100%; border-collapse:collapse;'>";
-    html += "<tr style='background:#f2f2f2;'><th>Token</th><th>Fréquence</th></tr>";
-    tri.forEach(([m, f]) => {
-        html += `<tr><td>${m}</td><td style='text-align:center;'>${f}</td></tr>`;
-    });
-    html += "</table>";
-    zone.innerHTML = html;
+.studies span {
+    display: block;
+    border: 1px solid #000;
+    width: fit-content;
+    padding: 2px 5px;
+    margin-bottom: 5px;
+    background: white;
 }
 
-// --- 3. GRAPHE (Le Camembert avec l'image) ---
-function genererGraphe() {
-    const mots = preparerMots();
-    const zone = document.getElementById('affichageDroit');
-    if (mots.length === 0) return;
-
-    let freq = {};
-    mots.forEach(m => { let mot = m.toLowerCase(); freq[mot] = (freq[mot] || 0) + 1; });
-    const top = Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 8);
-
-    const labels = top.map(x => x[0]);
-    const datas = top.map(x => x[1]);
-
-    // On utilise l'API QuickChart pour faire le camembert exact de la photo
-    const chartUrl = `https://quickchart.io/chart?c={type:'pie',data:{labels:['${labels.join("','")}'],datasets:[{data:[${datas.join(",")}]}]}}`;
-
-    zone.innerHTML = `<h3>Mots les plus fréquents</h3><div style='text-align:center;'><img src="${chartUrl}" style='width:100%; max-width:350px; background:white; padding:10px;'></div>`;
+.analysis-section {
+    text-align: center;
 }
 
-// --- 4. NOMBRE DE PHRASES ---
-function nombrePhrases() {
-    const zone = document.getElementById('affichageDroit');
-    const n = texteAnalyse.split(/[.!?]+/).filter(p => p.trim().length > 0).length;
-    zone.innerHTML = `<h3>Analyse</h3><p style='font-size:1.2em;'>Il y a <b>${n}</b> phrases dans ce texte.</p>`;
+.title-glow {
+    color: white;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    font-size: 2em;
 }
 
-// --- 5. MOTS LES PLUS LONGS (Tableau) ---
-function motsPlusLongs() {
-    const zone = document.getElementById('affichageDroit');
-    const mots = [...new Set(preparerMots())];
-    const tri = mots.sort((a, b) => b.length - a.length).slice(0, 7);
-
-    let html = "<h3>Mots les Plus Longs</h3><table border='1' style='width:100%; border-collapse:collapse;'>";
-    html += "<tr style='background:#f2f2f2;'><th>Mot</th><th>Longueur</th></tr>";
-    tri.forEach(m => {
-        html += `<tr><td>${m}</td><td style='text-align:center;'>${m.length}</td></tr>`;
-    });
-    html += "</table>";
-    zone.innerHTML = html;
+.tool-box {
+    background-color: #b194a0; /* Violet gris */
+    border: 1px solid #000;
+    padding: 20px;
+    display: inline-block;
+    border-radius: 5px;
 }
 
-// --- 6. CONCORDANCIER ---
-function concordancier() {
-    const zone = document.getElementById('affichageDroit');
-    const pole = document.getElementById('pôle').value.toLowerCase();
-    const mots = preparerMots();
-    if (!pole) return;
+.settings label {
+    display: block;
+    margin: 10px 0;
+    font-weight: bold;
+    font-size: 0.8em;
+}
 
-    let html = "<h3>Concordancier</h3><table border='1' style='width:100%; border-collapse:collapse;'>";
-    html += "<tr style='background:#f2f2f2;'><th>Gauche</th><th>Pôle</th><th>Droite</th></tr>";
-    
-    mots.forEach((m, i) => {
-        if (m.toLowerCase() === pole) {
-            const g = mots.slice(Math.max(0, i-2), i).join(" ");
-            const d = mots.slice(i+1, i+3).join(" ");
-            html += `<tr><td style='text-align:right;'>${g}</td><td style='text-align:center; color:red;'><b>${m}</b></td><td>${d}</td></tr>`;
-        }
-    });
-    html += "</table>";
-    zone.innerHTML = html;
+.button-grid {
+    margin-top: 15px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+}
+
+button {
+    background-color: #c4d63e;
+    border: 1px solid #333;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#result-area {
+    margin-top: 20px;
+    padding: 10px;
+    background: white;
+    min-height: 50px;
+    border: 1px dashed black;
 }
