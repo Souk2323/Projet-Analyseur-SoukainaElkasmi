@@ -7,64 +7,66 @@ document.getElementById('fileInput').addEventListener('change', function(e) {
     const reader = new FileReader();
     reader.onload = function(event) {
         texteAnalyse = event.target.result;
-        alert("Fichier chargé !");
+        // On change le texte du cadre "Bonjour" pour confirmer
+        const cadre = document.querySelector('.cadre-bonjour');
+        if(cadre) cadre.innerText = "Fichier prêt !";
     };
     reader.readAsText(file);
 });
 
-// 2. Découper le texte en mots
+// 2. Découper le texte en mots selon les délimiteurs
 function preparerMots() {
     if (!texteAnalyse) {
-        alert("Choisis d'abord un fichier !");
+        alert("Choisis d'abord un fichier .txt !");
         return [];
     }
-    const delimiteurs = document.getElementById('delims') ? document.getElementById('delims').value : " ,;.'!?-";
+    const delimInput = document.getElementById('delims');
+    const delimiteurs = delimInput ? delimInput.value : " ,;.'!?-";
     const regex = new RegExp("[" + delimiteurs.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + "\\s]+", "g");
     return texteAnalyse.split(regex).filter(m => m.length > 0);
 }
 
-// 3. Fonctions des boutons jaunes
+// 3. Fonctions pour les boutons
 function segmenter() {
     const mots = preparerMots();
-    if (mots.length > 0) {
-        document.getElementById('affichageDroit').innerHTML = `<h3>Segmentation</h3><p>${mots.join(' | ')}</p>`;
-    }
+    if (mots.length > 0) alert("Segmentation : " + mots.length + " mots trouvés.");
 }
 
 function dictionnaire() {
     const mots = preparerMots();
+    if (mots.length === 0) return;
     let dico = {};
     mots.forEach(m => {
         let mot = m.toLowerCase();
         dico[mot] = (dico[mot] || 0) + 1;
     });
-    let table = "<table border='1'><tr><th>Mot</th><th>Fréq.</th></tr>";
-    Object.entries(dico).sort((a, b) => b[1] - a[1]).slice(0, 10).forEach(([m, f]) => {
-        table += `<tr><td>${m}</td><td>${f}</td></tr>`;
-    });
-    document.getElementById('affichageDroit').innerHTML = table + "</table>";
+    console.log("Dictionnaire généré", dico);
+    alert("Dictionnaire créé (voir console)");
 }
 
 function concordancier() {
     const pole = document.getElementById('pole').value.toLowerCase();
-    const len = parseInt(document.getElementById('longueur').value) || 10; // Utilise ta case LONGUEUR
-    const mots = preparerMots();
-    if (!pole) return alert("Entrez un mot pôle");
-
-    let res = "<table border='1'><tr><th>Gauche</th><th>Pôle</th><th>Droite</th></tr>";
-    mots.forEach((m, i) => {
-        if (m.toLowerCase() === pole) {
-            let gauche = mots.slice(Math.max(0, i - len), i).join(" ");
-            let droite = mots.slice(i + 1, i + 1 + len).join(" ");
-            res += `<tr><td>${gauche}</td><td style='color:red'><b>${m}</b></td><td>${droite}</td></tr>`;
-        }
-    });
-    document.getElementById('affichageDroit').innerHTML = res + "</table>";
+    const len = parseInt(document.getElementById('longueur').value) || 10;
+    if (!pole) return alert("Entrez un mot pôle !");
+    alert("Recherche du mot '" + pole + "' avec un contexte de " + len);
 }
 
 function grep() {
     const p = document.getElementById('pole').value;
-    if (!p) return alert("Entrez un mot dans Pôle");
+    if (!p) return alert("Entrez un motif !");
     const lignes = texteAnalyse.split('\n').filter(l => l.includes(p));
-    document.getElementById('affichageDroit').innerHTML = `<h3>GREP</h3><p>${lignes.length} lignes trouvées.</p>`;
+    alert(lignes.length + " lignes trouvées.");
 }
+
+function nombrePhrases() {
+    const n = texteAnalyse.split(/[.!?]+/).filter(p => p.trim().length > 0).length;
+    alert("Il y a " + n + " phrases.");
+}
+
+function motsPlusLongs() {
+    const mots = [...new Set(preparerMots())].sort((a, b) => b.length - a.length);
+    alert("Le mot le plus long est : " + mots[0]);
+}
+
+function kujuj() { alert("Mode /kujuj/ activé !"); }
+function genererGraphe() { alert("Génération du graphe..."); }
