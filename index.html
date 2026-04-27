@@ -1,87 +1,74 @@
-Let texteAnalyse = "";
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Analyse de données - Soukaina</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-// 1. Charger le fichier .txt
-document.getElementById('fileInput').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function(event) {
-        texteAnalyse = event.target.result;
-        // On change le texte du cadre "Bonjour" pour confirmer
-        const cadre = document.querySelector('.cadre-bonjour');
-        if(cadre) cadre.innerText = "Fichier prêt !";
-    };
-    reader.readAsText(file);
-});
-
-// 2. Découper le texte en mots selon les délimiteurs
-function preparerMots() {
-    if (!texteAnalyse) {
-        alert("Choisis d'abord un fichier .txt !");
-        return [];
-    }
-    const delimInput = document.getElementById('delims');
-    const delimiteurs = delimInput ? delimInput.value : " ,;.'!?-";
-    const regex = new RegExp("[" + delimiteurs.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + "\\s]+", "g");
-    return texteAnalyse.split(regex).filter(m => m.length > 0);
-}
-
-// 3. Fonctions pour les boutons
-function segmenter() {
-    const mots = preparerMots();
-    if (mots.length > 0) alert("Segmentation : " + mots.length + " mots trouvés.");
-}
-
-function dictionnaire() {
-    const mots = preparerMots();
-    if (mots.length === 0) return;
-    let dico = {};
-    mots.forEach(m => {
-        let mot = m.toLowerCase();
-        dico[mot] = (dico[mot] || 0) + 1;
-    });
-    console.log("Dictionnaire généré", dico);
-    alert("Dictionnaire créé (voir console)");
-}
-
-function concordancier() {
-    const pole = document.getElementById('pole').value.toLowerCase();
-    const len = parseInt(document.getElementById('longueur').value) || 10;
-    if (!pole) return alert("Entrez un mot pôle !");
-    alert("Recherche du mot '" + pole + "' avec un contexte de " + len);
-}
-
-function grep() {
-    const p = document.getElementById('pole').value;
-    if (!p) return alert("Entrez un motif !");
-    const lignes = texteAnalyse.split('\n').filter(l => l.includes(p));
-    alert(lignes.length + " lignes trouvées.");
-}
-
-function nombrePhrases() {
-    const n = texteAnalyse.split(/[.!?]+/).filter(p => p.trim().length > 0).length;
-    alert("Il y a " + n + " phrases.");
-}
-
-function motsPlusLongs() {
-    const mots = [...new Set(preparerMots())].sort((a, b) => b.length - a.length);
-    alert("Le mot le plus long est : " + mots[0]);
-}
-
-function kujuj() { alert("Mode /kujuj/ activé !"); }
-function genererGraphe() { alert("Génération du graphe..."); }
-
-function genererGraphe() {
-    const zone = document.getElementById('affichageDroit');
-    zone.innerHTML = `
-        <h3 style="text-align:center; font-size:12px;">Mots les plus fréquents</h3>
-        <div style="display:flex; justify-content:center; margin-bottom: 20px;">
-            <img src="https://quickchart.io/chart?c={type:'pie',data:{labels:['le','la','de','un'],datasets:[{data:[30,20,15,10]}]}}" style="width:200px;">
+    <header class="cv-container">
+        <div class="cv-content">
+            <h1>Curriculum Vitae</h1>
+            <h3>Soukaina Elkasmi</h3>
+            <p><strong>Études effectuées :</strong></p>
+            <div class="studies">
+                <span>L1 Sciences du Langage (2024-2025)</span>
+                <span>L2 Sciences du Langage (2025-2026)</span>
+            </div>
+            <p><strong>Livres que j'ai lus :</strong></p>
+            <ul>
+                <li>Harry Potter</li>
+                <li>La Dame de ménage</li>
+                <li>L'Anomalie</li>
+                <li>Le Petit Prince</li>
+                <li>L'Étranger</li>
+            </ul>
         </div>
-    `;
-    zone.scrollIntoView({behavior: "smooth"}); 
-}
+        <div class="cv-image">
+            <img src="https://via.placeholder.com/100" alt="Icone">
+        </div>
+    </header>
 
+    <hr>
 
+    <main class="analysis-section">
+        <h2 class="title-glow">Analyse des données dans un fichier</h2>
+        
+        <div class="tool-box">
+            <button class="help-btn">Afficher l'aide</button>
+            
+            <div class="input-group">
+                <label>Sélectionner un fichier .txt :</label>
+                <input type="file" id="fileInput" accept=".txt">
+            </div>
 
-Moi 
+            <div class="settings">
+                <label>DÉLIMITEUR(S) <input type="text" id="delimiters" value=".,;:!?"></label>
+                <label>PÔLE <input type="text" id="pole" placeholder="pôle..."></label>
+                <label>LONGUEUR <input type="number" id="length" value="10"></label>
+                <label>STOPWORDS <input type="text" id="stopwords" value="de,le,la,les,à,et,des,un,une"></label>
+            </div>
+
+            <button class="hello-btn">Bonjour</button>
+
+            <div class="button-grid">
+                <button onclick="process('Segmentation')">Segmentation</button>
+                <button onclick="process('Dictionnaire')">Dictionnaire</button>
+                <button onclick="process('GREP')">GREP</button>
+                <button onclick="process('Concordancier')">Concordancier</button>
+                <button onclick="process('Nb phrases')">Nb phrases</button>
+                <button onclick="process('Mots longs')">Mots longs</button>
+                <button onclick="process('Graphe')">Graphe</button>
+            </div>
+        </div>
+
+        <div id="result-area">
+            </div>
+
+        <a href="#" class="link-sorbonne">Lien vers la Sorbonne Nouvelle</a>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
