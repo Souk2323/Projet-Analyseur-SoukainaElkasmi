@@ -1,87 +1,109 @@
 body {
-    background-color: #d6d600;
-    font-family: Arial, sans-serif;
-    text-align: center;
+    margin: 0;
+    font-family: Arial;
+    background: linear-gradient(#d6d600, #c9c900);
 }
 
-/* Container */
-.container {
-    width: 80%;
-    margin: auto;
-}
-
-/* CV */
+/* ===== CV ===== */
 .cv-box {
-    background: #e6e6c0;
-    border: 2px solid black;
+    width: 85%;
+    margin: 30px auto;
+    background: #e6e3c5;
+    border: 4px solid black;
     display: flex;
     justify-content: space-between;
-    padding: 15px;
-    margin-top: 20px;
+    align-items: center;
+    padding: 20px;
 }
 
 .cv-text {
     text-align: left;
 }
 
-.cv-img {
-    width: 150px;
-    height: auto;
+/* ENCADRÉ LICENCE */
+.licence-box {
+    border: 3px solid black;
+    background: white;
+    padding: 8px;
+    width: fit-content;
+    margin: 5px 0;
 }
 
-/* Études */
-.etudes {
-    border: 1px solid black;
-    padding: 5px;
-    display: inline-block;
+/* PHOTO */
+.cv-img {
+    width: 180px;
+    height: 130px;
+    object-fit: cover;
+    border: 3px solid black;
     background: white;
 }
 
-/* Titre */
+/* ===== TITRE ===== */
 .title {
-    margin: 40px 0;
-    font-size: 40px;
+    text-align: center;
+    font-size: 45px;
     color: white;
-    text-shadow: 2px 2px purple;
+    text-shadow: 3px 3px purple;
+    margin: 50px 0;
 }
 
-/* Bloc principal */
+/* ===== BLOC ===== */
 .box {
-    background: #c79aa0;
-    border: 2px solid black;
-    padding: 20px;
+    width: 70%;
+    margin: auto;
+    background: #c7939a;
+    border: 4px solid black;
+    padding: 25px;
 }
 
-/* Form */
-.form-group {
+/* Lignes */
+.ligne {
     margin: 10px 0;
+}
+
+/* Tags violets */
+.tag {
+    background: purple;
+    color: white;
+    padding: 3px 8px;
+    margin-right: 5px;
+}
+
+/* Inputs */
+input {
+    border: 2px solid black;
+    padding: 4px;
 }
 
 /* Boutons */
 button {
-    background: yellow;
-    border: 2px solid black;
+    background: #ffe600;
+    border: 3px solid black;
     padding: 5px 10px;
     margin: 5px;
+    font-weight: bold;
     cursor: pointer;
 }
 
-.help-btn {
-    margin-bottom: 15px;
+/* Bouton bonjour */
+#bonjour {
+    background: #8fd0a8;
+    display: block;
+    margin: 10px auto;
 }
 
-.bonjour-btn {
-    background: #90c7a7;
+/* Résultat */
+#resultat {
+    margin-top: 15px;
+    background: white;
+    border: 2px solid black;
     padding: 10px;
-}
-
-/* Boutons bas */
-.buttons button {
-    background: yellow;
+    min-height: 60px;
 }
 
 /* Lien */
 .link {
+    text-align: center;
     margin-top: 20px;
     color: blue;
 }
