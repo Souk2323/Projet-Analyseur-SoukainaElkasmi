@@ -12,24 +12,14 @@ document.getElementById('fileInput').addEventListener('change', function(e) {
         texteAnalyse = event.target.result;
         lignesTexte = texteAnalyse.split(/\n/).filter(l => l.trim().length > 0);
         
-        // Affichage des statistiques initiales (sous le cadre rose)
-        const cadreMessage = document.querySelector('.cadre-message'); 
-        if (cadreMessage) {
-            cadreMessage.innerHTML = `
-                <p>Fichier chargé avec succès</p>
-                <p>Nombre de tokens : ${preparerMots().length}</p>
-                <p>Nombre de lignes : ${lignesTexte.length}</p>
-            `;
-        }
-        
-        // Affiche le texte brut dans la zone de gauche
-        const zoneTexte = document.getElementById('affichage-texte-cv');
-        if (zoneTexte) zoneTexte.innerText = texteAnalyse;
+        // On change le texte du bouton "Bonjour" ou du cadre pour confirmer
+        document.querySelector('.cadre-bonjour').innerHTML = "Fichier chargé ! (" + lignesTexte.length + " lignes)";
+        alert("Fichier prêt pour l'analyse !");
     };
     reader.readAsText(file);
 });
 
-// --- 2. SÉCURITÉ & NETTOYAGE ---
+// --- 2. FONCTIONS OUTILS ---
 function estPret() {
     if (!texteAnalyse) {
         alert("Veuillez d'abord sélectionner un fichier .txt !");
@@ -39,17 +29,20 @@ function estPret() {
 }
 
 function preparerMots() {
-    // Récupère les délimiteurs de l'utilisateur
-    const delimInput = document.getElementById('delims').value || " ,;.'!?-";
-    const escaped = delimInput.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-    const regex = new RegExp("[" + escaped + "\\s]+", "g");
+    const delimiteurs = document.getElementById('delims').value || " ,;.'!?-";
+    const regex = new RegExp("[" + delimiteurs.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + "\\s]+", "g");
     return texteAnalyse.split(regex).filter(m => m.length > 0);
 }
 
-// --- 3. ACTIONS (DICTIONNAIRE & CONCORDANCIER) ---
+// --- 3. LES ACTIONS DES BOUTONS (Appelées par ton HTML) ---
 
-// DICTIONNAIRE : Génère un tableau propre
-document.getElementById('dictionnaireBtn').addEventListener('click', function() {
+function segmenter() {
+    if (!estPret()) return;
+    const mots = preparerMots();
+    alert("Segmentation : \n" + mots.join(" | "));
+}
+
+function dictionnaire() {
     if (!estPret()) return;
     const mots = preparerMots();
     let freq = {};
@@ -57,61 +50,61 @@ document.getElementById('dictionnaireBtn').addEventListener('click', function() 
         let mot = m.toLowerCase(); 
         freq[mot] = (freq[mot] || 0) + 1; 
     });
-    
     const tri = Object.entries(freq).sort((a,b) => b[1] - a[1]).slice(0, 10);
+    
+    let message = "TOP 10 DES MOTS :\n";
+    tri.forEach(([m, f]) => { message += m + " : " + f + "\n"; });
+    alert(message);
+}
 
-    let html = "<h3>Mots les plus fréquents</h3><table class='tableau-prof'>";
-    html += "<tr><th>Token</th><th>Fréquence</th></tr>";
-    tri.forEach(([m, f]) => { 
-        html += `<tr><td>${m}</td><td>${f}</td></tr>`; 
-    });
-    document.getElementById('cadre-resultat-analyse').innerHTML = html + "</table>";
-});
-
-// CONCORDANCIER : Rendu exact (Gauche | Pôle | Droit)
-document.getElementById('concordancierBtn').addEventListener('click', function() {
+function grep() {
     if (!estPret()) return;
-    const pole = document.getElementById('pole').value.trim();
-    if (!pole) return alert("Entrez un mot dans PÔLE !");
+    const pôle = document.getElementById('pole').value.trim();
+    if (!pôle) return alert("Entrez un mot dans PÔLE");
+    
+    const regex = new RegExp(pôle, "gi");
+    const resultats = lignesTexte.filter(ligne => ligne.match(regex));
+    alert("Lignes trouvées : " + resultats.length + "\n\n" + resultats.slice(0,5).join("\n"));
+}
+
+function concordancier() {
+    if (!estPret()) return;
+    const pôle = document.getElementById('pole').value.trim();
+    if (!pôle) return alert("Entrez un mot dans PÔLE");
 
     const mots = preparerMots();
-    let html = "<h3>Concordancier</h3><table class='tableau-prof'>";
-    html += "<tr><th>Contexte gauche</th><th>Pôle</th><th>Contexte droit</th></tr>";
-    
-    let trouve = false;
+    let resultats = "";
     mots.forEach((m, i) => {
-        if (m.toLowerCase() === pole.toLowerCase()) {
-            trouve = true;
-            const gauche = mots.slice(Math.max(0, i-5), i).join(" ");
-            const droit = mots.slice(i+1, i+6).join(" ");
-            html += `<tr>
-                        <td class='text-right'>${gauche}</td>
-                        <td class='text-center pole-rouge'><b>${m}</b></td>
-                        <td class='text-left'>${droit}</td>
-                    </tr>`;
+        if (m.toLowerCase() === pôle.toLowerCase()) {
+            const avant = mots.slice(Math.max(0, i-3), i).join(" ");
+            const apres = mots.slice(i+1, i+4).join(" ");
+            resultats += avant + " [" + m + "] " + apres + "\n";
         }
     });
-    
-    document.getElementById('cadre-resultat-analyse').innerHTML = trouve ? html + "</table>" : "<p>Mot non trouvé.</p>";
-});
+    alert(resultats || "Aucune occurrence trouvée.");
+}
 
-// MOTS LES PLUS LONGS
-document.getElementById('motsLongsBtn').addEventListener('click', function() {
+function kujuj() {
+    if (!estPret()) return;
+    const mots = preparerMots();
+    const res = mots.slice(0, 20).map(m => m.toUpperCase() + "juj").join(" ");
+    alert("Version Kujuj (début) : \n" + res);
+}
+
+function nombrePhrases() {
+    if (!estPret()) return;
+    const n = texteAnalyse.split(/[.!?]+/).filter(p => p.trim().length > 0).length;
+    alert("Il y a environ " + n + " phrase(s).");
+}
+
+function motsPlusLongs() {
     if (!estPret()) return;
     const motsUniques = [...new Set(preparerMots())];
     const tri = motsUniques.sort((a, b) => b.length - a.length).slice(0, 10);
-    
-    let html = "<h3>Mots les plus longs</h3><table class='tableau-prof'>";
-    html += "<tr><th>Mot</th><th>Longueur</th></tr>";
-    tri.forEach(m => {
-        html += `<tr><td>${m}</td><td>${m.length}</td></tr>`;
-    });
-    document.getElementById('cadre-resultat-analyse').innerHTML = html + "</table>";
-});
+    alert("Les 10 mots les plus longs : \n" + tri.join("\n"));
+}
 
-// NOMBRE DE PHRASES
-document.getElementById('nbPhrasesBtn').addEventListener('click', function() {
+function genererGraphe() {
     if (!estPret()) return;
-    const n = texteAnalyse.split(/[.!?]+/).filter(p => p.trim().length > 0).length;
-    document.getElementById('cadre-resultat-analyse').innerHTML = `<p class='phrase-compte'>Il y a <b>${n}</b> phrases dans ce texte.</p>`;
-});
+    alert("Fonction Graphe : Assurez-vous d'avoir une zone <div id='chart'> dans votre HTML pour afficher le graphique.");
+}
