@@ -1,49 +1,55 @@
-// 1. LE NOMBRE DE PHRASES
-function nombrePhrases() {
-    if (!texteAnalyse) return;
-    const n = texteAnalyse.split(/[.!?]+/).filter(p => p.trim().length > 0).length;
-    document.getElementById('affichageDroit').innerHTML = 
-        `<div style="font-family:monospace; padding:20px; font-size:1.2em;">
-            Il y a <strong>${n}</strong> phrases dans ce texte.
-         </div>`;
+let texteAnalyse = "";
+
+// --- CHARGEMENT DU FICHIER ---
+document.getElementById('fileInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        texteAnalyse = event.target.result;
+        const gauche = document.getElementById('affichageGauche');
+        if(gauche) gauche.innerText = texteAnalyse;
+        alert("Fichier chargé avec succès !");
+    };
+    reader.readAsText(file);
+});
+
+// --- NETTOYAGE DES MOTS ---
+function preparerMots() {
+    if (!texteAnalyse) {
+        alert("Veuillez d'abord charger un fichier .txt");
+        return [];
+    }
+    const delimInput = document.getElementById('delims');
+    const delimiteurs = delimInput && delimInput.value ? delimInput.value : " ,;.'!?-";
+    const regex = new RegExp("[" + delimiteurs.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + "\\s]+", "g");
+    return texteAnalyse.split(regex).filter(m => m.length > 0);
 }
 
-// 2. LE DICTIONNAIRE (Tableau comme sur ta photo)
-function dictionnaire() {
+// --- 1. SEGMENTER (Affichage propre) ---
+function segmenter() {
     const mots = preparerMots();
+    const zone = document.getElementById('affichageDroit');
     if (mots.length === 0) return;
-    let freq = {};
-    mots.forEach(m => { let mot = m.toLowerCase(); freq[mot] = (freq[mot] || 0) + 1; });
-
-    const tri = Object.entries(freq).sort((a,b) => b[1] - a[1]).slice(0, 8);
-
-    let html = `<h3>Dictionnaire</h3><table border='1' style='width:100%; border-collapse:collapse; background:rgba(255,255,255,0.1);'>
-                <tr style='background:#555; color:white;'><th>Token</th><th>Fréquence</th></tr>`;
-    tri.forEach(([m, f]) => {
-        html += `<tr><td style='padding:5px;'>${m}</td><td style='padding:5px; text-align:center;'>${f}</td></tr>`;
-    });
-    html += "</table>";
-    document.getElementById('affichageDroit').innerHTML = html;
+    zone.innerHTML = "<h3>Segmentation</h3><p style='line-height:1.8;'>" + mots.join(" ") + "</p>";
 }
 
-// 3. LES MOTS LES PLUS LONGS (Tableau)
-function motsPlusLongs() {
-    const mots = [...new Set(preparerMots())];
-    if (mots.length === 0) return;
-    const tri = mots.sort((a, b) => b.length - a.length).slice(0, 7);
-
-    let html = `<h3>Mots les Plus Longs</h3><table border='1' style='width:100%; border-collapse:collapse;'>
-                <tr style='background:#555; color:white;'><th>Mot</th><th>Longueur</th></tr>`;
-    tri.forEach(m => {
-        html += `<tr><td style='padding:5px;'>${m}</td><td style='padding:5px; text-align:center;'>${m.length}</td></tr>`;
-    });
-    html += "</table>";
-    document.getElementById('affichageDroit').innerHTML = html;
+// --- 2. KUJUJ (Règle : MAJUSCULE + juj) ---
+function kujuj() {
+    const mots = preparerMots();
+    const zone = document.getElementById('affichageDroit');
+    alert("Mode /kujuj/ activé !");
+    if (mots.length > 0) {
+        // Ajoute "juj" à la fin de CHAQUE mot
+        const resultat = mots.map(m => m.toUpperCase() + "juj").join(" ");
+        zone.innerHTML = "<h3>Résultat Kujuj</h3><p style='line-height:1.8;'>" + resultat + "</p>";
+    }
 }
 
-// 4. LE GRAPHE (Vrai Camembert avec QuickChart comme sur ton image)
+// --- 3. GRAPHE (Vrai Camembert comme le prof) ---
 function genererGraphe() {
     const mots = preparerMots();
+    const zone = document.getElementById('affichageDroit');
     if (mots.length === 0) return;
     
     let freq = {};
@@ -53,32 +59,65 @@ function genererGraphe() {
     const labels = top.map(x => x[0]);
     const datas = top.map(x => x[1]);
 
-    // On utilise l'API QuickChart pour faire le camembert exact
+    // Génération automatique du camembert via QuickChart
     const chartUrl = `https://quickchart.io/chart?c={type:'pie',data:{labels:['${labels.join("','")}'],datasets:[{data:[${datas.join(",")}]}]}}`;
 
-    document.getElementById('affichageDroit').innerHTML = `
-        <h3>Mots les plus fréquents</h3>
-        <div style="text-align:center;">
-            <img src="${chartUrl}" style="width:100%; max-width:400px; background:white; padding:10px; border-radius:10px;">
-        </div>`;
+    zone.innerHTML = `<h3>Mots les plus fréquents</h3><div style="text-align:center;"><img src="${chartUrl}" style="width:100%; max-width:400px; background:white; padding:10px; border-radius:10px; border:1px solid #ccc;"></div>`;
 }
 
-// 5. LE CONCORDANCIER (Tableau 3 colonnes)
+// --- 4. DICTIONNAIRE (Tableau) ---
+function dictionnaire() {
+    const mots = preparerMots();
+    const zone = document.getElementById('affichageDroit');
+    if (mots.length === 0) return;
+    let freq = {};
+    mots.forEach(m => { let mot = m.toLowerCase(); freq[mot] = (freq[mot] || 0) + 1; });
+    const tri = Object.entries(freq).sort((a,b) => b[1] - a[1]).slice(0, 8);
+
+    let html = "<h3>Dictionnaire</h3><table border='1' style='width:100%; border-collapse:collapse;'>";
+    html += "<tr style='background:#555; color:white;'><th>Token</th><th>Fréquence</th></tr>";
+    tri.forEach(([m, f]) => { html += `<tr><td>${m}</td><td style='text-align:center;'>${f}</td></tr>`; });
+    html += "</table>";
+    zone.innerHTML = html;
+}
+
+// --- 5. NOMBRE DE PHRASES ---
+function nombrePhrases() {
+    const zone = document.getElementById('affichageDroit');
+    if (!texteAnalyse) return;
+    const n = texteAnalyse.split(/[.!?]+/).filter(p => p.trim().length > 0).length;
+    zone.innerHTML = `<h3>Analyse</h3><p>Il y a <b>${n}</b> phrases dans ce texte.</p>`;
+}
+
+// --- 6. MOTS LES PLUS LONGS ---
+function motsPlusLongs() {
+    const mots = [...new Set(preparerMots())];
+    const zone = document.getElementById('affichageDroit');
+    const tri = mots.sort((a, b) => b.length - a.length).slice(0, 7);
+
+    let html = "<h3>Mots les Plus Longs</h3><table border='1' style='width:100%; border-collapse:collapse;'>";
+    html += "<tr style='background:#555; color:white;'><th>Mot</th><th>Longueur</th></tr>";
+    tri.forEach(m => { html += `<tr><td>${m}</td><td style='text-align:center;'>${m.length}</td></tr>`; });
+    html += "</table>";
+    zone.innerHTML = html;
+}
+
+// --- 7. CONCORDANCIER ---
 function concordancier() {
     const pole = document.getElementById('pôle').value.toLowerCase();
     const mots = preparerMots();
+    const zone = document.getElementById('affichageDroit');
     if (!pole || mots.length === 0) return;
 
-    let html = `<h3>Concordancier</h3><table border='1' style='width:100%; border-collapse:collapse; font-size:0.9em;'>
-                <tr style='background:#555; color:white;'><th>Contexte gauche</th><th>Pôle</th><th>Contexte droit</th></tr>`;
-    
+    let html = "<h3>Concordancier</h3><table border='1' style='width:100%; border-collapse:collapse;'>";
+    html += "<tr style='background:#555; color:white;'><th>Gauche</th><th>Pôle</th><th>Droite</th></tr>";
     mots.forEach((m, i) => {
         if (m.toLowerCase() === pole) {
-            const g = mots.slice(Math.max(0, i-3), i).join(" ");
-            const d = mots.slice(i+1, i+4).join(" ");
+            const g = mots.slice(Math.max(0, i-2), i).join(" ");
+            const d = mots.slice(i+1, i+3).join(" ");
             html += `<tr><td style='text-align:right;'>${g}</td><td style='text-align:center; color:red;'><b>${m}</b></td><td>${d}</td></tr>`;
         }
     });
     html += "</table>";
-    document.getElementById('affichageDroit').innerHTML = html;
+    zone.innerHTML = html;
 }
