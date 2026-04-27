@@ -70,3 +70,14 @@ function motsPlusLongs() {
 
 function kujuj() { alert("Mode /kujuj/ activé !"); }
 function genererGraphe() { alert("Génération du graphe..."); }
+
+function genererGraphe() {
+    const zone = document.getElementById('affichageDroit');
+    zone.innerHTML = `
+        <h3 style="text-align:center; font-size:12px;">Mots les plus fréquents</h3>
+        <div style="display:flex; justify-content:center; margin-bottom: 20px;">
+            <img src="https://quickchart.io/chart?c={type:'pie',data:{labels:['le','la','de','un'],datasets:[{data:[30,20,15,10]}]}}" style="width:200px;">
+        </div>
+    `;
+    zone.scrollIntoView({behavior: "smooth"}); 
+}
