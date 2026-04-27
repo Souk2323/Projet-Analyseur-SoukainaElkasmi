@@ -1,69 +1,87 @@
 body {
-    background-color: #d4cc3d; /* Jaune moutarde */
+    background-color: #d6d600;
     font-family: Arial, sans-serif;
-    margin: 20px;
-}
-
-.cv-container {
-    background-color: #e2df9a;
-    border: 1px solid #000;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.studies span {
-    display: block;
-    border: 1px solid #000;
-    width: fit-content;
-    padding: 2px 5px;
-    margin-bottom: 5px;
-    background: white;
-}
-
-.analysis-section {
     text-align: center;
 }
 
-.title-glow {
-    color: white;
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-    font-size: 2em;
+/* Container */
+.container {
+    width: 80%;
+    margin: auto;
 }
 
-.tool-box {
-    background-color: #b194a0; /* Violet gris */
-    border: 1px solid #000;
-    padding: 20px;
-    display: inline-block;
-    border-radius: 5px;
-}
-
-.settings label {
-    display: block;
-    margin: 10px 0;
-    font-weight: bold;
-    font-size: 0.8em;
-}
-
-.button-grid {
-    margin-top: 15px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 5px;
-}
-
-button {
-    background-color: #c4d63e;
-    border: 1px solid #333;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-#result-area {
+/* CV */
+.cv-box {
+    background: #e6e6c0;
+    border: 2px solid black;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
     margin-top: 20px;
-    padding: 10px;
+}
+
+.cv-text {
+    text-align: left;
+}
+
+.cv-img {
+    width: 150px;
+    height: auto;
+}
+
+/* Études */
+.etudes {
+    border: 1px solid black;
+    padding: 5px;
+    display: inline-block;
     background: white;
-    min-height: 50px;
-    border: 1px dashed black;
+}
+
+/* Titre */
+.title {
+    margin: 40px 0;
+    font-size: 40px;
+    color: white;
+    text-shadow: 2px 2px purple;
+}
+
+/* Bloc principal */
+.box {
+    background: #c79aa0;
+    border: 2px solid black;
+    padding: 20px;
+}
+
+/* Form */
+.form-group {
+    margin: 10px 0;
+}
+
+/* Boutons */
+button {
+    background: yellow;
+    border: 2px solid black;
+    padding: 5px 10px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.help-btn {
+    margin-bottom: 15px;
+}
+
+.bonjour-btn {
+    background: #90c7a7;
+    padding: 10px;
+}
+
+/* Boutons bas */
+.buttons button {
+    background: yellow;
+}
+
+/* Lien */
+.link {
+    margin-top: 20px;
+    color: blue;
 }
