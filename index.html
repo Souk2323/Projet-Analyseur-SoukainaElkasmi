@@ -1,92 +1,37 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<title>Analyse</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Analyse des données dans un fichier</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
+    <h1>Analyse des données dans un fichier</h1>
 
-<!-- ===== CV ===== -->
-<div class="cv-box">
-
-    <div class="cv-text">
-        <h1>Curriculum Vitae</h1>
-
-        <p><strong>Soukaina Elkasmi</strong></p>
-
-        <p><strong>Études effectuées :</strong></p>
-
-        <!-- ENCADRÉ LICENCE (comme sur ta photo) -->
-        <div class="licence-box">
-            <p><strong>Licence</strong></p>
-            L1 Sciences du Langage (2024-2025)<br>
-            L2 Sciences du Langage (2025-2026)
+    <div class="main-container">
+        <input type="file" id="fileInput" accept=".txt">
+        
+        <div class="settings">
+            <label>Délimiteur(s) :</label>
+            <input type="text" id="delimiters" value=" ,;.'!?-">
+            
+            <label>Pôle :</label>
+            <input type="text" id="poleInput" placeholder="entrez un pôle...">
+            
+            <label>Longueur :</label>
+            <input type="number" id="contextLength" value="10">
         </div>
 
-        <p><strong>Livres que j'ai lus :</strong></p>
-        <ul>
-            <li>Harry Potter</li>
-            <li>La Dame de ménage</li>
-            <li>L'Anomalie</li>
-            <li>Le Petit Prince</li>
-            <li>L'Étranger</li>
-        </ul>
+        <div class="buttons">
+            <button onclick="segmenter()">Segmentation</button>
+            <button onclick="genererDico()">Dictionnaire</button>
+            <button onclick="concordancier()">Concordancier</button>
+            <button onclick="compterPhrases()">Nombre de phrases</button>
+        </div>
+
+        <div id="resultats"></div>
     </div>
 
-    <!-- TA PHOTO -->
-    <img src="photo.jpg" alt="photo" class="cv-img">
-
-</div>
-
-<!-- ===== TITRE ===== -->
-<h2 class="title">Analyse des données dans un fichier</h2>
-
-<!-- ===== BLOC ANALYSE ===== -->
-<div class="box">
-
-    <button id="help">Afficher l'aide</button>
-
-    <div class="ligne">
-        <label>Sélectionner un fichier .txt :</label>
-        <input type="file" id="fileInput">
-    </div>
-
-    <div class="ligne">
-        <span class="tag">DÉLIMITEUR(S)</span>
-        <input type="text" id="delim" value=".,;!?-">
-    </div>
-
-    <div class="ligne">
-        <span class="tag">PÔLE</span>
-        <input type="text" id="pole">
-
-        <span class="tag">LONGUEUR</span>
-        <input type="number" id="longueur" value="10">
-    </div>
-
-    <div class="ligne">
-        <span class="tag">STOPWORDS</span>
-        <input type="text" id="stop" value="de,le,la,les,à,et,des,un,une">
-    </div>
-
-    <button id="bonjour">Bonjour</button>
-
-    <div class="buttons">
-        <button onclick="segmentation()">Segmentation</button>
-        <button onclick="dictionnaire()">Dictionnaire</button>
-        <button onclick="nbPhrases()">Nb phrases</button>
-        <button onclick="motsLongs()">Mots longs</button>
-    </div>
-
-    <div id="resultat"></div>
-
-</div>
-
-<p class="link">Lien vers la Sorbonne Nouvelle</p>
-
-<script src="script.js"></script>
-
+    <script src="javascript/script.js"></script>
 </body>
 </html>
