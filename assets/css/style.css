@@ -1,14 +1,16 @@
 body {
     margin: 0;
     font-family: Arial;
-    background: linear-gradient(#d6d600, #c9c900);
+
+    /* 🟡 JAUNE BIEN VIF comme la photo */
+    background-color: #d4d400;
 }
 
-/* ===== CV ===== */
+/* ===== CV (BEIGE) ===== */
 .cv-box {
     width: 85%;
     margin: 30px auto;
-    background: #e6e3c5;
+    background-color: #e8e2b8; /* BEIGE */
     border: 4px solid black;
     display: flex;
     justify-content: space-between;
@@ -20,22 +22,20 @@ body {
     text-align: left;
 }
 
-/* ENCADRÉ LICENCE */
+/* encadré licence */
 .licence-box {
     border: 3px solid black;
     background: white;
     padding: 8px;
-    width: fit-content;
-    margin: 5px 0;
+    display: inline-block;
 }
 
-/* PHOTO */
+/* image */
 .cv-img {
     width: 180px;
     height: 130px;
     object-fit: cover;
     border: 3px solid black;
-    background: white;
 }
 
 /* ===== TITRE ===== */
@@ -47,37 +47,37 @@ body {
     margin: 50px 0;
 }
 
-/* ===== BLOC ===== */
+/* ===== BLOC ROSE ===== */
 .box {
     width: 70%;
     margin: auto;
-    background: #c7939a;
+
+    background-color: #c98c95; /* ROSE fidèle */
     border: 4px solid black;
     padding: 25px;
 }
 
-/* Lignes */
+/* lignes */
 .ligne {
     margin: 10px 0;
 }
 
-/* Tags violets */
+/* étiquettes violettes */
 .tag {
     background: purple;
     color: white;
     padding: 3px 8px;
-    margin-right: 5px;
 }
 
-/* Inputs */
+/* inputs */
 input {
     border: 2px solid black;
     padding: 4px;
 }
 
-/* Boutons */
+/* boutons */
 button {
-    background: #ffe600;
+    background: yellow;
     border: 3px solid black;
     padding: 5px 10px;
     margin: 5px;
@@ -85,23 +85,22 @@ button {
     cursor: pointer;
 }
 
-/* Bouton bonjour */
+/* bouton bonjour */
 #bonjour {
     background: #8fd0a8;
     display: block;
     margin: 10px auto;
 }
 
-/* Résultat */
+/* résultat */
 #resultat {
     margin-top: 15px;
     background: white;
     border: 2px solid black;
     padding: 10px;
-    min-height: 60px;
 }
 
-/* Lien */
+/* lien */
 .link {
     text-align: center;
     margin-top: 20px;
