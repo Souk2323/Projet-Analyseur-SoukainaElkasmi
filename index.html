@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analyseur Soukaina</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=4">
+    <link rel="stylesheet" href="assets/css/style.css?v=5">
 </head>
 <body>
 
     <div id="bloc-cv">
         <div class="cv-gauche">
-            <h1>Curriculum Vitae</h1>
+            <h2 style="margin:0;">Curriculum Vitae</h2>
             <p><strong>Soukaina Elkasmi</strong></p>
-            <p><em>Livres lus :</em></p>
-            <ul class="liste-livres">
+            <p>Livres lus :</p>
+            <ul style="font-size: 10px; padding-left: 15px;">
                 <li>Harry Potter</li>
                 <li>La Dame de ménage</li>
                 <li>L'Anomalie</li>
@@ -29,28 +29,23 @@
     <h2 class="titre-moyen">Analyse des données dans un fichier</h2>
 
     <div id="bloc-analyseur">
-        <button class="btn-aide">Afficher l'aide</button>
+        <button>Afficher l'aide</button>
         
-        <div class="ligne-simple" style="margin-top:10px;">
+        <div class="ligne-simple">
             <label>Sélectionner un fichier .txt :</label>
             <input type="file" id="fileInput">
         </div>
 
         <div class="ligne-mixte">
             <span class="badge">DÉLIMITEUR(S)</span>
-            <input type="text" id="delims" value=" ,;.'!?-">
+            <input type="text" value=" ,;.'!?-">
         </div>
 
         <div class="ligne-mixte">
             <span class="badge">PÔLE</span>
-            <input type="text" id="pole" placeholder="mot pôle..." style="width: 80px;">
+            <input type="text" placeholder="pôle..." style="width: 70px;">
             <span class="badge">LONGUEUR</span>
-            <input type="number" id="longueur" value="10" style="width: 30px;">
-        </div>
-
-        <div class="ligne-simple">
-            <span class="badge">STOPWORDS</span>
-            <input type="text" id="stopwords" value="de,le,la,les,à,et,des,un,une,du,que,en,l,qu,d,s,se,ne,n,ce,me,sa" style="width: 120px;">
+            <input type="number" value="10" style="width: 35px;">
         </div>
 
         <div class="cadre-bonjour">Bonjour</div>
@@ -61,10 +56,6 @@
             <button onclick="grep()">GREP</button>
             <button onclick="concordancier()">Concordancier</button>
             <button onclick="kujuj()">/kujuj/</button>
-            <br>
-            <button onclick="nombrePhrases()">Nb phrases</button>
-            <button onclick="motsPlusLongs()">Mots longs</button>
-            <button onclick="genererGraphe()">Graphe</button>
         </div>
     </div>
 
