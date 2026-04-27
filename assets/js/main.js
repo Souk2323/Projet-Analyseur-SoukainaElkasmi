@@ -1,85 +1,72 @@
-let texteBrut = "";
+let texteAnalyse = "";
 
-// Chargement du fichier
+// 1. Charger le fichier .txt
 document.getElementById('fileInput').addEventListener('change', function(e) {
     const file = e.target.files[0];
+    if (!file) return;
     const reader = new FileReader();
     reader.onload = function(event) {
-        texteBrut = event.target.result;
-        document.getElementById('resultats').innerHTML = "<h3>Fichier chargé avec succès !</h3>";
+        texteAnalyse = event.target.result;
+        // On change le texte du cadre "Bonjour" pour confirmer
+        const cadre = document.querySelector('.cadre-bonjour');
+        if(cadre) cadre.innerText = "Fichier prêt !";
     };
     reader.readAsText(file);
 });
 
-// Aide à la découpe (nettoyage)
-function obtenirMots() {
-    const delims = document.getElementById('delims').value;
-    const regex = new RegExp("[" + delims.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + "\\s]+", "g");
-    return texteBrut.split(regex).filter(m => m.length > 0);
+// 2. Découper le texte en mots selon les délimiteurs
+function preparerMots() {
+    if (!texteAnalyse) {
+        alert("Choisis d'abord un fichier .txt !");
+        return [];
+    }
+    const delimInput = document.getElementById('delims');
+    const delimiteurs = delimInput ? delimInput.value : " ,;.'!?-";
+    const regex = new RegExp("[" + delimiteurs.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + "\\s]+", "g");
+    return texteAnalyse.split(regex).filter(m => m.length > 0);
 }
 
-// 1. Segmentation / Tokens
+// 3. Fonctions pour les boutons
 function segmenter() {
-    if (!texteBrut) return alert("Veuillez charger un fichier.");
-    const mots = obtenirMots();
-    document.getElementById('resultats').innerHTML = `<h3>Tokens détectés : ${mots.length}</h3><p>${mots.slice(0, 50).join(' | ')}...</p>`;
+    const mots = preparerMots();
+    if (mots.length > 0) alert("Segmentation : " + mots.length + " mots trouvés.");
 }
 
-// 2. Dictionnaire de fréquences
-function genererDictionnaire() {
-    const mots = obtenirMots();
-    const stopwords = document.getElementById('stopwords').value.split(',');
+function dictionnaire() {
+    const mots = preparerMots();
+    if (mots.length === 0) return;
     let dico = {};
-    
     mots.forEach(m => {
         let mot = m.toLowerCase();
-        if (!stopwords.includes(mot)) {
-            dico[mot] = (dico[mot] || 0) + 1;
-        }
+        dico[mot] = (dico[mot] || 0) + 1;
     });
-
-    let html = "<table><tr><th>Token</th><th>Fréquence</th></tr>";
-    Object.keys(dico).sort((a,b) => dico[b] - dico[a]).slice(0, 10).forEach(mot => {
-        html += `<tr><td>${mot}</td><td>${dico[mot]}</td></tr>`;
-    });
-    html += "</table>";
-    document.getElementById('resultats').innerHTML = "<h3>Top 10 des mots fréquents</h3>" + html;
+    console.log("Dictionnaire généré", dico);
+    alert("Dictionnaire créé (voir console)");
 }
 
-// 3. Concordancier
 function concordancier() {
     const pole = document.getElementById('pole').value.toLowerCase();
-    const taille = parseInt(document.getElementById('longueur').value);
-    if (!pole) return alert("Entrez un mot pôle.");
-    
-    const mots = obtenirMots();
-    let html = "<table><tr><th>Contexte Gauche</th><th>Pôle</th><th>Contexte Droit</th></tr>";
-    
-    mots.forEach((mot, i) => {
-        if (mot.toLowerCase() === pole) {
-            let gauche = mots.slice(Math.max(0, i - taille), i).join(" ");
-            let droit = mots.slice(i + 1, i + 1 + taille).join(" ");
-            html += `<tr><td>${gauche}</td><td style="font-weight:bold">${mot}</td><td>${droit}</td></tr>`;
-        }
-    });
-    html += "</table>";
-    document.getElementById('resultats').innerHTML = html;
+    const len = parseInt(document.getElementById('longueur').value) || 10;
+    if (!pole) return alert("Entrez un mot pôle !");
+    alert("Recherche du mot '" + pole + "' avec un contexte de " + len);
 }
 
-// 4. Mots les plus longs
+function grep() {
+    const p = document.getElementById('pole').value;
+    if (!p) return alert("Entrez un motif !");
+    const lignes = texteAnalyse.split('\n').filter(l => l.includes(p));
+    alert(lignes.length + " lignes trouvées.");
+}
+
+function nombrePhrases() {
+    const n = texteAnalyse.split(/[.!?]+/).filter(p => p.trim().length > 0).length;
+    alert("Il y a " + n + " phrases.");
+}
+
 function motsPlusLongs() {
-    const mots = [...new Set(obtenirMots())]; // Uniques
-    mots.sort((a, b) => b.length - a.length);
-    let html = "<table><tr><th>Mot</th><th>Longueur</th></tr>";
-    mots.slice(0, 10).forEach(m => {
-        html += `<tr><td>${m}</td><td>${m.length}</td></tr>`;
-    });
-    html += "</table>";
-    document.getElementById('resultats').innerHTML = "<h3>Mots les plus longs</h3>" + html;
+    const mots = [...new Set(preparerMots())].sort((a, b) => b.length - a.length);
+    alert("Le mot le plus long est : " + mots[0]);
 }
 
-// 5. Nombre de phrases
-function compterPhrases() {
-    const phrases = texteBrut.split(/[.!?]+/).filter(p => p.trim().length > 0);
-    document.getElementById('resultats').innerHTML = `<h3>Il y a ${phrases.length} phrases dans ce texte.</h3>`;
-}
+function kujuj() { alert("Mode /kujuj/ activé !"); }
+function genererGraphe() { alert("Génération du graphe..."); }
