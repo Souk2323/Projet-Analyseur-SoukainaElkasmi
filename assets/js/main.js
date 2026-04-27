@@ -10,8 +10,16 @@ let lignesTexte = [];
 const DELIMITEURS_PROF = "`/*~|&#@=~:?%*$(){}[];+-*/`";
 const STOPWORDS_PROF = ["de","le","la","les","à","et","des","un","une","du","que","en","l","que","qu","d","s","se","ne","n","ce","me","sa"];
 
+// Zone d'affichage des résultats (on utilise la classe .cadre-bonjour déjà existante)
+function afficherResultat(html) {
+    const cadreBonjour = document.querySelector('.cadre-bonjour');
+    if (cadreBonjour) {
+        cadreBonjour.innerHTML = html;
+    }
+}
+
 // ============================================================
-// 1. CHARGEMENT DU FICHIER
+// CHARGEMENT DU FICHIER (reste sur l'ID fileInput)
 // ============================================================
 document.getElementById('fileInput').addEventListener('change', function(e) {
     const file = e.target.files[0];
@@ -21,19 +29,16 @@ document.getElementById('fileInput').addEventListener('change', function(e) {
     reader.onload = function(event) {
         texteAnalyse = event.target.result;
         lignesTexte = texteAnalyse.split(/\n/).filter(l => l.trim().length > 0);
+        const nbTokens = preparerMotsBruts().length;
         
-        const cadreMessage = document.querySelector('.cadre-message');
-        if (cadreMessage) {
-            cadreMessage.innerHTML = "<p>Fichier chargé avec succès<br>Nombre de tokens : " + preparerMotsBruts().length + "<br>Nombre de lignes : " + lignesTexte.length + "</p>";
-        } else {
-            alert("Fichier chargé : " + lignesTexte.length + " lignes, " + preparerMotsBruts().length + " tokens.");
-        }
+        // Message de confirmation dans .cadre-bonjour
+        afficherResultat("<p style='color:green;'><strong>Fichier chargé avec succès</strong><br>Nombre de tokens : " + nbTokens + "<br>Nombre de lignes : " + lignesTexte.length + "</p>");
     };
     reader.readAsText(file);
 });
 
 // ============================================================
-// 2. FONCTION DE SÉCURITÉ
+// FONCTION DE SÉCURITÉ
 // ============================================================
 function estPret() {
     if (!texteAnalyse) {
@@ -44,120 +49,73 @@ function estPret() {
 }
 
 // ============================================================
-// 3. PRÉPARATION DES MOTS (2 versions : avec et sans stopwords)
+// PRÉPARATION DES MOTS
 // ============================================================
-
-// Version SANS filtrage des stopwords (pour Dictionnaire, GREP, Concordancier)
 function preparerMotsBruts() {
     const delimiteursEchappes = DELIMITEURS_PROF.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
     const regex = new RegExp("[" + delimiteursEchappes + "\\s]+", "g");
     return texteAnalyse.split(regex).filter(m => m.length > 0);
 }
 
-// Version AVEC filtrage des stopwords (pour Segmentation, Mots longs, Graphe)
 function preparerMots() {
     return preparerMotsBruts().filter(m => !STOPWORDS_PROF.includes(m.toLowerCase()));
 }
 
 // ============================================================
-// 4. BOUTON BONJOUR
+// FONCTIONS APPELEES PAR LES ONCLICK DU HTML
 // ============================================================
-document.getElementById('bonjourBtn').addEventListener('click', function() {
-    const cadreResultat = document.querySelector('.cadre-resultat');
-    if (cadreResultat) {
-        cadreResultat.innerHTML = "<h2>Bonjour</h2>";
-    } else {
-        alert("Bonjour");
-    }
-});
 
-// ============================================================
-// 5. SEGMENTATION
-// ============================================================
-document.getElementById('segmentationBtn').addEventListener('click', function() {
+// SEGMENTATION (sans stopwords)
+function segmenter() {
     if (!estPret()) return;
-    const mots = preparerMots();  // stopwords filtrés
-    const cadreResultat = document.querySelector('.cadre-resultat');
-    if (cadreResultat) {
-        cadreResultat.innerHTML = "<h3>Segmentation</h3><p>" + mots.join(" | ") + "</p>";
-    } else {
-        alert("Segmentation : " + mots.join(" | "));
-    }
-});
+    const mots = preparerMots();
+    afficherResultat("<h3>Segmentation</h3><p>" + mots.join(" | ") + "</p>");
+}
 
-// ============================================================
-// 6. NOMBRE DE PHRASES
-// ============================================================
-document.getElementById('nbPhrasesBtn').addEventListener('click', function() {
+// NOMBRE DE PHRASES
+function nombrePhrases() {
     if (!estPret()) return;
     const phrases = texteAnalyse.split(/[.!?]+/).filter(p => p.trim().length > 0);
-    const cadreResultat = document.querySelector('.cadre-resultat');
-    if (cadreResultat) {
-        cadreResultat.innerHTML = "<h3>Nombre de phrases</h3><p>" + phrases.length + "</p>";
-    } else {
-        alert("Nombre de phrases : " + phrases.length);
-    }
-});
+    afficherResultat("<h3>Nombre de phrases</h3><p><strong>" + phrases.length + "</strong></p>");
+}
 
-// ============================================================
-// 7. DICTIONNAIRE (Top fréquences - TOUS les tokens)
-// ============================================================
-document.getElementById('dictionnaireBtn').addEventListener('click', function() {
+// DICTIONNAIRE (tous les tokens, avec stopwords)
+function dictionnaire() {
     if (!estPret()) return;
-    const mots = preparerMotsBruts();  // PAS de filtrage stopwords
+    const mots = preparerMotsBruts();
     let freq = {};
     mots.forEach(m => { 
         let mot = m.toLowerCase(); 
         freq[mot] = (freq[mot] || 0) + 1; 
     });
-    const tri = Object.entries(freq).sort((a,b) => b[1] - a[1]).slice(0, 10);
+    const tri = Object.entries(freq).sort((a,b) => b[1] - a[1]).slice(0, 15);
 
-    let html = "<h3>Mots les plus fréquents</h3><table border='1' style='width:100%; border-collapse:collapse;'>";
+    let html = "<h3>Mots les plus fréquents</h3><table border='1' style='width:100%; border-collapse:collapse; font-size:11px;'>";
     html += "<tr><th>Token</th><th>Fréquence</th></tr>";
     tri.forEach(([m, f]) => { 
-        html += "<tr><td style='padding:5px;'>" + m + "</td><td style='padding:5px;'>" + f + "</td></tr>"; 
+        html += "<tr><td>" + m + "</td><td>" + f + "</td></tr>"; 
     });
     html += "</table>";
+    afficherResultat(html);
+}
 
-    const cadreResultat = document.querySelector('.cadre-resultat');
-    if (cadreResultat) {
-        cadreResultat.innerHTML = html;
-    } else {
-        let txt = "Mots les plus fréquents :\n";
-        tri.forEach(([m, f]) => { txt += m + " : " + f + "\n"; });
-        alert(txt);
-    }
-});
-
-// ============================================================
-// 8. MOTS LES PLUS LONGS (stopwords filtrés, mots uniques)
-// ============================================================
-document.getElementById('motsLongsBtn').addEventListener('click', function() {
+// MOTS LES PLUS LONGS (sans stopwords, uniques)
+function motsPlusLongs() {
     if (!estPret()) return;
-    const motsUniques = [...new Set(preparerMots())];  // stopwords filtrés
+    const motsUniques = [...new Set(preparerMots())];
     const tri = motsUniques.sort((a, b) => b.length - a.length).slice(0, 10);
 
-    let html = "<h3>Mots les Plus Longs</h3><table border='1' style='width:100%; border-collapse:collapse;'>";
+    let html = "<h3>Mots les Plus Longs</h3><table border='1' style='width:100%; border-collapse:collapse; font-size:11px;'>";
     html += "<tr><th>Mot</th><th>Longueur</th></tr>";
     tri.forEach(m => {
-        html += "<tr><td style='padding:5px;'>" + m + "</td><td style='padding:5px;'>" + m.length + "</td></tr>";
+        html += "<tr><td>" + m + "</td><td>" + m.length + "</td></tr>";
     });
     html += "</table>";
+    afficherResultat(html);
+}
 
-    const cadreResultat = document.querySelector('.cadre-resultat');
-    if (cadreResultat) {
-        cadreResultat.innerHTML = html;
-    } else {
-        let txt = "Mots les plus longs :\n";
-        tri.forEach(m => { txt += m + " (" + m.length + ")\n"; });
-        alert(txt);
-    }
-});
-
-// ============================================================
-// 9. GREP (recherche dans les lignes - sensible à la casse via regex gi)
-// ============================================================
-document.getElementById('grepBtn').addEventListener('click', function() {
+// GREP
+function grep() {
     if (!estPret()) return;
     const pole = document.getElementById('pole').value.trim();
     if (!pole) { 
@@ -166,27 +124,24 @@ document.getElementById('grepBtn').addEventListener('click', function() {
     }
 
     const regex = new RegExp(pole, "gi");
-    const resultats = lignesTexte.filter(ligne => regex.test(ligne));
-
-    let html = "<h3>GREP</h3><p>" + resultats.length + " ligne(s) trouvée(s)</p>";
-    html += "<div style='text-align:left; font-size:12px; max-height:300px; overflow-y:auto;'>";
+    const resultats = lignesTexte.filter(ligne => {
+        const test = regex.test(ligne);
+        regex.lastIndex = 0;
+        return test;
+    });
+    
+    let html = "<h3>GREP</h3><p><strong>" + resultats.length + " ligne(s) trouvée(s)</strong></p>";
+    html += "<div style='text-align:left; max-height:300px; overflow-y:auto; font-size:11px;'>";
     resultats.forEach(l => {
-        html += l.replace(regex, (match) => "<span style='color:red; font-weight:bold;'>" + match + "</span>") + "<br><hr style='margin:5px 0;'>";
+        regex.lastIndex = 0;
+        html += l.replace(regex, (match) => "<span style='color:red; font-weight:bold;'>" + match + "</span>") + "<br><hr>";
     });
     html += "</div>";
+    afficherResultat(html);
+}
 
-    const cadreResultat = document.querySelector('.cadre-resultat');
-    if (cadreResultat) {
-        cadreResultat.innerHTML = html;
-    } else {
-        alert("GREP : " + resultats.length + " lignes trouvées.");
-    }
-});
-
-// ============================================================
-// 10. CONCORDANCIER (contexte 3 mots avant/après, stopwords INCLUS)
-// ============================================================
-document.getElementById('concordancierBtn').addEventListener('click', function() {
+// CONCORDANCIER (stopwords INCLUS)
+function concordancier() {
     if (!estPret()) return;
     const pole = document.getElementById('pole').value.trim();
     if (!pole) { 
@@ -194,9 +149,9 @@ document.getElementById('concordancierBtn').addEventListener('click', function()
         return; 
     }
 
-    const mots = preparerMotsBruts();  // PAS de filtrage stopwords
-    let html = "<h3>Concordancier</h3><table border='1' style='width:100%; border-collapse:collapse; font-size:12px;'>";
-    html += "<tr><th>Contexte gauche</th><th>Pôle</th><th>Contexte droit</th></tr>";
+    const mots = preparerMotsBruts();
+    let html = "<h3>Concordancier</h3><table border='1' style='width:100%; border-collapse:collapse; font-size:10px;'>";
+    html += "<tr><th>Contexte gauche</th><th style='color:red;'>Pôle</th><th>Contexte droit</th></tr>";
     let trouve = false;
 
     mots.forEach((m, i) => {
@@ -205,31 +160,23 @@ document.getElementById('concordancierBtn').addEventListener('click', function()
             const gauche = mots.slice(Math.max(0, i-3), i).join(" ");
             const droit = mots.slice(i+1, i+4).join(" ");
             html += "<tr>";
-            html += "<td style='text-align:right; padding:5px;'>" + gauche + "</td>";
-            html += "<td style='text-align:center; color:red; font-weight:bold; padding:5px;'>" + m + "</td>";
-            html += "<td style='text-align:left; padding:5px;'>" + droit + "</td>";
+            html += "<td style='text-align:right; padding:3px;'>" + gauche + "</td>";
+            html += "<td style='text-align:center; color:red; font-weight:bold; padding:3px;'>" + m + "</td>";
+            html += "<td style='text-align:left; padding:3px;'>" + droit + "</td>";
             html += "</tr>";
         }
     });
     html += "</table>";
 
-    const cadreResultat = document.querySelector('.cadre-resultat');
-    if (cadreResultat) {
-        if (trouve) {
-            cadreResultat.innerHTML = html;
-        } else {
-            cadreResultat.innerHTML = "<h3>Concordancier</h3><p>Le mot '" + pole + "' n'a pas été trouvé.</p>";
-        }
+    if (trouve) {
+        afficherResultat(html);
     } else {
-        if (trouve) alert("Concordancier : " + pole + " trouvé.");
-        else alert("Le mot '" + pole + "' n'a pas été trouvé.");
+        afficherResultat("<h3>Concordancier</h3><p>Le mot '" + pole + "' n'a pas été trouvé.</p>");
     }
-});
+}
 
-// ============================================================
-// 11. /kujuj/ (fonction mystère - probablement mise en évidence du pôle)
-// ============================================================
-document.getElementById('kujujBtn').addEventListener('click', function() {
+// /KUJUJ/ (mise en évidence du pôle)
+function kujuj() {
     if (!estPret()) return;
     const pole = document.getElementById('pole').value.trim();
     if (!pole) {
@@ -245,20 +192,13 @@ document.getElementById('kujujBtn').addEventListener('click', function() {
         }
     }).join(" ");
     
-    const cadreResultat = document.querySelector('.cadre-resultat');
-    if (cadreResultat) {
-        cadreResultat.innerHTML = "<h3>/kujuj/</h3><p>" + res + "</p>";
-    } else {
-        alert("/kujuj/ : " + res.replace(/<[^>]*>/g, ''));
-    }
-});
+    afficherResultat("<h3>/kujuj/</h3><p style='font-size:12px;'>" + res + "</p>");
+}
 
-// ============================================================
-// 12. GRAPHE CAMEMBERT (Pie Chart - stopwords filtrés)
-// ============================================================
-document.getElementById('grapheBtn').addEventListener('click', function() {
+// GRAPHE CAMEMBERT (stopwords filtrés)
+function genererGraphe() {
     if (!estPret()) return;
-    const mots = preparerMots();  // stopwords filtrés
+    const mots = preparerMots();
     let freq = {};
     mots.forEach(m => { 
         let mot = m.toLowerCase(); 
@@ -266,10 +206,11 @@ document.getElementById('grapheBtn').addEventListener('click', function() {
     });
     const top = Object.entries(freq).sort((a,b) => b[1] - a[1]).slice(0, 5);
 
-    const cadreResultat = document.querySelector('.cadre-resultat');
-    if (cadreResultat) {
-        cadreResultat.innerHTML = "<h3>graphecamembert-Pie chart</h3><div id='chart' class='ct-chart ct-golden-section' style='height:250px;'></div>";
+    const html = "<h3>graphecamembert-Pie chart</h3><div id='chart' class='ct-chart ct-golden-section' style='height:200px;'></div>";
+    afficherResultat(html);
 
+    // Petit délai pour que le DOM soit mis à jour avant de créer le graphique
+    setTimeout(function() {
         if (typeof Chartist !== 'undefined') {
             new Chartist.Pie('#chart', {
                 labels: top.map(x => x[0]),
@@ -280,16 +221,7 @@ document.getElementById('grapheBtn').addEventListener('click', function() {
                 showLabel: true
             });
         } else {
-            cadreResultat.innerHTML += "<p style='color:red;'>Erreur : Librairie Chartist non chargée.</p>";
+            document.getElementById('chart').innerHTML = "<p style='color:red;'>Erreur : Librairie Chartist non chargée.</p>";
         }
-    } else {
-        alert("Pour le graphe, ajoutez <div class='cadre-resultat'> et Chartist dans le HTML.");
-    }
-});
-
-// ============================================================
-// 13. BOUTON AIDE
-// ============================================================
-document.getElementById('afficherAideBtn').addEventListener('click', function() {
-    alert("Utilisation :\n1. Sélectionnez un fichier .txt.\n2. Entrez un mot dans 'Pôle' pour GREP, Concordancier, /kujuj/.\n3. Les délimiteurs et stopwords sont prédéfinis comme le prof.\n4. Cliquez sur les boutons pour lancer les analyses.");
-});
+    }, 100);
+}
