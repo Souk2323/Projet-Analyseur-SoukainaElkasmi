@@ -171,5 +171,3 @@ function genererGraphe() {
         console.error("Conteneur de graphe (div#chart) non trouvé dans le HTML.");
     }
 }
-
-
