@@ -2,85 +2,62 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analyseur Soukaina</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=11">
+    <title>Mon Interface Jaune</title>
+    <style>
+        /* On remet ton style d'origine ici */
+        body {
+            background-color: #1a1a1a; /* Fond sombre pour faire ressortir le jaune */
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffcc00; /* Le jaune parfait du début */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .btn {
+            background-color: #000;
+            color: #ffcc00;
+            border: none;
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            background-color: #333;
+        }
+    </style>
 </head>
 <body>
 
-    <div id="bloc-cv">
-        <div class="cv-gauche">
-            <h2 style="margin:0; font-size: 1.1rem;">Curriculum Vitae</h2>
-            <p style="font-weight: bold; margin: 3px 0; font-size: 10px;">Soukaina Elkasmi</p>
-            
-            <p style="margin: 5px 0 2px 0; font-size: 9px;"><strong>Études effectuées :</strong></p>
-            <div class="cadre-etudes">
-                L1 Sciences du Langage (2024-2025)<br>
-                L2 Sciences du Langage (2025-2026)
-            </div>
-
-            <p style="margin: 8px 0 2px 0; font-size: 9px;"><strong>Livres que j'ai lus :</strong></p>
-            <ul class="liste-livres">
-                <li>Harry Potter</li>
-                <li>La Dame de ménage</li>
-                <li>L'Anomalie</li>
-                <li>Le Petit Prince</li>
-                <li>L'Étranger</li>
-            </ul>
-        </div>
-        <div class="photo-cv">
-            <img src="assets/IMG_5211.jpeg" alt="Photo">
-        </div>
-    </div>
-
-    <h2 class="titre-moyen">Analyse des données dans un fichier</h2>
-
-    <div id="bloc-analyseur">
-        <button>Afficher l'aide</button>
+    <div class="container">
+        <h1 style="color: #000;">Tableau de Bord</h1>
         
-        <div class="ligne-simple" style="margin-top:5px;">
-            <label>Sélectionner un fichier .txt :</label>
-            <input type="file" id="fileInput" style="width: 120px;">
-        </div>
-
-        <div class="ligne-mixte">
-            <span class="badge">DÉLIMITEUR(S)</span>
-            <input type="text" id="delims" value=" ,;.'!?-" style="width: 80px;">
-        </div>
-
-        <div class="ligne-mixte">
-            <span class="badge">PÔLE</span>
-            <input type="text" id="pole" placeholder="pôle..." style="width: 60px;">
-            <span class="badge">LONGUEUR</span>
-            <input type="number" id="longueur" value="10" style="width: 30px;">
-        </div>
-
-        <div class="ligne-simple">
-            <span class="badge">STOPWORDS</span>
-            <input type="text" value="de,le,la,les,à,et,des,un,une..." style="width: 100px;">
-        </div>
-
-        <div class="cadre-bonjour">Bonjour</div>
-
-        <div class="boutons-actions">
-            <button onclick="segmenter()">Segmentation</button>
-            <button onclick="dictionnaire()">Dictionnaire</button>
-            <button onclick="grep()">GREP</button>
-            <button onclick="concordancier()">Concordancier</button>
-            <button onclick="kujuj()">/kujuj/</button>
-            <br>
-            <button onclick="nombrePhrases()">Nb phrases</button>
-            <button onclick="motsPlusLongs()">Mots longs</button>
-            <button onclick="genererGraphe()">Graphe</button>
-        </div>
-    </div>
-<div id="affichageDroit" style="width: 95%; max-width: 500px; margin-top: 20px; font-size: 10px;">
+        <button class="btn" onclick="actionBouton('Alerte')">Bouton 1</button>
+        <button class="btn" onclick="actionBouton('Validation')">Bouton 2</button>
     </div>
 
-    <footer>
-        <a href="https://www.sorbonne-nouvelle.fr/" target="_blank" class="lien-sorbonne">Lien vers la Sorbonne Nouvelle</a>
-    </footer>
+    <script>
+        // La fonction qui manquait pour faire marcher les boutons
+        function actionBouton(nom) {
+            alert("Tu as cliqué sur : " + nom);
+            console.log("Action exécutée pour " + nom);
+        }
+    </script>
 
-    <script src="assets/js/main.js"></script>
 </body>
 </html>
