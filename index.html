@@ -2,20 +2,25 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Analyse de données - Soukaina</title>
+    <title>Analyse de données</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header class="cv-container">
-        <div class="cv-content">
+<div class="container">
+
+    <!-- CV -->
+    <div class="cv-box">
+        <div class="cv-text">
             <h1>Curriculum Vitae</h1>
-            <h3>Soukaina Elkasmi</h3>
+            <p><strong>Soukaina Elkasmi</strong></p>
+
             <p><strong>Études effectuées :</strong></p>
-            <div class="studies">
-                <span>L1 Sciences du Langage (2024-2025)</span>
-                <span>L2 Sciences du Langage (2025-2026)</span>
+            <div class="etudes">
+                L1 Sciences du Langage (2024-2025)<br>
+                L2 Sciences du Langage (2025-2026)
             </div>
+
             <p><strong>Livres que j'ai lus :</strong></p>
             <ul>
                 <li>Harry Potter</li>
@@ -25,50 +30,61 @@
                 <li>L'Étranger</li>
             </ul>
         </div>
-        <div class="cv-image">
-            <img src="https://via.placeholder.com/100" alt="Icone">
-        </div>
-    </header>
 
-    <hr>
+        <img src="img.jpg" alt="image" class="cv-img">
+    </div>
 
-    <main class="analysis-section">
-        <h2 class="title-glow">Analyse des données dans un fichier</h2>
-        
-        <div class="tool-box">
-            <button class="help-btn">Afficher l'aide</button>
-            
-            <div class="input-group">
-                <label>Sélectionner un fichier .txt :</label>
-                <input type="file" id="fileInput" accept=".txt">
-            </div>
+    <!-- Titre -->
+    <h2 class="title">Analyse des données dans un fichier</h2>
 
-            <div class="settings">
-                <label>DÉLIMITEUR(S) <input type="text" id="delimiters" value=".,;:!?"></label>
-                <label>PÔLE <input type="text" id="pole" placeholder="pôle..."></label>
-                <label>LONGUEUR <input type="number" id="length" value="10"></label>
-                <label>STOPWORDS <input type="text" id="stopwords" value="de,le,la,les,à,et,des,un,une"></label>
-            </div>
+    <!-- Bloc analyse -->
+    <div class="box">
 
-            <button class="hello-btn">Bonjour</button>
+        <button class="help-btn">Afficher l'aide</button>
 
-            <div class="button-grid">
-                <button onclick="process('Segmentation')">Segmentation</button>
-                <button onclick="process('Dictionnaire')">Dictionnaire</button>
-                <button onclick="process('GREP')">GREP</button>
-                <button onclick="process('Concordancier')">Concordancier</button>
-                <button onclick="process('Nb phrases')">Nb phrases</button>
-                <button onclick="process('Mots longs')">Mots longs</button>
-                <button onclick="process('Graphe')">Graphe</button>
-            </div>
+        <div class="form-group">
+            <label>Sélectionner un fichier .txt :</label>
+            <input type="file">
         </div>
 
-        <div id="result-area">
-            </div>
+        <div class="form-group">
+            <label>DÉLIMITEUR(S)</label>
+            <input type="text" value=".,;!?-">
+        </div>
 
-        <a href="#" class="link-sorbonne">Lien vers la Sorbonne Nouvelle</a>
-    </main>
+        <div class="form-group">
+            <label>PÔLE</label>
+            <input type="text" placeholder="pôle...">
 
-    <script src="script.js"></script>
+            <label>LONGUEUR</label>
+            <input type="number" value="10">
+        </div>
+
+        <div class="form-group">
+            <label>STOPWORDS</label>
+            <input type="text" value="de,le,la,les,à,et,des,un,ur">
+        </div>
+
+        <button class="bonjour-btn">Bonjour</button>
+
+        <div class="buttons">
+            <button>Segmentation</button>
+            <button>Dictionnaire</button>
+            <button>GREP</button>
+            <button>Concordancier</button>
+            <button>/kujuj/</button>
+            <button>Nb phrases</button>
+            <button>Mots longs</button>
+            <button>Graphe</button>
+        </div>
+
+    </div>
+
+    <p class="link">Lien vers la Sorbonne Nouvelle</p>
+
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
+
