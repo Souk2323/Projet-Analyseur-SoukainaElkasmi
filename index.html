@@ -5,15 +5,22 @@
 <title>Analyse</title>
 <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
+<!-- ===== CV ===== -->
 <div class="cv-box">
-    <div>
+
+    <div class="cv-text">
         <h1>Curriculum Vitae</h1>
+
         <p><strong>Soukaina Elkasmi</strong></p>
 
         <p><strong>Études effectuées :</strong></p>
-        <div class="etudes">
+
+        <!-- ENCADRÉ LICENCE (comme sur ta photo) -->
+        <div class="licence-box">
+            <p><strong>Licence</strong></p>
             L1 Sciences du Langage (2024-2025)<br>
             L2 Sciences du Langage (2025-2026)
         </div>
@@ -28,11 +35,15 @@
         </ul>
     </div>
 
-    <img src="img.jpg">
+    <!-- TA PHOTO -->
+    <img src="photo.jpg" alt="photo" class="cv-img">
+
 </div>
 
+<!-- ===== TITRE ===== -->
 <h2 class="title">Analyse des données dans un fichier</h2>
 
+<!-- ===== BLOC ANALYSE ===== -->
 <div class="box">
 
     <button id="help">Afficher l'aide</button>
@@ -49,7 +60,7 @@
 
     <div class="ligne">
         <span class="tag">PÔLE</span>
-        <input type="text" id="pole" placeholder="pôle...">
+        <input type="text" id="pole">
 
         <span class="tag">LONGUEUR</span>
         <input type="number" id="longueur" value="10">
@@ -57,7 +68,7 @@
 
     <div class="ligne">
         <span class="tag">STOPWORDS</span>
-        <input type="text" id="stop" value="de,le,la,les,à,et,des,un,ur">
+        <input type="text" id="stop" value="de,le,la,les,à,et,des,un,une">
     </div>
 
     <button id="bonjour">Bonjour</button>
@@ -76,5 +87,6 @@
 <p class="link">Lien vers la Sorbonne Nouvelle</p>
 
 <script src="script.js"></script>
+
 </body>
 </html>
