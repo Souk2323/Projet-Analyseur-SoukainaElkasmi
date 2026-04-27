@@ -13,7 +13,8 @@ L'analyseur propose les outils suivants :
 - **Segmentation** : Découpage du texte selon des délimiteurs personnalisables (RegExp).
 - **Dictionnaire** : Calcul de la fréquence d'apparition de chaque mot.
 - **GREP** : Extraction des lignes contenant un pôle spécifique.
-- **Concordancier** : Affichage du contexte gauche et droit d'un mot choisi.
+- **Mots les plus longs** : Affichage des 10 mots les plus longs du texte.
+- **Nombre de phrases** : Comptage des phrases du texte.
 - **Statistiques** : Comptage automatique du nombre de formes dans le texte.
 
 ## Structure du projet
