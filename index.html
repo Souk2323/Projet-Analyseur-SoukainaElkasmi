@@ -1,19 +1,16 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analyseur Soukaina</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=5">
-</head>
-<body>
-
     <div id="bloc-cv">
         <div class="cv-gauche">
-            <h2 style="margin:0;">Curriculum Vitae</h2>
-            <p><strong>Soukaina Elkasmi</strong></p>
-            <p>Livres lus :</p>
-            <ul style="font-size: 10px; padding-left: 15px;">
+            <h2 style="margin:0; font-size: 1.2rem;">Curriculum Vitae</h2>
+            <p style="font-weight: bold; margin: 5px 0;">Soukaina Elkasmi</p>
+            
+            <p style="margin-bottom: 5px;"><strong>Études effectuées :</strong></p>
+            <div class="cadre-etudes">
+                L1 Sciences du Langage (2024-2025)<br>
+                L2 Sciences du Langage (2025-2026)
+            </div>
+
+            <p style="margin: 10px 0 5px 0;"><strong>Livres que j'ai lus :</strong></p>
+            <ul class="liste-livres">
                 <li>Harry Potter</li>
                 <li>La Dame de ménage</li>
                 <li>L'Anomalie</li>
@@ -25,44 +22,3 @@
             <img src="assets/IMG_5211.jpeg" alt="Photo">
         </div>
     </div>
-
-    <h2 class="titre-moyen">Analyse des données dans un fichier</h2>
-
-    <div id="bloc-analyseur">
-        <button>Afficher l'aide</button>
-        
-        <div class="ligne-simple">
-            <label>Sélectionner un fichier .txt :</label>
-            <input type="file" id="fileInput">
-        </div>
-
-        <div class="ligne-mixte">
-            <span class="badge">DÉLIMITEUR(S)</span>
-            <input type="text" value=" ,;.'!?-">
-        </div>
-
-        <div class="ligne-mixte">
-            <span class="badge">PÔLE</span>
-            <input type="text" placeholder="pôle..." style="width: 70px;">
-            <span class="badge">LONGUEUR</span>
-            <input type="number" value="10" style="width: 35px;">
-        </div>
-
-        <div class="cadre-bonjour">Bonjour</div>
-
-        <div class="boutons-actions">
-            <button onclick="segmenter()">Segmentation</button>
-            <button onclick="dictionnaire()">Dictionnaire</button>
-            <button onclick="grep()">GREP</button>
-            <button onclick="concordancier()">Concordancier</button>
-            <button onclick="kujuj()">/kujuj/</button>
-        </div>
-    </div>
-
-    <footer>
-        <a href="https://www.sorbonne-nouvelle.fr/" target="_blank" class="lien-sorbonne">Lien vers la Sorbonne Nouvelle</a>
-    </footer>
-
-    <script src="assets/js/main.js"></script>
-</body>
-</html>
