@@ -1,110 +1,174 @@
-// Variables globales
-let texteAnalyse = "";
-let lignesTexte = [];
+// Récupère les éléments dont on aura besoin
+const fileInput = document.getElementById('fileInput');
+const delimsInput = document.getElementById('delims');
+const poleInput = document.getElementById('pole');
+const longueurInput = document.getElementById('longueur');
+// Assure-toi que ce sélecteur correspond exactement au champ stopwords dans ton HTML
+const stopwordsInput = document.querySelector('input[value="de,le,la,les,à,et,des,un,ur"]'); 
 
-// --- 1. CHARGEMENT DU FICHIER ---
-document.getElementById('fileInput').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (!file) return;
+let fileContent = ''; // Pour stocker le contenu du fichier lu
 
-    const reader = new FileReader();
-    reader.onload = function(event) {
-        texteAnalyse = event.target.result;
-        lignesTexte = texteAnalyse.split(/\n/).filter(l => l.trim().length > 0);
-        
-        // On change le texte du bouton "Bonjour" ou du cadre pour confirmer
-        document.querySelector('.cadre-bonjour').innerHTML = "Fichier chargé ! (" + lignesTexte.length + " lignes)";
-        alert("Fichier prêt pour l'analyse !");
-    };
-    reader.readAsText(file);
+// Fonction pour lire le contenu du fichier sélectionné
+fileInput.addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            fileContent = e.target.result;
+            console.log("Fichier lu avec succès.");
+        };
+        reader.readAsText(file);
+    }
 });
 
-// --- 2. FONCTIONS OUTILS ---
-function estPret() {
-    if (!texteAnalyse) {
-        alert("Veuillez d'abord sélectionner un fichier .txt !");
-        return false;
-    }
-    return true;
-}
-
-function preparerMots() {
-    const delimiteurs = document.getElementById('delims').value || " ,;.'!?-";
-    const regex = new RegExp("[" + delimiteurs.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + "\\s]+", "g");
-    return texteAnalyse.split(regex).filter(m => m.length > 0);
-}
-
-// --- 3. LES ACTIONS DES BOUTONS (Appelées par ton HTML) ---
+// --- Fonctions des boutons ---
 
 function segmenter() {
-    if (!estPret()) return;
-    const mots = preparerMots();
-    alert("Segmentation : \n" + mots.join(" | "));
+    if (!fileContent) {
+        alert("Veuillez d'abord sélectionner un fichier.");
+        return;
+    }
+    const delims = delimsInput.value.split(''); 
+    const pole = poleInput.value;
+    const longueur = parseInt(longueurInput.value, 10);
+    
+    console.log("--- Segmentation ---");
+    console.log("Contenu du fichier :", fileContent.substring(0, 100) + "..."); 
+    console.log("Délimiteurs :", delims);
+    console.log("Pôle :", pole);
+    console.log("Longueur :", longueur);
+    
+    alert("Fonction Segmentation appelée. Vérifiez la console pour les détails.");
 }
 
 function dictionnaire() {
-    if (!estPret()) return;
-    const mots = preparerMots();
-    let freq = {};
-    mots.forEach(m => { 
-        let mot = m.toLowerCase(); 
-        freq[mot] = (freq[mot] || 0) + 1; 
-    });
-    const tri = Object.entries(freq).sort((a,b) => b[1] - a[1]).slice(0, 10);
-    
-    let message = "TOP 10 DES MOTS :\n";
-    tri.forEach(([m, f]) => { message += m + " : " + f + "\n"; });
-    alert(message);
+    if (!fileContent) {
+        alert("Veuillez d'abord sélectionner un fichier.");
+        return;
+    }
+    console.log("--- Dictionnaire ---");
+    console.log("Contenu du fichier :", fileContent.substring(0, 100) + "...");
+    alert("Fonction Dictionnaire appelée. Vérifiez la console pour les détails.");
 }
 
 function grep() {
-    if (!estPret()) return;
-    const pôle = document.getElementById('pole').value.trim();
-    if (!pôle) return alert("Entrez un mot dans PÔLE");
-    
-    const regex = new RegExp(pôle, "gi");
-    const resultats = lignesTexte.filter(ligne => ligne.match(regex));
-    alert("Lignes trouvées : " + resultats.length + "\n\n" + resultats.slice(0,5).join("\n"));
+    if (!fileContent) {
+        alert("Veuillez d'abord sélectionner un fichier.");
+        return;
+    }
+    const pole = poleInput.value; 
+    console.log("--- GREP ---");
+    console.log("Contenu du fichier :", fileContent.substring(0, 100) + "...");
+    console.log("Terme de recherche (Pôle) :", pole);
+    alert("Fonction GREP appelée. Vérifiez la console pour les détails.");
 }
 
 function concordancier() {
-    if (!estPret()) return;
-    const pôle = document.getElementById('pole').value.trim();
-    if (!pôle) return alert("Entrez un mot dans PÔLE");
-
-    const mots = preparerMots();
-    let resultats = "";
-    mots.forEach((m, i) => {
-        if (m.toLowerCase() === pôle.toLowerCase()) {
-            const avant = mots.slice(Math.max(0, i-3), i).join(" ");
-            const apres = mots.slice(i+1, i+4).join(" ");
-            resultats += avant + " [" + m + "] " + apres + "\n";
-        }
-    });
-    alert(resultats || "Aucune occurrence trouvée.");
+    if (!fileContent) {
+        alert("Veuillez d'abord sélectionner un fichier.");
+        return;
+    }
+    console.log("--- Concordancier ---");
+    console.log("Contenu du fichier :", fileContent.substring(0, 100) + "...");
+    alert("Fonction Concordancier appelée. Vérifiez la console pour les détails.");
 }
 
 function kujuj() {
-    if (!estPret()) return;
-    const mots = preparerMots();
-    const res = mots.slice(0, 20).map(m => m.toUpperCase() + "juj").join(" ");
-    alert("Version Kujuj (début) : \n" + res);
+    console.log("--- /kujuj/ ---");
+    if (fileContent && fileContent.includes('/kujuj/')) {
+        console.log("Le motif '/kujuj/' a été trouvé dans le fichier.");
+        alert("Le motif '/kujuj/' a été trouvé !");
+    } else {
+        console.log("Le motif '/kujuj/' n'a pas été trouvé.");
+        alert("Le motif '/kujuj/' n'a pas été trouvé.");
+    }
 }
 
 function nombrePhrases() {
-    if (!estPret()) return;
-    const n = texteAnalyse.split(/[.!?]+/).filter(p => p.trim().length > 0).length;
-    alert("Il y a environ " + n + " phrase(s).");
+    if (!fileContent) {
+        alert("Veuillez d'abord sélectionner un fichier.");
+        return;
+    }
+    const phrases = fileContent.split(/[.!?]+/);
+    const nbPhrases = phrases.filter(phrase => phrase.trim() !== '').length;
+    
+    console.log("--- Nombre de Phrases ---");
+    console.log("Nombre total de phrases :", nbPhrases);
+    alert(`Nombre de phrases détectées : ${nbPhrases}`);
 }
 
 function motsPlusLongs() {
-    if (!estPret()) return;
-    const motsUniques = [...new Set(preparerMots())];
-    const tri = motsUniques.sort((a, b) => b.length - a.length).slice(0, 10);
-    alert("Les 10 mots les plus longs : \n" + tri.join("\n"));
+    if (!fileContent) {
+        alert("Veuillez d'abord sélectionner un fichier.");
+        return;
+    }
+    const longueur = parseInt(longueurInput.value, 10);
+    const delims = delimsInput.value.split('');
+    const stopwords = stopwordsInput.value.split(','); 
+
+    let cleanedText = fileContent.toLowerCase();
+    delims.forEach(delim => {
+        cleanedText = cleanedText.replace(new RegExp(delim.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), ' ');
+    });
+    
+    let words = cleanedText.split(/\s+/).filter(word => word.length > 0);
+
+    const longWords = words.filter(word => !stopwords.includes(word) && word.length > longueur);
+    
+    console.log("--- Mots plus longs que " + longueur + " ---");
+    console.log("Mots trouvés :", longWords);
+    alert("Mots les plus longs (" + longueur + " caractères) trouvés : " + longWords.join(', '));
 }
 
 function genererGraphe() {
-    if (!estPret()) return;
-    alert("Fonction Graphe : Assurez-vous d'avoir une zone <div id='chart'> dans votre HTML pour afficher le graphique.");
+    if (!fileContent) {
+        alert("Veuillez d'abord sélectionner un fichier.");
+        return;
+    }
+    console.log("--- Génération de Graphe ---");
+    console.log("Contenu du fichier :", fileContent.substring(0, 100) + "...");
+    
+    const delims = delimsInput.value.split('');
+    const stopwords = stopwordsInput.value.split(',');
+
+    let cleanedText = fileContent.toLowerCase();
+    delims.forEach(delim => {
+        cleanedText = cleanedText.replace(new RegExp(delim.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), ' ');
+    });
+    let words = cleanedText.split(/\s+/).filter(word => word.length > 0);
+    
+    let wordCounts = {};
+    words.forEach(word => {
+        if (!stopwords.includes(word)) {
+            wordCounts[word] = (wordCounts[word] || 0) + 1;
+        }
+    });
+
+    const sortedWords = Object.entries(wordCounts).sort(([, a], [, b]) => b - a);
+    const dataForChart = sortedWords.slice(0, 10); 
+
+    const labels = dataForChart.map(item => item[0]);
+    const series = [dataForChart.map(item => item[1])];
+
+    console.log("Données pour le graphe :", { labels, series });
+
+    const chartContainer = document.getElementById('chart'); 
+    if (chartContainer) {
+        chartContainer.innerHTML = ''; // Vide le conteneur
+
+        // Assure-toi que Chartist.js est bien chargé avant d'appeler ceci.
+        // Tu l'as déjà dans ton <head> avec la balise <script>.
+        new Chartist.Bar('.ct-chart', { 
+          labels: labels,
+          series: series
+        }, {
+          distributeSeries: true
+        });
+        alert("Graphe généré. Vérifiez la console.");
+    } else {
+        alert("Conteneur de graphe non trouvé dans le HTML. Impossible de générer le graphe.");
+        console.error("Conteneur de graphe (div#chart) non trouvé dans le HTML.");
+    }
 }
+```
+
