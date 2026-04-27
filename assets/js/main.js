@@ -82,38 +82,7 @@ function grep() {
     afficher(html);
 }
 
-function concordancier() {
-    if (!estPret()) return;
-    var pole = document.getElementById('pole').value.trim();
-    if (!pole) { alert("Veuillez entrer un mot dans le champ PÔLE."); return; }
-    var mots = preparerMotsBruts();
-    var html = "<h3>Concordancier</h3><table border='1' style='width:100%; border-collapse:collapse; font-size:11px;'>";
-    html += "<tr><th>Contexte gauche</th><th style='color:red;'>Pôle</th><th>Contexte droit</th></tr>";
-    var trouve = false;
-    mots.forEach(function(m, i) {
-        if (m.toLowerCase() === pole.toLowerCase()) {
-            trouve = true;
-            html += "<tr><td style='text-align:right;'>" + mots.slice(Math.max(0, i-3), i).join(" ") + "</td><td style='color:red; text-align:center;'><b>" + m + "</b></td><td>" + mots.slice(i+1, i+4).join(" ") + "</td></tr>";
-        }
-    });
-    html += "</table>";
-    afficher(trouve ? html : "<h3>Concordancier</h3><p>Mot '" + pole + "' non trouvé.</p>");
-}
-
 function kujuj() {
     if (!estPret()) return;
     afficher("<h3>/kujuj/</h3><p>" + preparerMotsBruts().map(function(m) { return m + "juj"; }).join(" ") + "</p>");
-}
-
-function genererGraphe() {
-    if (!estPret()) return;
-    var mots = preparerMots();
-    var freq = {};
-    mots.forEach(function(m) { var mot = m.toLowerCase(); freq[mot] = (freq[mot] || 0) + 1; });
-    var top = Object.entries(freq).sort(function(a, b) { return b[1] - a[1]; }).slice(0, 7);
-    afficher("<h3>graphecamembert-Pie chart</h3><div class='ct-chart ct-golden-section'></div>");
-    new Chartist.Pie('.ct-chart', {
-        labels: top.map(function(x) { return x[0]; }),
-        series: top.map(function(x) { return x[1]; })
-    }, { donut: false, showLabel: true });
 }
