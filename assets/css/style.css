@@ -1,25 +1,26 @@
-/* --- BASE --- */
+/* CONFIGURATION GLOBALE */
 body {
-    background-color: #d4cc00;
+    background-color: #d4cc00; /* Fond Jaune moutarde */
     font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
     margin: 0;
     padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-size: 10px !important;
 }
 
-/* --- TITRE EFFET BULLE --- */
+/* TITRE AVEC OMBRE VIOLETTE */
 .titre-moyen {
     color: white;
-    font-size: 1.5rem !important;
-    text-shadow: 2px 2px 0px #a388e5;
+    font-size: 1.8rem !important;
     text-align: center;
     margin: 15px 0;
     font-weight: bold;
+    text-shadow: 2px 2px 0px #a388e5; /* Ombre violette comme sur l'image */
 }
 
-/* --- CV & ÉTUDES --- */
+/* SECTION CV */
 #bloc-cv {
     background-color: #e2e1b9;
     width: 95%;
@@ -28,77 +29,86 @@ body {
     padding: 10px;
     display: flex;
     justify-content: space-between;
+    margin-bottom: 15px;
 }
 
 .cadre-etudes {
     border: 1px solid black;
-    padding: 4px;
+    padding: 3px;
     background-color: white;
-    font-size: 9px;
+    font-size: 8px;
     display: inline-block;
+    margin-bottom: 5px;
 }
 
 .liste-livres {
-    font-size: 9px;
+    font-size: 8px;
     margin: 0;
     padding-left: 15px;
 }
 
 .photo-cv img {
-    width: 120px !important;
+    width: 110px !important;
     border: 1px solid black;
 }
 
-/* --- ANALYSEUR ROSE --- */
+/* BLOC ANALYSEUR ROSE */
 #bloc-analyseur {
-    background-color: #c499a6;
+    background-color: #c499a6; /* Fond Rose */
     width: 95%;
     max-width: 500px;
     border: 1px solid black;
-    padding: 12px;
+    padding: 10px;
     text-align: center;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
 }
 
-.ligne-mixte {
+.ligne-simple, .ligne-mixte {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 5px;
-    margin: 5px 0;
+    gap: 4px;
+    margin-bottom: 6px;
 }
 
 .badge {
     background-color: #8b5fb0;
     color: white;
-    font-size: 8px;
-    padding: 2px 4px;
+    font-size: 8px !important;
+    padding: 1px 3px;
     border: 0.5px solid black;
 }
 
-/* --- BOUTONS JAUNES --- */
-.btn-jaune {
+input {
+    border: 0.5px solid black;
+    font-size: 8px !important;
+    padding: 1px;
+}
+
+/* BOUTONS JAUNES MINI */
+button {
     background-color: #d4cc00;
     border: 1px solid black;
-    font-size: 9px;
+    font-size: 8px !important;
     font-weight: bold;
-    padding: 3px 6px;
-    margin: 2px;
+    padding: 2px 4px;
+    margin: 1px;
+    cursor: pointer;
 }
 
 .cadre-bonjour {
-    border: 2px solid #1a5e4d;
-    color: #1a5e4d;
-    padding: 3px;
+    border: 1.5px solid #1a5e4d;
+    padding: 2px 8px;
     display: inline-block;
-    margin: 10px 0;
+    margin: 8px 0;
     font-weight: bold;
-    font-size: 9px;
+    font-size: 8px;
+    color: #1a5e4d;
 }
 
 .lien-sorbonne {
-    font-size: 10px;
+    font-size: 9px;
     color: #5a3d8c;
     text-decoration: none;
     margin-top: 15px;
-    display: block;
 }
