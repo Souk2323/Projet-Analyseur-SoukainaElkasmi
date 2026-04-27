@@ -3,67 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analyse des données dans un fichier - Soukaina Elkasmi</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Analyseur Soukaina</title>
+    <link rel="stylesheet" href="assets/css/style.css?v=11">
 </head>
 <body>
 
-    <div class="photo-cv">
-        <img src="assets/IMG_5211.jpeg" alt="Photo de Soukaina Elkasmi">
+    <div id="bloc-cv">
+        <div class="cv-gauche">
+            <h2 style="margin:0; font-size: 1.1rem;">Curriculum Vitae</h2>
+            <p style="font-weight: bold; margin: 3px 0; font-size: 10px;">Soukaina Elkasmi</p>
+            
+            <p style="margin: 5px 0 2px 0; font-size: 9px;"><strong>Études effectuées :</strong></p>
+            <div class="cadre-etudes">
+                L1 Sciences du Langage (2024-2025)<br>
+                L2 Sciences du Langage (2025-2026)
+            </div>
+
+            <p style="margin: 8px 0 2px 0; font-size: 9px;"><strong>Livres que j'ai lus :</strong></p>
+            <ul class="liste-livres">
+                <li>Harry Potter</li>
+                <li>La Dame de ménage</li>
+                <li>L'Anomalie</li>
+                <li>Le Petit Prince</li>
+                <li>L'Étranger</li>
+            </ul>
+        </div>
+        <div class="photo-cv">
+            <img src="assets/IMG_5211.jpeg" alt="Photo">
+        </div>
     </div>
 
-    <header>
-        <h1>Analyse des données dans un fichier</h1>
-    </header>
+    <h2 class="titre-moyen">Analyse des données dans un fichier</h2>
 
-    <main>
-        <div class="panneau-central">
-            <button class="btn-aide">Afficher l'aide</button>
-            
-            <div class="upload-zone">
-                <label>Sélectionner un fichier au format .txt :</label>
-                <input type="file" id="fileInput" accept=".txt">
-            </div>
-
-            <div class="parametres">
-                <div class="ligne-input">
-                    <span class="badge">DÉLIMITEUR(S)</span>
-                    <input type="text" id="delims" value=" ,;.'!?-">
-                </div>
-                
-                <div class="colonnes-input">
-                    <div class="ligne-input">
-                        <span class="badge">PÔLE</span>
-                        <input type="text" id="pole" placeholder="entrez un pôle...">
-                    </div>
-                    <div class="ligne-input">
-                        <span class="badge">LONGUEUR</span>
-                        <input type="number" id="longueur" value="10">
-                    </div>
-                </div>
-
-                <div class="ligne-input full">
-                    <span class="badge">MOTS GRAMMATICAUX (STOPWORDS)</span>
-                    <input type="text" id="stopwords" value="de,le,la,les,à,et,des,un,une,du,que,en,l,qu,d,s,se,ne,n,ce,me,sa">
-                </div>
-            </div>
-
-            <div class="logo-bonjour">
-                <div class="cadre-bonjour">Bonjour</div>
-            </div>
-
-            <div class="boutons-actions">
-                <button onclick="segmenter()">Segmentation</button>
-                <button onclick="dictionnaire()">Dictionnaire</button>
-                <button onclick="concordancier()">Concordancier</button>
-                <button onclick="motsPlusLongs()">Mots les plus longs</button>
-                <button onclick="nombrePhrases()">Nombre de phrases</button>
-            </div>
+    <div id="bloc-analyseur">
+        <button>Afficher l'aide</button>
+        
+        <div class="ligne-simple" style="margin-top:5px;">
+            <label>Sélectionner un fichier .txt :</label>
+            <input type="file" id="fileInput" style="width: 120px;">
         </div>
 
-        <div id="resultats" class="zone-resultats"></div>
-    </main>
+        <div class="ligne-mixte">
+            <span class="badge">DÉLIMITEUR(S)</span>
+            <input type="text" id="delims" value=" ,;.'!?-" style="width: 80px;">
+        </div>
 
-    <script src="javascript/script.js"></script>
+        <div class="ligne-mixte">
+            <span class="badge">PÔLE</span>
+            <input type="text" id="pole" placeholder="pôle..." style="width: 60px;">
+            <span class="badge">LONGUEUR</span>
+            <input type="number" id="longueur" value="10" style="width: 30px;">
+        </div>
+
+        <div class="ligne-simple">
+            <span class="badge">STOPWORDS</span>
+            <input type="text" value="de,le,la,les,à,et,des,un,une..." style="width: 100px;">
+        </div>
+
+        <div class="cadre-bonjour">Bonjour</div>
+
+        <div class="boutons-actions">
+            <button onclick="segmenter()">Segmentation</button>
+            <button onclick="dictionnaire()">Dictionnaire</button>
+            <button onclick="grep()">GREP</button>
+            <button onclick="concordancier()">Concordancier</button>
+            <button onclick="kujuj()">/kujuj/</button>
+            <br>
+            <button onclick="nombrePhrases()">Nb phrases</button>
+            <button onclick="motsPlusLongs()">Mots longs</button>
+            <button onclick="genererGraphe()">Graphe</button>
+        </div>
+    </div>
+
+    <footer>
+        <a href="https://www.sorbonne-nouvelle.fr/" target="_blank" class="lien-sorbonne">Lien vers la Sorbonne Nouvelle</a>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
