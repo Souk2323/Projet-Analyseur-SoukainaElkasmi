@@ -1,100 +1,114 @@
-/* Style global */
+/* CONFIGURATION GLOBALE */
 body {
-    background-color: #d4cc00; /* Le jaune moutarde du fond */
-    font-family: 'Courier New', Courier, monospace;
+    background-color: #d4cc00; /* Fond Jaune moutarde */
+    font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
+    margin: 0;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
-    margin: 0;
+    font-size: 10px !important;
 }
 
-/* Ton bloc CV (en haut de la page) */
-#bloc-cv {
-    background-color: #e2e1b9; /* Gris/beige clair */
-    width: 85%;
-    max-width: 800px;
-    border: 2px solid black;
-    display: flex;
-    padding: 20px;
-    margin-bottom: 30px;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.cv-gauche { flex: 2; }
-
-/* Style pour ta photo dans le CV */
-.photo-cv img {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 50%; /* Photo ronde */
-    border: 3px solid #5a3d8c;
-    box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
-}
-
-/* Le bloc de l'Analyseur (Violet/Rose) */
-#bloc-analyseur {
-    background-color: #c499a6;
-    width: 85%;
-    max-width: 800px;
-    border: 2px solid black;
-    padding: 30px;
+/* TITRE AVEC OMBRE VIOLETTE */
+.titre-moyen {
+    color: white;
+    font-size: 1.8rem !important;
     text-align: center;
-    box-shadow: 10px 10px 0px #5a3d8c;
+    margin: 15px 0;
+    font-weight: bold;
+    text-shadow: 2px 2px 0px #a388e5; /* Ombre violette comme sur l'image */
 }
 
-/* Les badges pour les labels (DÉLIMITEURS, etc.) */
+/* SECTION CV */
+#bloc-cv {
+    background-color: #e2e1b9;
+    width: 95%;
+    max-width: 500px;
+    border: 1px solid black;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.cadre-etudes {
+    border: 1px solid black;
+    padding: 3px;
+    background-color: white;
+    font-size: 8px;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.liste-livres {
+    font-size: 8px;
+    margin: 0;
+    padding-left: 15px;
+}
+
+.photo-cv img {
+    width: 110px !important;
+    border: 1px solid black;
+}
+
+/* BLOC ANALYSEUR ROSE */
+#bloc-analyseur {
+    background-color: #c499a6; /* Fond Rose */
+    width: 95%;
+    max-width: 500px;
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+}
+
+.ligne-simple, .ligne-mixte {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    margin-bottom: 6px;
+}
+
 .badge {
     background-color: #8b5fb0;
     color: white;
-    padding: 2px 8px;
-    font-size: 0.8em;
-    margin-right: 5px;
-    font-weight: bold;
+    font-size: 8px !important;
+    padding: 1px 3px;
+    border: 0.5px solid black;
 }
 
-/* Les boutons d'actions */
-.boutons-actions button {
-    background-color: #c9d6a3; /* Vert d'eau */
+input {
+    border: 0.5px solid black;
+    font-size: 8px !important;
+    padding: 1px;
+}
+
+/* BOUTONS JAUNES MINI */
+button {
+    background-color: #d4cc00;
     border: 1px solid black;
-    margin: 5px;
-    padding: 10px;
+    font-size: 8px !important;
+    font-weight: bold;
+    padding: 2px 4px;
+    margin: 1px;
     cursor: pointer;
-    font-weight: bold;
 }
 
-.boutons-actions button:hover {
-    background-color: #aebf86;
-}
-
-/* Style des résultats (tableaux) */
-table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-    background-color: white;
-}
-
-th, td {
-    border: 1px solid black;
-    padding: 10px;
-    text-align: center;
-}
-
-th {
-    background-color: #a388e5;
-    color: white;
-}
-
-/* Zone pour le message de bienvenue */
 .cadre-bonjour {
-    border: 3px solid #1a5e4d;
-    color: #1a5e4d;
-    padding: 10px 20px;
+    border: 1.5px solid #1a5e4d;
+    padding: 2px 8px;
     display: inline-block;
-    border-radius: 10px;
-    margin: 15px 0;
+    margin: 8px 0;
     font-weight: bold;
+    font-size: 8px;
+    color: #1a5e4d;
+}
+
+.lien-sorbonne {
+    font-size: 9px;
+    color: #5a3d8c;
+    text-decoration: none;
+    margin-top: 15px;
 }
