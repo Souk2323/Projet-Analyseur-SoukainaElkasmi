@@ -1,32 +1,104 @@
-/* Le cadre pour tes études */
-.cadre-etudes {
-    border: 1px solid black;
-    padding: 5px;
-    background-color: white;
-    font-size: 9px;
-    line-height: 1.4;
-    display: inline-block; /* Pour qu'il s'ajuste au texte */
-}
-
-/* Ajustement de la liste des livres */
-.liste-livres {
-    font-size: 9px;
+/* --- BASE --- */
+body {
+    background-color: #d4cc00;
+    font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
     margin: 0;
-    padding-left: 18px; /* Pour aligner les points des puces */
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.liste-livres li {
-    margin-bottom: 2px;
+/* --- TITRE EFFET BULLE --- */
+.titre-moyen {
+    color: white;
+    font-size: 1.5rem !important;
+    text-shadow: 2px 2px 0px #a388e5;
+    text-align: center;
+    margin: 15px 0;
+    font-weight: bold;
 }
 
-/* On s'assure que le bloc CV reste propre */
+/* --- CV & ÉTUDES --- */
 #bloc-cv {
     background-color: #e2e1b9;
     width: 95%;
     max-width: 500px;
     border: 1px solid black;
-    padding: 12px;
+    padding: 10px;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+}
+
+.cadre-etudes {
+    border: 1px solid black;
+    padding: 4px;
+    background-color: white;
+    font-size: 9px;
+    display: inline-block;
+}
+
+.liste-livres {
+    font-size: 9px;
+    margin: 0;
+    padding-left: 15px;
+}
+
+.photo-cv img {
+    width: 120px !important;
+    border: 1px solid black;
+}
+
+/* --- ANALYSEUR ROSE --- */
+#bloc-analyseur {
+    background-color: #c499a6;
+    width: 95%;
+    max-width: 500px;
+    border: 1px solid black;
+    padding: 12px;
+    text-align: center;
+}
+
+.ligne-mixte {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin: 5px 0;
+}
+
+.badge {
+    background-color: #8b5fb0;
+    color: white;
+    font-size: 8px;
+    padding: 2px 4px;
+    border: 0.5px solid black;
+}
+
+/* --- BOUTONS JAUNES --- */
+.btn-jaune {
+    background-color: #d4cc00;
+    border: 1px solid black;
+    font-size: 9px;
+    font-weight: bold;
+    padding: 3px 6px;
+    margin: 2px;
+}
+
+.cadre-bonjour {
+    border: 2px solid #1a5e4d;
+    color: #1a5e4d;
+    padding: 3px;
+    display: inline-block;
+    margin: 10px 0;
+    font-weight: bold;
+    font-size: 9px;
+}
+
+.lien-sorbonne {
+    font-size: 10px;
+    color: #5a3d8c;
+    text-decoration: none;
+    margin-top: 15px;
+    display: block;
 }
