@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analyseur de Texte - Sciences du Langage</title>
+    <title>Analyse des données dans un fichier</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -13,41 +13,42 @@
     </header>
 
     <main>
-        <div class="container-principal">
-            <div class="upload-section">
-                <button class="btn-aide">Afficher l'aide</button>
-                <div class="file-input-wrapper">
-                    <label>Sélectionner un fichier au format .txt :</label>
-                    <input type="file" id="monFichier" accept=".txt">
-                </div>
+        <div class="panneau-central">
+            <button class="btn-aide">Afficher l'aide</button>
+            
+            <div class="upload-zone">
+                <label>Sélectionner un fichier au format .txt :</label>
+                <input type="file" id="fileInput" accept=".txt">
             </div>
 
-            <div class="settings-grid">
-                <div class="field">
-                    <span class="label-tag">DÉLIMITEUR(S)</span>
+            <div class="parametres">
+                <div class="ligne-input">
+                    <span class="badge">DÉLIMITEUR(S)</span>
                     <input type="text" id="delims" value=" ,;.'!?-">
                 </div>
                 
-                <div class="field-row">
-                    <div class="field">
-                        <span class="label-tag">PÔLE</span>
+                <div class="colonnes-input">
+                    <div class="ligne-input">
+                        <span class="badge">PÔLE</span>
                         <input type="text" id="pole" placeholder="entrez un pôle...">
                     </div>
-                    <div class="field">
-                        <span class="label-tag">LONGUEUR</span>
+                    <div class="ligne-input">
+                        <span class="badge">LONGUEUR</span>
                         <input type="number" id="longueur" value="10">
                     </div>
                 </div>
 
-                <div class="field full-width">
-                    <span class="label-tag">MOTS GRAMMATICAUX (STOPWORDS)</span>
-                    <textarea id="stopwords">de,le,la,les,à,et,des,un,une,du,que,en,l,que,qu,d,s,se,ne,n,ce,me,sa</textarea>
+                <div class="ligne-input full">
+                    <span class="badge">MOTS GRAMMATICAUX, STOPWORDS EN ANGLAIS</span>
+                    <input type="text" id="stopwords" value="de,le,la,les,à,et,des,un,une,du,que,en,l,que,qu,d,s,se,ne,n,ce,me,sa">
                 </div>
             </div>
 
-            <button class="btn-bonjour">Bonjour</button>
+            <div class="logo-bonjour">
+                <div class="cadre-bonjour">Bonjour</div>
+            </div>
 
-            <div class="toolbar">
+            <div class="boutons-actions">
                 <button onclick="segmenter()">Segmentation</button>
                 <button onclick="dictionnaire()">Dictionnaire</button>
                 <button onclick="grep()">GREP</button>
@@ -56,7 +57,8 @@
             </div>
         </div>
 
-        <div id="affichage-resultats"></div>
+        <div id="resultats" class="zone-resultats">
+            </div>
     </main>
 
     <script src="javascript/script.js"></script>
