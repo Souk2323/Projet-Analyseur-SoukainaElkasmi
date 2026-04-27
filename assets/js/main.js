@@ -1,98 +1,93 @@
-// 1. Fonction pour le mode KUJUJ (Consigne : ajouter "uj" à la fin de chaque mot)
+let texteAnalyse = "";
+
+// 1. Chargement du fichier (Essentiel pour remplir la zone de gauche)
+document.getElementById('fileInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        texteAnalyse = event.target.result;
+        // On affiche le texte brut à gauche (comme sur la photo de ta collègue)
+        document.getElementById('affichageGauche').innerText = texteAnalyse;
+        
+        const cadre = document.querySelector('.cadre-bonjour');
+        if(cadre) cadre.innerText = "Fichier prêt !";
+    };
+    reader.readAsText(file);
+});
+
+// 2. Préparation des mots (Segmentation de base)
+function preparerMots() {
+    if (!texteAnalyse) {
+        alert("Choisis d'abord un fichier .txt !");
+        return [];
+    }
+    const delimInput = document.getElementById('delims');
+    const delimiteurs = delimInput && delimInput.value ? delimInput.value : " ,;.'!?-";
+    const regex = new RegExp("[" + delimiteurs.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + "\\s]+", "g");
+    return texteAnalyse.split(regex).filter(m => m.length > 0);
+}
+
+// --- LES FONCTIONS DES BOUTONS ---
+
+function segmenter() {
+    const mots = preparerMots();
+    if (mots.length === 0) return;
+    // Affiche les mots séparés par un espace dans la zone de droite
+    document.getElementById('affichageDroit').innerText = mots.join(" ");
+}
+
 function kujuj() {
     const mots = preparerMots();
-    const affichage = document.getElementById('affichageDroit');
-    
+    if (mots.length === 0) return;
     alert("Mode /kujuj/ activé !");
-
-    if (mots.length > 0) {
-        // On met en majuscule et on ajoute "UJ" à la fin de chaque mot
-        const resultat = mots.map(m => m.toUpperCase() + "UJ").join(" ");
-        affichage.innerHTML = "<h3>Résultat Kujuj :</h3><p>" + resultat + "</p>";
-    }
+    // Règle : Mot en majuscule + UJ à la fin
+    const resultat = mots.map(m => m.toUpperCase() + "UJ").join(" ");
+    document.getElementById('affichageDroit').innerText = resultat;
 }
 
-// 2. Fonction GREP (Chercher des phrases contenant le pôle)
 function grep() {
-    const poleValue = document.getElementById('pôle').value.toLowerCase();
-    const affichage = document.getElementById('affichageDroit');
-    
-    if (!poleValue || !texteAnalyse) {
-        alert("Entrez un pôle et chargez un fichier !");
+    const pole = document.getElementById('pôle').value.toLowerCase();
+    if (!pole || !texteAnalyse) {
+        alert("Entrez un pôle (mot à chercher) !");
         return;
     }
-
-    // On découpe en phrases et on garde celles qui contiennent le pôle
-    const phrases = texteAnalyse.split(/[.!?]+/).filter(p => p.toLowerCase().includes(poleValue));
-    
-    if (phrases.length > 0) {
-        affichage.innerHTML = "<h3>Résultat GREP pour '" + poleValue + "' :</h3><ul>" + 
-            phrases.map(p => "<li>" + p.trim() + "</li>").join("") + "</ul>";
-    } else {
-        affichage.innerHTML = "<p>Aucune occurrence trouvée pour ce pôle.</p>";
-    }
+    // Cherche les phrases contenant le mot
+    const phrases = texteAnalyse.split(/[.!?]+/).filter(p => p.toLowerCase().includes(pole));
+    document.getElementById('affichageDroit').innerText = phrases.join("\n\n");
 }
 
-// 3. Fonction CONCORDANCIER (Pôle au centre avec contexte)
 function concordancier() {
-    const poleValue = document.getElementById('pôle').value.toLowerCase();
-    const affichage = document.getElementById('affichageDroit');
+    const pole = document.getElementById('pôle').value.toLowerCase();
     const mots = preparerMots();
+    if (!pole || mots.length === 0) return;
 
-    if (!poleValue || mots.length === 0) return;
-
-    let html = "<h3>Concordancier</h3><table border='1' style='width:100%; border-collapse:collapse; font-family:monospace;'>";
-    
+    let resultat = "";
     mots.forEach((m, i) => {
-        if (m.toLowerCase() === poleValue) {
-            const gauche = mots.slice(Math.max(0, i - 3), i).join(" ");
-            const droite = mots.slice(i + 1, i + 4).join(" ");
-            html += `<tr>
-                <td style='text-align:right; width:45%;'>${gauche}</td>
-                <td style='text-align:center; width:10%; color:red;'><b>${m}</b></td>
-                <td style='text-align:left; width:45%;'>${droite}</td>
-            </tr>`;
+        if (m.toLowerCase() === pole) {
+            const gauche = mots.slice(Math.max(0, i - 2), i).join(" ");
+            const droite = mots.slice(i + 1, i + 3).join(" ");
+            resultat += `${gauche} [ ${m} ] ${droite}\n`;
         }
     });
-
-    html += "</table>";
-    affichage.innerHTML = html;
+    document.getElementById('affichageDroit').innerText = resultat || "Aucune occurrence trouvée.";
 }
 
-// 4. Fonction MOTS LONGS
 function motsPlusLongs() {
-    const mots = [...new Set(preparerMots())]; // On enlève les doublons
-    const affichage = document.getElementById('affichageDroit');
-
-    // On trie par longueur décroissante et on prend les 10 premiers
-    const tri = mots.sort((a, b) => b.length - a.length).slice(0, 10);
-
-    let html = "<h3>Les 10 mots les plus longs</h3><ol>";
-    tri.forEach(m => {
-        html += `<li>${m} (${m.length} lettres)</li>`;
-    });
-    html += "</ol>";
-    affichage.innerHTML = html;
+    const mots = [...new Set(preparerMots())];
+    const tri = mots.sort((a, b) => b.length - a.length).slice(0, 5);
+    document.getElementById('affichageDroit').innerText = "MOTS LES PLUS LONGS :\n" + tri.map(m => `- ${m} (${m.length} l.)`).join("\n");
 }
 
-// 5. Fonction GRAPHE (Simulé avec des barres HTML pour que ce soit "fait main")
 function genererGraphe() {
     const mots = preparerMots();
-    const affichage = document.getElementById('affichageDroit');
-    
     let freq = {};
     mots.forEach(m => { freq[m.toLowerCase()] = (freq[m.toLowerCase()] || 0) + 1; });
-
-    const topMots = Object.entries(freq).sort((a,b) => b[1] - a[1]).slice(0, 5);
-
-    let html = "<h3>Graphique des fréquences (Top 5)</h3>";
-    topMots.forEach(([m, f]) => {
-        const largeur = f * 30; // On ajuste la taille de la barre
-        html += `<div style="margin:5px 0;">
-            <span style="display:inline-block; width:80px;">${m}</span>
-            <div style="display:inline-block; background:blue; height:15px; width:${largeur}px;"></div>
-            <span> (${f})</span>
-        </div>`;
+    const top = Object.entries(freq).sort((a,b) => b[1] - a[1]).slice(0, 5);
+    
+    let graph = "GRAPHIQUE DE FRÉQUENCE :\n";
+    top.forEach(([m, f]) => {
+        graph += `${m.padEnd(12)} | ${"#".repeat(f)} (${f})\n`;
     });
-    affichage.innerHTML = html;
+    document.getElementById('affichageDroit').innerText = graph;
 }
