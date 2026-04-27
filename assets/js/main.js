@@ -112,5 +112,7 @@ function genererGraphe() {
     mots.forEach(function(m) { var mot = m.toLowerCase(); freq[mot] = (freq[mot] || 0) + 1; });
     var top = Object.entries(freq).sort(function(a, b) { return b[1] - a[1]; }).slice(0, 7);
     afficher("<h3>graphecamembert-Pie chart</h3><div id='chart' class='ct-chart ct-golden-section'></div>");
-    new Chartist.Pie('#chart', { labels: top.map(function(x) { return x[0]; }), series: top.map(function(x) { return x[1]; }) }, { donut: false, showLabel: true });
+    setTimeout(function() {
+        new Chartist.Pie('#chart', { labels: top.map(function(x) { return x[0]; }), series: top.map(function(x) { return x[1]; }) }, { donut: false, showLabel: true });
+    }, 300);
 }
