@@ -1,9 +1,18 @@
-// Variables globales pour stocker les données du fichier
+// ============================================================
+// VARIABLES GLOBALES
+// ============================================================
 let texteAnalyse = "";
 let lignesTexte = [];
 
-// --- 1. CHARGEMENT DU FICHIER ---
-// Assure-toi que ton HTML a un input avec id="fileInput"
+// ============================================================
+// CONFIGURATION FIXE (identique au prof)
+// ============================================================
+const DELIMITEURS_PROF = "`/*~|&#@=~:?%*$(){}[];+-*/`";
+const STOPWORDS_PROF = ["de","le","la","les","à","et","des","un","une","du","que","en","l","que","qu","d","s","se","ne","n","ce","me","sa"];
+
+// ============================================================
+// 1. CHARGEMENT DU FICHIER
+// ============================================================
 document.getElementById('fileInput').addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -11,23 +20,21 @@ document.getElementById('fileInput').addEventListener('change', function(e) {
     const reader = new FileReader();
     reader.onload = function(event) {
         texteAnalyse = event.target.result;
-        // On stocke les lignes pour le GREP (Séance 9)
         lignesTexte = texteAnalyse.split(/\n/).filter(l => l.trim().length > 0);
         
-        // On affiche un message dans un élément dédié pour confirmer
-        // Assure-toi d'avoir un élément avec la classe 'cadre-message' dans ton HTML
-        const cadreMessage = document.querySelector('.cadre-message'); 
+        const cadreMessage = document.querySelector('.cadre-message');
         if (cadreMessage) {
-            cadreMessage.innerHTML = "<h3>Fichier chargé</h3><p>Nombre de lignes : " + lignesTexte.length + "</p>";
+            cadreMessage.innerHTML = "<p>Fichier chargé avec succès<br>Nombre de tokens : " + preparerMotsBruts().length + "<br>Nombre de lignes : " + lignesTexte.length + "</p>";
         } else {
-            alert("Fichier chargé : " + lignesTexte.length + " lignes.");
+            alert("Fichier chargé : " + lignesTexte.length + " lignes, " + preparerMotsBruts().length + " tokens.");
         }
-        alert("Fichier prêt pour l'analyse !");
     };
     reader.readAsText(file);
 });
 
-// --- 2. FONCTION DE SÉCURITÉ ---
+// ============================================================
+// 2. FONCTION DE SÉCURITÉ
+// ============================================================
 function estPret() {
     if (!texteAnalyse) {
         alert("Veuillez d'abord sélectionner un fichier .txt !");
@@ -36,25 +43,40 @@ function estPret() {
     return true;
 }
 
-// --- 3. NETTOYAGE DES MOTS ---
-function preparerMots() {
-    // Assure-toi que ton HTML a un input avec id="delims"
-    const delimiteurs = document.getElementById('delims').value || " ,;.'!?-";
-    // Échappe les caractères spéciaux pour la regex
-    const delimiteursEchappes = delimiteurs.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+// ============================================================
+// 3. PRÉPARATION DES MOTS (2 versions : avec et sans stopwords)
+// ============================================================
+
+// Version SANS filtrage des stopwords (pour Dictionnaire, GREP, Concordancier)
+function preparerMotsBruts() {
+    const delimiteursEchappes = DELIMITEURS_PROF.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
     const regex = new RegExp("[" + delimiteursEchappes + "\\s]+", "g");
     return texteAnalyse.split(regex).filter(m => m.length > 0);
 }
 
-// --- 4. LES ACTIONS DES BOUTONS ---
+// Version AVEC filtrage des stopwords (pour Segmentation, Mots longs, Graphe)
+function preparerMots() {
+    return preparerMotsBruts().filter(m => !STOPWORDS_PROF.includes(m.toLowerCase()));
+}
 
-// Assure-toi d'avoir des boutons avec les IDs correspondants dans ton HTML
+// ============================================================
+// 4. BOUTON BONJOUR
+// ============================================================
+document.getElementById('bonjourBtn').addEventListener('click', function() {
+    const cadreResultat = document.querySelector('.cadre-resultat');
+    if (cadreResultat) {
+        cadreResultat.innerHTML = "<h2>Bonjour</h2>";
+    } else {
+        alert("Bonjour");
+    }
+});
 
-// SEGMENTATION
+// ============================================================
+// 5. SEGMENTATION
+// ============================================================
 document.getElementById('segmentationBtn').addEventListener('click', function() {
     if (!estPret()) return;
-    const mots = preparerMots();
-    // Assure-toi d'avoir un élément pour afficher le résultat, par exemple avec la classe 'cadre-resultat'
+    const mots = preparerMots();  // stopwords filtrés
     const cadreResultat = document.querySelector('.cadre-resultat');
     if (cadreResultat) {
         cadreResultat.innerHTML = "<h3>Segmentation</h3><p>" + mots.join(" | ") + "</p>";
@@ -63,10 +85,26 @@ document.getElementById('segmentationBtn').addEventListener('click', function() 
     }
 });
 
-// DICTIONNAIRE
+// ============================================================
+// 6. NOMBRE DE PHRASES
+// ============================================================
+document.getElementById('nbPhrasesBtn').addEventListener('click', function() {
+    if (!estPret()) return;
+    const phrases = texteAnalyse.split(/[.!?]+/).filter(p => p.trim().length > 0);
+    const cadreResultat = document.querySelector('.cadre-resultat');
+    if (cadreResultat) {
+        cadreResultat.innerHTML = "<h3>Nombre de phrases</h3><p>" + phrases.length + "</p>";
+    } else {
+        alert("Nombre de phrases : " + phrases.length);
+    }
+});
+
+// ============================================================
+// 7. DICTIONNAIRE (Top fréquences - TOUS les tokens)
+// ============================================================
 document.getElementById('dictionnaireBtn').addEventListener('click', function() {
     if (!estPret()) return;
-    const mots = preparerMots();
+    const mots = preparerMotsBruts();  // PAS de filtrage stopwords
     let freq = {};
     mots.forEach(m => { 
         let mot = m.toLowerCase(); 
@@ -74,194 +112,184 @@ document.getElementById('dictionnaireBtn').addEventListener('click', function() 
     });
     const tri = Object.entries(freq).sort((a,b) => b[1] - a[1]).slice(0, 10);
 
-    let html = "<h3>Dictionnaire (Top 10)</h3><table border='1' style='width:100%; border-collapse:collapse;'>";
+    let html = "<h3>Mots les plus fréquents</h3><table border='1' style='width:100%; border-collapse:collapse;'>";
+    html += "<tr><th>Token</th><th>Fréquence</th></tr>";
     tri.forEach(([m, f]) => { 
-        html += `<tr><td style="padding: 5px;">${m}</td><td style="padding: 5px;">${f}</td></tr>`; 
+        html += "<tr><td style='padding:5px;'>" + m + "</td><td style='padding:5px;'>" + f + "</td></tr>"; 
     });
+    html += "</table>";
+
     const cadreResultat = document.querySelector('.cadre-resultat');
     if (cadreResultat) {
-        cadreResultat.innerHTML = html + "</table>";
+        cadreResultat.innerHTML = html;
     } else {
-        // Affiche dans une alerte si le cadre n'est pas trouvé
-        let tableHtml = "Dictionnaire (Top 10):\n";
-        tri.forEach(([m, f]) => { tableHtml += `${m}: ${f}\n`; });
-        alert(tableHtml);
+        let txt = "Mots les plus fréquents :\n";
+        tri.forEach(([m, f]) => { txt += m + " : " + f + "\n"; });
+        alert(txt);
     }
 });
 
-// GREP (Séance 9)
+// ============================================================
+// 8. MOTS LES PLUS LONGS (stopwords filtrés, mots uniques)
+// ============================================================
+document.getElementById('motsLongsBtn').addEventListener('click', function() {
+    if (!estPret()) return;
+    const motsUniques = [...new Set(preparerMots())];  // stopwords filtrés
+    const tri = motsUniques.sort((a, b) => b.length - a.length).slice(0, 10);
+
+    let html = "<h3>Mots les Plus Longs</h3><table border='1' style='width:100%; border-collapse:collapse;'>";
+    html += "<tr><th>Mot</th><th>Longueur</th></tr>";
+    tri.forEach(m => {
+        html += "<tr><td style='padding:5px;'>" + m + "</td><td style='padding:5px;'>" + m.length + "</td></tr>";
+    });
+    html += "</table>";
+
+    const cadreResultat = document.querySelector('.cadre-resultat');
+    if (cadreResultat) {
+        cadreResultat.innerHTML = html;
+    } else {
+        let txt = "Mots les plus longs :\n";
+        tri.forEach(m => { txt += m + " (" + m.length + ")\n"; });
+        alert(txt);
+    }
+});
+
+// ============================================================
+// 9. GREP (recherche dans les lignes - sensible à la casse via regex gi)
+// ============================================================
 document.getElementById('grepBtn').addEventListener('click', function() {
     if (!estPret()) return;
-    // Assure-toi que ton HTML a un input avec id="pole"
-    const pôle = document.getElementById('pole').value.trim();
-    if (!pôle) { 
+    const pole = document.getElementById('pole').value.trim();
+    if (!pole) { 
         alert("Veuillez entrer un mot dans le champ PÔLE pour le GREP."); 
         return; 
     }
-    
-    const regex = new RegExp(pôle, "gi");
-    const resultats = lignesTexte.filter(ligne => ligne.match(regex));
-    
-    let html = `<h3>GREP (${resultats.length} lignes trouvées)</h3><div style='text-align:left; font-size:10px; max-height: 300px; overflow-y: auto;'>`;
+
+    const regex = new RegExp(pole, "gi");
+    const resultats = lignesTexte.filter(ligne => regex.test(ligne));
+
+    let html = "<h3>GREP</h3><p>" + resultats.length + " ligne(s) trouvée(s)</p>";
+    html += "<div style='text-align:left; font-size:12px; max-height:300px; overflow-y:auto;'>";
     resultats.forEach(l => {
-        // Met en évidence le mot trouvé en rouge
-        html += l.replace(regex, (match) => `<span style="color:red; font-weight:bold;">${match}</span>`) + "<br><hr style='margin: 5px 0;'>";
+        html += l.replace(regex, (match) => "<span style='color:red; font-weight:bold;'>" + match + "</span>") + "<br><hr style='margin:5px 0;'>";
     });
+    html += "</div>";
+
     const cadreResultat = document.querySelector('.cadre-resultat');
     if (cadreResultat) {
-        cadreResultat.innerHTML = html + "</div>";
+        cadreResultat.innerHTML = html;
     } else {
-        alert("Résultats GREP : " + resultats.length + " lignes correspondent.");
+        alert("GREP : " + resultats.length + " lignes trouvées.");
     }
 });
 
-// CONCORDANCIER (Séance 10)
+// ============================================================
+// 10. CONCORDANCIER (contexte 3 mots avant/après, stopwords INCLUS)
+// ============================================================
 document.getElementById('concordancierBtn').addEventListener('click', function() {
     if (!estPret()) return;
-    const pôle = document.getElementById('pole').value.trim();
-    if (!pôle) { 
+    const pole = document.getElementById('pole').value.trim();
+    if (!pole) { 
         alert("Veuillez entrer un mot dans le champ PÔLE pour le Concordancier."); 
         return; 
     }
 
-    const mots = preparerMots();
-    let html = "<h3>Concordancier</h3><table border='1' style='width:100%; font-size:10px; border-collapse:collapse;'>";
+    const mots = preparerMotsBruts();  // PAS de filtrage stopwords
+    let html = "<h3>Concordancier</h3><table border='1' style='width:100%; border-collapse:collapse; font-size:12px;'>";
+    html += "<tr><th>Contexte gauche</th><th>Pôle</th><th>Contexte droit</th></tr>";
     let trouve = false;
+
     mots.forEach((m, i) => {
-        if (m.toLowerCase() === pôle.toLowerCase()) {
+        if (m.toLowerCase() === pole.toLowerCase()) {
             trouve = true;
-            const motsAvant = mots.slice(Math.max(0, i-3), i).join(" ");
-            const motsApres = mots.slice(i+1, i+4).join(" ");
-            html += `<tr>
-                        <td align='right' style='padding: 3px;'>${motsAvant}</td>
-                        <td align='center' style='color:red; padding: 3px;'><b>${m}</b></td>
-                        <td style='padding: 3px;'>${motsApres}</td>
-                    </tr>`;
+            const gauche = mots.slice(Math.max(0, i-3), i).join(" ");
+            const droit = mots.slice(i+1, i+4).join(" ");
+            html += "<tr>";
+            html += "<td style='text-align:right; padding:5px;'>" + gauche + "</td>";
+            html += "<td style='text-align:center; color:red; font-weight:bold; padding:5px;'>" + m + "</td>";
+            html += "<td style='text-align:left; padding:5px;'>" + droit + "</td>";
+            html += "</tr>";
         }
     });
-    
+    html += "</table>";
+
     const cadreResultat = document.querySelector('.cadre-resultat');
     if (cadreResultat) {
         if (trouve) {
-            cadreResultat.innerHTML = html + "</table>";
+            cadreResultat.innerHTML = html;
         } else {
-            cadreResultat.innerHTML = "<h3>Concordancier</h3><p>Le mot '" + pôle + "' n'a pas été trouvé.</p>";
+            cadreResultat.innerHTML = "<h3>Concordancier</h3><p>Le mot '" + pole + "' n'a pas été trouvé.</p>";
         }
     } else {
-        if (trouve) alert("Concordancier trouvé pour '" + pôle + "'.");
-        else alert("Le mot '" + pôle + "' n'a pas été trouvé.");
+        if (trouve) alert("Concordancier : " + pole + " trouvé.");
+        else alert("Le mot '" + pole + "' n'a pas été trouvé.");
     }
 });
 
-// KUJUJ (Fonction perso)
+// ============================================================
+// 11. /kujuj/ (fonction mystère - probablement mise en évidence du pôle)
+// ============================================================
 document.getElementById('kujujBtn').addEventListener('click', function() {
     if (!estPret()) return;
-    const mots = preparerMots();
-    const res = mots.map(m => m.toUpperCase() + "juj").join(" ");
+    const pole = document.getElementById('pole').value.trim();
+    if (!pole) {
+        alert("Veuillez entrer un mot dans le champ PÔLE pour /kujuj/.");
+        return;
+    }
+    const mots = preparerMotsBruts();
+    const res = mots.map(m => {
+        if (m.toLowerCase() === pole.toLowerCase()) {
+            return "<span style='color:red; font-weight:bold;'>" + m + "</span>";
+        } else {
+            return m;
+        }
+    }).join(" ");
+    
     const cadreResultat = document.querySelector('.cadre-resultat');
     if (cadreResultat) {
-        cadreResultat.innerHTML = "<h3>Résultat Kujuj</h3><p>" + res + "</p>";
+        cadreResultat.innerHTML = "<h3>/kujuj/</h3><p>" + res + "</p>";
     } else {
-        alert("Résultat Kujuj : " + res);
+        alert("/kujuj/ : " + res.replace(/<[^>]*>/g, ''));
     }
 });
 
-// NOMBRE DE PHRASES
-document.getElementById('nbPhrasesBtn').addEventListener('click', function() {
-    if (!estPret()) return;
-    const n = texteAnalyse.split(/[.!?]+/).filter(p => p.trim().length > 0).length;
-    const cadreResultat = document.querySelector('.cadre-resultat');
-    if (cadreResultat) {
-        cadreResultat.innerHTML = `<h3>Analyse</h3><p>Il y a <b>${n}</b> phrase(s).</p>`;
-    } else {
-        alert("Nombre de phrases : " + n);
-    }
-});
-
-// MOTS LES PLUS LONGS
-document.getElementById('motsLongsBtn').addEventListener('click', function() {
-    if (!estPret()) return;
-    // Utilise un Set pour obtenir des mots uniques avant de trier
-    const motsUniques = [...new Set(preparerMots())];
-    const tri = motsUniques.sort((a, b) => b.length - a.length).slice(0, 10); // Prend les 10 plus longs
-    const cadreResultat = document.querySelector('.cadre-resultat');
-    if (cadreResultat) {
-        cadreResultat.innerHTML = "<h3>Mots les plus longs</h3><p>" + tri.join(", ") + "</p>";
-    } else {
-        alert("Mots les plus longs : " + tri.join(", "));
-    }
-});
-
-// GRAPHE (Séance 11 - Chartist)
-// Assure-toi d'inclure la librairie Chartist dans ton HTML
-// <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
-// <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+// ============================================================
+// 12. GRAPHE CAMEMBERT (Pie Chart - stopwords filtrés)
+// ============================================================
 document.getElementById('grapheBtn').addEventListener('click', function() {
     if (!estPret()) return;
-    const mots = preparerMots();
+    const mots = preparerMots();  // stopwords filtrés
     let freq = {};
     mots.forEach(m => { 
         let mot = m.toLowerCase(); 
         freq[mot] = (freq[mot] || 0) + 1; 
     });
-    // Prend les 5 mots les plus fréquents pour le graphe
     const top = Object.entries(freq).sort((a,b) => b[1] - a[1]).slice(0, 5);
 
     const cadreResultat = document.querySelector('.cadre-resultat');
     if (cadreResultat) {
-        cadreResultat.innerHTML = '<h3>Graphe des mots les plus fréquents</h3><div id="chart" class="ct-chart ct-golden-section" style="height:200px;"></div>';
-        
-        // Vérifie si Chartist est disponible avant de créer le graphique
+        cadreResultat.innerHTML = "<h3>graphecamembert-Pie chart</h3><div id='chart' class='ct-chart ct-golden-section' style='height:250px;'></div>";
+
         if (typeof Chartist !== 'undefined') {
             new Chartist.Pie('#chart', {
                 labels: top.map(x => x[0]),
                 series: top.map(x => x[1])
+            }, {
+                donut: true,
+                donutWidth: 50,
+                showLabel: true
             });
         } else {
             cadreResultat.innerHTML += "<p style='color:red;'>Erreur : Librairie Chartist non chargée.</p>";
         }
     } else {
-        alert("Pour voir le graphe, assurez-vous d'avoir un élément pour l'afficher (ex: <div class='cadre-resultat'>) et la librairie Chartist chargée.");
+        alert("Pour le graphe, ajoutez <div class='cadre-resultat'> et Chartist dans le HTML.");
     }
 });
 
-// Bouton "Afficher l'aide"
+// ============================================================
+// 13. BOUTON AIDE
+// ============================================================
 document.getElementById('afficherAideBtn').addEventListener('click', function() {
-    alert("Pour utiliser cet outil : \n1. Sélectionnez un fichier .txt. \n2. Entrez vos délimiteurs si nécessaire (par défaut : , ; . ' ! ? -). \n3. Entrez un mot dans 'PÔLE' pour les fonctions GREP et Concordancier. \n4. Cliquez sur les boutons pour lancer les analyses.");
+    alert("Utilisation :\n1. Sélectionnez un fichier .txt.\n2. Entrez un mot dans 'Pôle' pour GREP, Concordancier, /kujuj/.\n3. Les délimiteurs et stopwords sont prédéfinis comme le prof.\n4. Cliquez sur les boutons pour lancer les analyses.");
 });
-
-// Bouton "Bonjour" (juste pour montrer que ça marche, peut être lié à un autre événement)
-document.getElementById('bonjourBtn').addEventListener('click', function() {
-    const cadreMessage = document.querySelector('.cadre-message');
-    if (cadreMessage) {
-        cadreMessage.innerHTML = "<h3>Message</h3><p>Bonjour ! Prêt pour l'analyse.</p>";
-    } else {
-        alert("Bonjour !");
-    }
-});
-```
-
-Ce que j'ai corrigé et ajouté :
-
-1.  Gestion des IDs pour les éléments HTML : J'ai supposé que tes boutons et champs de saisie dans le HTML ont des IDs spécifiques (comme `fileInput`, `delims`, `pole`, `segmentationBtn`, `dictionnaireBtn`, etc.). J'ai ajouté des commentaires pour te rappeler de vérifier ça dans ton fichier HTML.
-2.  Affichage des résultats : J'ai supposé que tu as un endroit dans ton HTML pour afficher les résultats (par exemple, une `div` avec la classe `cadre-resultat` ou `cadre-message`). Si cet élément existe, le résultat s'affichera dedans. Sinon, une `alert` s'affichera pour te montrer le résultat. C'est plus sympa d'avoir une zone dédiée pour les résultats sur la page elle-même.
-3.  Encodage des délimiteurs : Dans `preparerMots()`, j'ai amélioré l'échappement des caractères spéciaux dans les délimiteurs pour que la Regex fonctionne correctement même avec des symboles comme `.` ou `?`.
-4.  Mode GREP : Ajout d'une vérification pour s'assurer que le champ "PÔLE" n'est pas vide avant de lancer le GREP.
-5.  Mode Concordancier : Ajout d'une vérification pour le champ "PÔLE" et un message si le mot recherché n'est pas trouvé. J'ai aussi ajouté des styles pour mieux présenter le tableau.
-6.  Mode Mots Longs : J'ai utilisé `new Set()` pour m'assurer que je ne compte pas deux fois le même mot si le fichier est très répétitif, et j'ai limité à 10 mots.
-7.  Mode Graphe : Ajout d'une vérification pour s'assurer que la librairie Chartist est bien chargée avant de tenter de créer le graphe.
-8.  Boutons d'aide et "Bonjour" : J'ai ajouté des `addEventListener` pour les boutons "Afficher l'aide" et "Bonjour" en supposant qu'ils ont des IDs correspondants.
-
-Pour que ce code fonctionne, tu devras créer le fichier HTML correspondant qui inclut :
-
-*   Un `<input type="file" id="fileInput">` pour choisir le fichier.
-*   Des `<input type="text">` avec les IDs `delims` et `pole`.
-*   Des `<button>` avec les IDs : `segmentationBtn`, `dictionnaireBtn`, `grepBtn`, `concordancierBtn`, `kujujBtn`, `nbPhrasesBtn`, `motsLongsBtn`, `grapheBtn`, `afficherAideBtn`, `bonjourBtn`.
-*   Une `div` (par exemple `<div class="cadre-resultat"></div>`) pour afficher les résultats des analyses.
-*   Une autre `div` (par exemple `<div class="cadre-message"></div>`) pour les messages de chargement ou le bouton bonjour.
-*   Si tu veux le graphe, il faut aussi inclure les liens vers la librairie [Chartist.js](https://gionkunz.github.io/chartist-js/) dans ton `<head>` HTML :
-    ```html
-    <script src="https://cdn.jsdelivr.net/npm/chartist@0.11.4/dist/chartist.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chartist@0.11.4/dist/chartist.min.css">
-    ```
-
