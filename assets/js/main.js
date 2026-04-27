@@ -1,56 +1,28 @@
-let texte = "";
+let texteGlobal = "";
 
-/* Charger fichier */
-document.getElementById("fileInput").addEventListener("change", function(e) {
+// Charger le fichier
+document.getElementById('fileInput').addEventListener('change', function(e) {
     const file = e.target.files[0];
     const reader = new FileReader();
-
-    reader.onload = function(e) {
-        texte = e.target.result;
-        document.getElementById("resultat").innerText = "Fichier chargé ✔";
+    reader.onload = function(event) {
+        texteGlobal = event.target.result;
+        document.getElementById('resultats').innerHTML = "<p>Fichier chargé avec succès !</p>";
     };
-
     reader.readAsText(file);
 });
 
-/* Segmentation */
-function segmentation() {
-    let delim = document.getElementById("delim").value;
-    let regex = new RegExp("[" + delim + "\\s]+");
-    let mots = texte.split(regex);
-
-    document.getElementById("resultat").innerText = mots.join(" | ");
+// Fonction pour compter les phrases
+function nombrePhrases() {
+    if (!texteGlobal) return alert("Chargez un fichier d'abord");
+    const phrases = texteGlobal.split(/[.!?]+/).filter(p => p.trim().length > 0);
+    document.getElementById('resultats').innerHTML = `<h3>Il y a ${phrases.length} phrases dans ce texte.</h3>`;
 }
 
-/* Dictionnaire */
-function dictionnaire() {
-    let mots = texte.toLowerCase().split(/\W+/);
-    let unique = [...new Set(mots)];
-
-    document.getElementById("resultat").innerText =
-        "Nombre de mots différents : " + unique.length + "\n\n" +
-        unique.join(", ");
+// Fonction de segmentation simple
+function segmenter() {
+    if (!texteGlobal) return alert("Chargez un fichier d'abord");
+    const mots = texteGlobal.split(/\s+/);
+    document.getElementById('resultats').innerHTML = `<h3>Nombre de mots (tokens) : ${mots.length}</h3>`;
 }
 
-/* Nb phrases */
-function nbPhrases() {
-    let phrases = texte.split(/[.!?]+/).filter(p => p.trim() !== "");
-
-    document.getElementById("resultat").innerText =
-        "Nombre de phrases : " + phrases.length;
-}
-
-/* Mots longs */
-function motsLongs() {
-    let longueur = document.getElementById("longueur").value;
-    let mots = texte.split(/\W+/);
-    let longs = mots.filter(m => m.length >= longueur);
-
-    document.getElementById("resultat").innerText =
-        longs.join(", ");
-}
-
-/* Boutons */
-document.getElementById("bonjour").onclick = () => alert("Bonjour !");
-document.getElementById("help").onclick = () =>
-    alert("Charge un fichier .txt puis clique sur un bouton.");
+// Les autres fonctions (Dico, Concordancier) peuvent être ajoutées ici
