@@ -1,4 +1,4 @@
-```javascript
+javascript
 // Assure-toi que cette fonction est dans ton fichier JavaScript global,
 // et que les IDs des boutons et des zones d'affichage correspondent.
 
