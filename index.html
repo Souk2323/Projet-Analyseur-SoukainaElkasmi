@@ -3,17 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analyse des données dans un fichier</title>
+    <title>Projet Analyseur - Soukaina Elkasmi</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-    <header>
-        <h1>Analyse des données dans un fichier</h1>
+    <header class="cv-header">
+        <div class="photo-container">
+            <img src="assets/IMG_5211.jpeg" alt="Photo de profil">
+        </div>
+        <div class="infos-etudiante">
+            <h1>Soukaina Elkasmi</h1>
+            <p>Étudiante en Sciences du Langage - Projet L4INA01</p>
+        </div>
     </header>
 
     <main>
-        <div class="panneau-central">
+        <div class="panneau-analyse">
+            <h2>Analyse des données dans un fichier</h2>
+            
             <button class="btn-aide">Afficher l'aide</button>
             
             <div class="upload-zone">
@@ -30,7 +38,7 @@
                 <div class="colonnes-input">
                     <div class="ligne-input">
                         <span class="badge">PÔLE</span>
-                        <input type="text" id="pole" placeholder="entrez un pôle...">
+                        <input type="text" id="pole" placeholder="ex: conduite">
                     </div>
                     <div class="ligne-input">
                         <span class="badge">LONGUEUR</span>
@@ -39,26 +47,21 @@
                 </div>
 
                 <div class="ligne-input full">
-                    <span class="badge">MOTS GRAMMATICAUX, STOPWORDS EN ANGLAIS</span>
-                    <input type="text" id="stopwords" value="de,le,la,les,à,et,des,un,une,du,que,en,l,que,qu,d,s,se,ne,n,ce,me,sa">
+                    <span class="badge">MOTS GRAMMATICAUX (STOPWORDS)</span>
+                    <input type="text" id="stopwords" value="de,le,la,les,à,et,des,un,une,du,que,en,l,qu,d,s,se,ne,n,ce,me,sa">
                 </div>
-            </div>
-
-            <div class="logo-bonjour">
-                <div class="cadre-bonjour">Bonjour</div>
             </div>
 
             <div class="boutons-actions">
                 <button onclick="segmenter()">Segmentation</button>
-                <button onclick="dictionnaire()">Dictionnaire</button>
-                <button onclick="grep()">GREP</button>
+                <button onclick="genererDictionnaire()">Dictionnaire</button>
                 <button onclick="concordancier()">Concordancier</button>
-                <button onclick="nombrePhrases()">Nombre de phrases</button>
+                <button onclick="motsPlusLongs()">Mots les plus longs</button>
+                <button onclick="compterPhrases()">Nombre de phrases</button>
             </div>
         </div>
 
-        <div id="resultats" class="zone-resultats">
-            </div>
+        <div id="resultats" class="zone-affichage"></div>
     </main>
 
     <script src="javascript/script.js"></script>
