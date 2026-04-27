@@ -1,4 +1,4 @@
-```javascript
+javascript
 // Variables globales pour stocker les données du fichier
 let texteAnalyse = "";
 let lignesTexte = [];
@@ -240,5 +240,5 @@ document.getElementById('bonjourBtn').addEventListener('click', function() {
         alert("Bonjour !");
     }
 });
-```
+
 
