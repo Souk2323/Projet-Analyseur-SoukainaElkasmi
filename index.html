@@ -3,25 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projet Analyseur - Soukaina Elkasmi</title>
+    <title>Analyse des données dans un fichier - Soukaina Elkasmi</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-    <header class="cv-header">
-        <div class="photo-container">
-            <img src="assets/IMG_5211.jpeg" alt="Photo de profil">
-        </div>
-        <div class="infos-etudiante">
-            <h1>Soukaina Elkasmi</h1>
-            <p>Étudiante en Sciences du Langage - Projet L4INA01</p>
-        </div>
+    <div class="photo-cv">
+        <img src="assets/IMG_5211.jpeg" alt="Photo de Soukaina Elkasmi">
+    </div>
+
+    <header>
+        <h1>Analyse des données dans un fichier</h1>
     </header>
 
     <main>
-        <div class="panneau-analyse">
-            <h2>Analyse des données dans un fichier</h2>
-            
+        <div class="panneau-central">
             <button class="btn-aide">Afficher l'aide</button>
             
             <div class="upload-zone">
@@ -38,7 +34,7 @@
                 <div class="colonnes-input">
                     <div class="ligne-input">
                         <span class="badge">PÔLE</span>
-                        <input type="text" id="pole" placeholder="ex: conduite">
+                        <input type="text" id="pole" placeholder="entrez un pôle...">
                     </div>
                     <div class="ligne-input">
                         <span class="badge">LONGUEUR</span>
@@ -52,16 +48,20 @@
                 </div>
             </div>
 
+            <div class="logo-bonjour">
+                <div class="cadre-bonjour">Bonjour</div>
+            </div>
+
             <div class="boutons-actions">
                 <button onclick="segmenter()">Segmentation</button>
-                <button onclick="genererDictionnaire()">Dictionnaire</button>
+                <button onclick="dictionnaire()">Dictionnaire</button>
                 <button onclick="concordancier()">Concordancier</button>
                 <button onclick="motsPlusLongs()">Mots les plus longs</button>
-                <button onclick="compterPhrases()">Nombre de phrases</button>
+                <button onclick="nombrePhrases()">Nombre de phrases</button>
             </div>
         </div>
 
-        <div id="resultats" class="zone-affichage"></div>
+        <div id="resultats" class="zone-resultats"></div>
     </main>
 
     <script src="javascript/script.js"></script>
