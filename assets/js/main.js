@@ -34,9 +34,11 @@ function afficher(html) {
     document.querySelector('.cadre-bonjour').innerHTML = html;
 }
 
-function segmentation() {
+function segmenter() {
     if (!estPret()) return;
-    afficher("<h3>Segmentation</h3><p>" + preparerMots().join(" | ") + "</p>");
+    var mots = preparerMots();
+    if (mots.length === 0) { afficher("<h3>Segmentation</h3><p>Aucun mot trouvé.</p>"); return; }
+    afficher("<h3>Segmentation</h3><p>" + mots.join(" | ") + "</p>");
 }
 
 function nombrePhrases() {
@@ -48,6 +50,7 @@ function nombrePhrases() {
 function dictionnaire() {
     if (!estPret()) return;
     var mots = preparerMots();
+    if (mots.length === 0) { afficher("<h3>Mots les plus fréquents</h3><p>Aucun mot trouvé.</p>"); return; }
     var freq = {};
     mots.forEach(function(m) { freq[m] = (freq[m] || 0) + 1; });
     var tri = Object.entries(freq).sort(function(a, b) { return b[1] - a[1]; });
@@ -60,8 +63,10 @@ function dictionnaire() {
 
 function motsPlusLongs() {
     if (!estPret()) return;
+    var mots = preparerMots();
+    if (mots.length === 0) { afficher("<h3>Mots les Plus Longs</h3><p>Aucun mot trouvé.</p>"); return; }
     var motsUniques = [];
-    preparerMots().forEach(function(m) { if (motsUniques.indexOf(m) === -1) motsUniques.push(m); });
+    mots.forEach(function(m) { if (motsUniques.indexOf(m) === -1) motsUniques.push(m); });
     var tri = motsUniques.sort(function(a, b) { return b.length - a.length; }).slice(0, 10);
     var html = "<h3>Mots les Plus Longs</h3><table border='1' style='width:100%; border-collapse:collapse;'>";
     html += "<tr><th>Mot</th><th>Longueur</th></tr>";
@@ -102,17 +107,25 @@ function concordancier() {
 
 function kujuj() {
     if (!estPret()) return;
-    afficher("<h3>/kujuj/</h3><p>" + preparerMotsBruts().map(function(m) { return m + "juj"; }).join(" ") + "</p>");
+    var mots = preparerMotsBruts();
+    afficher("<h3>/kujuj/</h3><p>" + mots.map(function(m) { return m + "juj"; }).join(" ") + "</p>");
 }
 
 function genererGraphe() {
     if (!estPret()) return;
     var mots = preparerMots();
+    if (mots.length === 0) { afficher("<h3>graphecamembert-Pie chart</h3><p>Aucune donnée.</p>"); return; }
     var freq = {};
     mots.forEach(function(m) { var mot = m.toLowerCase(); freq[mot] = (freq[mot] || 0) + 1; });
     var top = Object.entries(freq).sort(function(a, b) { return b[1] - a[1]; }).slice(0, 7);
-    afficher("<h3>graphecamembert-Pie chart</h3><div id='chart' class='ct-chart ct-golden-section'></div>");
+    afficher("<h3>graphecamembert-Pie chart</h3><div class='ct-chart ct-golden-section' style='width:300px; height:300px; margin:auto;'></div>");
     setTimeout(function() {
-        new Chartist.Pie('#chart', { labels: top.map(function(x) { return x[0]; }), series: top.map(function(x) { return x[1]; }) }, { donut: false, showLabel: true });
+        var container = document.querySelector('.ct-chart');
+        if (container && typeof Chartist !== 'undefined') {
+            new Chartist.Pie(container, {
+                labels: top.map(function(x) { return x[0]; }),
+                series: top.map(function(x) { return x[1]; })
+            }, { donut: false, showLabel: true });
+        }
     }, 300);
 }
