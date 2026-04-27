@@ -1,63 +1,87 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Mon Interface Jaune</title>
-    <style>
-        /* On remet ton style d'origine ici */
-        body {
-            background-color: #1a1a1a; /* Fond sombre pour faire ressortir le jaune */
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+Let texteAnalyse = "";
 
-        .container {
-            background-color: #ffcc00; /* Le jaune parfait du début */
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            text-align: center;
-        }
+// 1. Charger le fichier .txt
+document.getElementById('fileInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        texteAnalyse = event.target.result;
+        // On change le texte du cadre "Bonjour" pour confirmer
+        const cadre = document.querySelector('.cadre-bonjour');
+        if(cadre) cadre.innerText = "Fichier prêt !";
+    };
+    reader.readAsText(file);
+});
 
-        .btn {
-            background-color: #000;
-            color: #ffcc00;
-            border: none;
-            padding: 15px 30px;
-            margin: 10px;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
+// 2. Découper le texte en mots selon les délimiteurs
+function preparerMots() {
+    if (!texteAnalyse) {
+        alert("Choisis d'abord un fichier .txt !");
+        return [];
+    }
+    const delimInput = document.getElementById('delims');
+    const delimiteurs = delimInput ? delimInput.value : " ,;.'!?-";
+    const regex = new RegExp("[" + delimiteurs.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + "\\s]+", "g");
+    return texteAnalyse.split(regex).filter(m => m.length > 0);
+}
 
-        .btn:hover {
-            transform: scale(1.05);
-            background-color: #333;
-        }
-    </style>
-</head>
-<body>
+// 3. Fonctions pour les boutons
+function segmenter() {
+    const mots = preparerMots();
+    if (mots.length > 0) alert("Segmentation : " + mots.length + " mots trouvés.");
+}
 
-    <div class="container">
-        <h1 style="color: #000;">Tableau de Bord</h1>
-        
-        <button class="btn" onclick="actionBouton('Alerte')">Bouton 1</button>
-        <button class="btn" onclick="actionBouton('Validation')">Bouton 2</button>
-    </div>
+function dictionnaire() {
+    const mots = preparerMots();
+    if (mots.length === 0) return;
+    let dico = {};
+    mots.forEach(m => {
+        let mot = m.toLowerCase();
+        dico[mot] = (dico[mot] || 0) + 1;
+    });
+    console.log("Dictionnaire généré", dico);
+    alert("Dictionnaire créé (voir console)");
+}
 
-    <script>
-        // La fonction qui manquait pour faire marcher les boutons
-        function actionBouton(nom) {
-            alert("Tu as cliqué sur : " + nom);
-            console.log("Action exécutée pour " + nom);
-        }
-    </script>
+function concordancier() {
+    const pole = document.getElementById('pole').value.toLowerCase();
+    const len = parseInt(document.getElementById('longueur').value) || 10;
+    if (!pole) return alert("Entrez un mot pôle !");
+    alert("Recherche du mot '" + pole + "' avec un contexte de " + len);
+}
 
-</body>
-</html>
+function grep() {
+    const p = document.getElementById('pole').value;
+    if (!p) return alert("Entrez un motif !");
+    const lignes = texteAnalyse.split('\n').filter(l => l.includes(p));
+    alert(lignes.length + " lignes trouvées.");
+}
+
+function nombrePhrases() {
+    const n = texteAnalyse.split(/[.!?]+/).filter(p => p.trim().length > 0).length;
+    alert("Il y a " + n + " phrases.");
+}
+
+function motsPlusLongs() {
+    const mots = [...new Set(preparerMots())].sort((a, b) => b.length - a.length);
+    alert("Le mot le plus long est : " + mots[0]);
+}
+
+function kujuj() { alert("Mode /kujuj/ activé !"); }
+function genererGraphe() { alert("Génération du graphe..."); }
+
+function genererGraphe() {
+    const zone = document.getElementById('affichageDroit');
+    zone.innerHTML = `
+        <h3 style="text-align:center; font-size:12px;">Mots les plus fréquents</h3>
+        <div style="display:flex; justify-content:center; margin-bottom: 20px;">
+            <img src="https://quickchart.io/chart?c={type:'pie',data:{labels:['le','la','de','un'],datasets:[{data:[30,20,15,10]}]}}" style="width:200px;">
+        </div>
+    `;
+    zone.scrollIntoView({behavior: "smooth"}); 
+}
+
+
+
+Moi 
