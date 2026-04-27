@@ -1,15 +1,4 @@
-// --- 1. FONCTION KUJUJ (Majuscule + uj) ---
-function kujuj() {
-    const mots = preparerMots();
-    const zone = document.getElementById('affichageDroit');
-    alert("Mode /kujuj/ activé !");
-    if (mots.length > 0 && zone) {
-        const res = mots.map(m => m.toUpperCase() + "uj").join(" ");
-        zone.innerHTML = "<h3>Résultat Kujuj :</h3><p>" + res + "</p>";
-    }
-}
-
-// --- 2. DICTIONNAIRE (Tableau comme le prof) ---
+// --- 1. DICTIONNAIRE (Tableau de fréquence) ---
 function dictionnaire() {
     const mots = preparerMots();
     const zone = document.getElementById('affichageDroit');
@@ -19,17 +8,18 @@ function dictionnaire() {
     mots.forEach(m => { let mot = m.toLowerCase(); freq[mot] = (freq[mot] || 0) + 1; });
     const tri = Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 10);
 
-    // On crée le tableau HTML directement en JS
-    let html = "<h3>Dictionnaire</h3><table border='1' style='width:100%; border-collapse:collapse;'>";
-    html += "<tr style='background:#f2f2f2;'><th>Token</th><th>Fréquence</th></tr>";
+    // On crée le tableau HTML
+    let html = "<table border='1' style='width:100%; border-collapse:collapse;'>";
+    html += "<tr><th>Token</th><th>Fréquence</th></tr>";
     tri.forEach(([m, f]) => {
         html += `<tr><td>${m}</td><td style='text-align:center;'>${f}</td></tr>`;
     });
     html += "</table>";
-    zone.innerHTML = html;
+    
+    zone.innerHTML = html; // .innerHTML est obligatoire pour les tableaux
 }
 
-// --- 3. GRAPHE (Le Camembert avec l'URL QuickChart) ---
+// --- 2. GRAPHE (Le Camembert) ---
 function genererGraphe() {
     const mots = preparerMots();
     const zone = document.getElementById('affichageDroit');
@@ -42,31 +32,49 @@ function genererGraphe() {
     const labels = top.map(x => x[0]);
     const datas = top.map(x => x[1]);
 
-    // Cette URL crée l'image du camembert automatiquement
+    // Utilisation de l'API pour l'image du graphe
     const chartUrl = `https://quickchart.io/chart?c={type:'pie',data:{labels:['${labels.join("','")}'],datasets:[{data:[${datas.join(",")}]}]}}`;
 
-    zone.innerHTML = `<h3>Fréquences</h3><div style='text-align:center;'><img src="${chartUrl}" style='width:100%; max-width:350px; background:white; padding:10px;'></div>`;
+    zone.innerHTML = `<img src="${chartUrl}" style='width:100%; max-width:350px; background:white;'>`;
 }
 
-// --- 4. NOMBRE DE PHRASES ---
+// --- 3. NB PHRASES ---
 function nombrePhrases() {
     const zone = document.getElementById('affichageDroit');
-    if (!texteAnalyse || !zone) return;
     const n = texteAnalyse.split(/[.!?]+/).filter(p => p.trim().length > 0).length;
-    zone.innerHTML = `<h3>Analyse</h3><p>Il y a <b>${n}</b> phrases dans ce texte.</p>`;
+    zone.innerHTML = "Il y a " + n + " phrases dans ce texte.";
 }
 
-// --- 5. MOTS LES PLUS LONGS (Tableau) ---
+// --- 4. MOTS LES PLUS LONGS (Tableau) ---
 function motsPlusLongs() {
     const zone = document.getElementById('affichageDroit');
     const mots = [...new Set(preparerMots())];
-    if (mots.length === 0 || !zone) return;
-    const tri = mots.sort((a, b) => b.length - a.length).slice(0, 7);
+    const tri = mots.sort((a, b) => b.length - a.length).slice(0, 10);
 
-    let html = "<h3>Mots les Plus Longs</h3><table border='1' style='width:100%; border-collapse:collapse;'>";
-    html += "<tr style='background:#f2f2f2;'><th>Mot</th><th>Longueur</th></tr>";
+    let html = "<table border='1' style='width:100%; border-collapse:collapse;'>";
+    html += "<tr><th>Mot</th><th>Longueur</th></tr>";
     tri.forEach(m => {
         html += `<tr><td>${m}</td><td style='text-align:center;'>${m.length}</td></tr>`;
+    });
+    html += "</table>";
+    zone.innerHTML = html;
+}
+
+// --- 5. CONCORDANCIER (Tableau 3 colonnes) ---
+function concordancier() {
+    const zone = document.getElementById('affichageDroit');
+    const pole = document.getElementById('pôle').value.toLowerCase();
+    const mots = preparerMots();
+    if (!pole || !zone) return;
+
+    let html = "<table border='1' style='width:100%; border-collapse:collapse;'>";
+    html += "<tr><th>Gauche</th><th>Pôle</th><th>Droite</th></tr>";
+    mots.forEach((m, i) => {
+        if (m.toLowerCase() === pole) {
+            const g = mots.slice(Math.max(0, i-2), i).join(" ");
+            const d = mots.slice(i+1, i+3).join(" ");
+            html += `<tr><td style='text-align:right;'>${g}</td><td style='text-align:center; color:red;'><b>${m}</b></td><td>${d}</td></tr>`;
+        }
     });
     html += "</table>";
     zone.innerHTML = html;
